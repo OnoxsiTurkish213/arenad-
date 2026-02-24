@@ -94,9 +94,8 @@ body{font-family:'Inter',sans-serif;background:#08080f;color:#e0e0e0;min-height:
 
 <div class="wrap">
 <div class="hdr"><h1>⚔️ Arena Smash</h1><small>10 Kişilik Arena</small></div>
-<div id="dbS" class="wt">🔄 Firebase'e bağlanılıyor...</div>
+<div id="dbS" class="wt">🔄 Firebase test ediliyor...</div>
 
-<!-- MENU -->
 <div class="scr on" id="S0">
 <div class="ibox" style="margin-top:10px">
 <label>Oyuncu Adın</label>
@@ -111,15 +110,14 @@ body{font-family:'Inter',sans-serif;background:#08080f;color:#e0e0e0;min-height:
 <ul>
 <li>10 kişiye kadar arena savaşı</li>
 <li>Her tur yön ve güç seç, HAZIR bas</li>
-<li>7 saniye dolunca karakterler fırlar</li>
+<li>7sn dolunca karakterler fırlar</li>
 <li>Çarpışınca birbirini iter</li>
-<li>Arena dışına çıkan elenir</li>
+<li>Arena dışı = elenirsin</li>
 <li>Son kalan kazanır! 🏆</li>
 </ul>
 </div>
 </div>
 
-<!-- LOBBY HOST -->
 <div class="scr" id="S1">
 <button class="bk" onclick="exitLobby()">← Geri</button>
 <div class="cshow">
@@ -131,7 +129,6 @@ body{font-family:'Inter',sans-serif;background:#08080f;color:#e0e0e0;min-height:
 <button class="btn bgr" onclick="startMatch()" id="startBtn" disabled>⚔️ Başlat</button>
 </div>
 
-<!-- JOIN -->
 <div class="scr" id="S2">
 <button class="bk" onclick="sw('S0')">← Geri</button>
 <div class="ibox">
@@ -142,7 +139,6 @@ body{font-family:'Inter',sans-serif;background:#08080f;color:#e0e0e0;min-height:
 <button class="btn bg" onclick="joinRoom()">🚪 Katıl</button>
 </div>
 
-<!-- WAIT GUEST -->
 <div class="scr" id="S3">
 <button class="bk" onclick="exitP()">← Geri</button>
 <div class="cshow">
@@ -153,7 +149,6 @@ body{font-family:'Inter',sans-serif;background:#08080f;color:#e0e0e0;min-height:
 <div class="plist"><h4>Oyuncular</h4><div class="pl" id="lpL2"></div></div>
 </div>
 
-<!-- GAME -->
 <div class="scr" id="S4">
 <div class="hud">
 <div class="round">Tur: <span id="hRound">1</span></div>
@@ -180,96 +175,74 @@ body{font-family:'Inter',sans-serif;background:#08080f;color:#e0e0e0;min-height:
 </div>
 </div>
 
-<!-- FIREBASE SDK -->
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
-
 <script>
-// ============================================
-// FIREBASE CONFIG + INIT
-// ============================================
-var firebaseConfig = {
-    apiKey: "AIzaSyDXgndR3i2p0ovRXVxqGb24d7lMXdTTX9I",
-    authDomain: "mobilgame1-f03ac.firebaseapp.com",
-    databaseURL: "https://mobilgame1-f03ac-default-rtdb.europe-west1.firebasedatabase.app",
-    projectId: "mobilgame1-f03ac",
-    storageBucket: "mobilgame1-f03ac.firebasestorage.app",
-    messagingSenderId: "188464433527",
-    appId: "1:188464433527:web:baed82070bfed9652df972",
-    measurementId: "G-0G2FXDPVKM"
-};
+// ==========================================
+// FIREBASE REST API - SDK YOK, FETCH KULLAN
+// ==========================================
+var DB = "https://mobilgame1-f03ac-default-rtdb.europe-west1.firebasedatabase.app";
 
-var app = firebase.initializeApp(firebaseConfig);
-var db = firebase.database();
-var dbOk = false;
-
-// ============================================
-// CONNECTION TEST
-// ============================================
-function testConn() {
-    setS("wt", "🔄 Firebase'e bağlanılıyor...");
-
-    // Method 1: .info/connected
-    db.ref(".info/connected").on("value", function(snap) {
-        if (snap.val() === true) {
-            dbOk = true;
-            setS("ok", "✅ Firebase bağlı — Hazır!");
-            document.getElementById("btnC").disabled = false;
-            document.getElementById("btnJ").disabled = false;
-        }
+function fbPut(path, data) {
+    return fetch(DB + "/" + path + ".json", {
+        method: "PUT",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify(data)
     });
+}
+function fbPatch(path, data) {
+    return fetch(DB + "/" + path + ".json", {
+        method: "PATCH",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify(data)
+    });
+}
+function fbGet(path) {
+    return fetch(DB + "/" + path + ".json").then(function(r) { return r.json(); });
+}
+function fbDel(path) {
+    return fetch(DB + "/" + path + ".json", { method: "DELETE" });
+}
 
-    // Method 2: Fallback test write
-    setTimeout(function() {
-        if (!dbOk) {
-            db.ref("_test").set({ t: Date.now() })
-                .then(function() {
-                    db.ref("_test").remove();
-                    dbOk = true;
-                    setS("ok", "✅ Firebase bağlı — Hazır!");
-                    document.getElementById("btnC").disabled = false;
-                    document.getElementById("btnJ").disabled = false;
-                })
-                .catch(function(err) {
-                    setS("no", "❌ Bağlantı hatası: " + err.message);
+// ==========================================
+// TEST CONNECTION
+// ==========================================
+function testConn() {
+    setS("wt", "🔄 Firebase test ediliyor...");
+    fbPut("_test", {ok: true, t: Date.now()})
+        .then(function(res) {
+            if (res.ok) {
+                fbDel("_test");
+                setS("ok", "✅ Firebase bağlı — Hazır!");
+                document.getElementById("btnC").disabled = false;
+                document.getElementById("btnJ").disabled = false;
+            } else {
+                res.text().then(function(t) {
+                    setS("no", "❌ Hata: " + t);
                 });
-        }
-    }, 3000);
-
-    // Method 3: Timeout
-    setTimeout(function() {
-        if (!dbOk) {
-            setS("no", "❌ Bağlantı zaman aşımı! Sayfayı yenile.");
-        }
-    }, 8000);
+            }
+        })
+        .catch(function(err) {
+            setS("no", "❌ Bağlantı hatası: " + err.message);
+        });
 }
+function setS(c, t) { var e = document.getElementById("dbS"); e.className = c; e.textContent = t; }
 
-function setS(c, t) {
-    var e = document.getElementById("dbS");
-    e.className = c;
-    e.textContent = t;
-}
-
-// ============================================
-// CONSTANTS
-// ============================================
+// ==========================================
+// CONSTS & STATE
+// ==========================================
 var ARENA = 8, CELL = 50, RADIUS = 18;
 var FRICTION = 0.92, BOUNCE = 0.7, PUSH = 1.5;
 var MAX_P = 10, PREP_TIME = 7, SIM_STEPS = 120;
 var COLORS = ["#ff6b6b","#ffd93d","#6bcb77","#4ecdc4","#a29bfe","#fd79a8","#fdcb6e","#00cec9","#e17055","#dfe6e9"];
 
-// ============================================
-// STATE
-// ============================================
 var room = null, role = null, mySlot = null, pName = "";
-var listeners = [];
+var pollT = null, phaseT = null, animId = null;
 var players = [], roundNum = 0, phase = "wait";
 var myAlive = true, simFrame = 0, prepCount = 0;
-var canvas, ctx, cW, cH, oX, oY, animId = null, phaseT = null;
+var canvas, ctx, cW, cH, oX, oY;
 
-// ============================================
+// ==========================================
 // UTILS
-// ============================================
+// ==========================================
 function rc() { return String(1000 + Math.floor(Math.random() * 9000)); }
 function gn() { var v = document.getElementById("inpName").value.trim(); return v || ("P" + Math.floor(Math.random() * 99)); }
 function sw(id) { var a = document.querySelectorAll(".scr"); for (var i = 0; i < a.length; i++) a[i].classList.remove("on"); document.getElementById(id).classList.add("on"); }
@@ -279,12 +252,11 @@ function toast(m, t) {
     setTimeout(function() { d.classList.add("sh"); }, 10);
     setTimeout(function() { d.classList.remove("sh"); setTimeout(function() { d.remove(); }, 300); }, 2200);
 }
-
-function offAll() { for (var i = 0; i < listeners.length; i++) { try { listeners[i](); } catch(e) {} } listeners = []; }
+function stopPoll() { if (pollT) { clearInterval(pollT); pollT = null; } }
+function stopAnim() { if (animId) { cancelAnimationFrame(animId); animId = null; } }
+function stopPhase() { if (phaseT) { clearInterval(phaseT); phaseT = null; } }
 function clean() {
-    offAll();
-    if (phaseT) { clearInterval(phaseT); phaseT = null; }
-    if (animId) { cancelAnimationFrame(animId); animId = null; }
+    stopPoll(); stopAnim(); stopPhase();
     room = null; role = null; mySlot = null;
     players = []; roundNum = 0; phase = "wait"; myAlive = true; simFrame = 0;
     document.getElementById("inpCode").value = "";
@@ -292,661 +264,443 @@ function clean() {
     document.getElementById("resOv").classList.remove("on");
 }
 
-// ============================================
-// FIREBASE LISTEN HELPER
-// ============================================
-function listenRef(path, cb) {
-    var ref = db.ref(path);
-    var handler = ref.on("value", function(snap) { cb(snap.val()); });
-    listeners.push(function() { ref.off("value", handler); });
+function poll(cb) {
+    stopPoll();
+    function go() { if (!room) return; fbGet("arenas/" + room).then(cb).catch(function() {}); }
+    go();
+    pollT = setInterval(go, 1000);
 }
 
-// ============================================
+// ==========================================
 // CREATE ROOM
-// ============================================
+// ==========================================
 function createRoom() {
-    if (!dbOk) { toast("Firebase bağlı değil!", "t"); return; }
     pName = gn(); document.getElementById("inpName").value = pName;
-    var code = rc();
-    room = code; role = "host"; mySlot = "p0";
+    var code = rc(); room = code; role = "host"; mySlot = "p0";
+    var data = { status: "lobby", host: pName, round: 0, phase: "lobby" };
+    data.p0 = { name: pName, alive: true, ready: false, angle: 0, power: 50, x: 0, y: 0, vx: 0, vy: 0 };
 
-    var data = {
-        status: "lobby",
-        host: pName,
-        round: 0,
-        phase: "lobby",
-        p0: { name: pName, alive: true, ready: false, angle: 0, power: 50, x: 0, y: 0, vx: 0, vy: 0 }
-    };
-
-    db.ref("arenas/" + code).set(data)
-        .then(function() {
-            db.ref("arenas/" + code).onDisconnect().remove();
-            document.getElementById("dCode").textContent = code;
-            sw("S1");
-            toast("Arena kuruldu! Kod: " + code, "s");
-
-            // Listen for changes
-            listenRef("arenas/" + code, function(d) {
-                if (!d) { toast("Arena silindi!", "t"); clean(); sw("S0"); return; }
-                if (d.status === "lobby") updateLobby(d, "lpL");
-                if (d.status === "playing") {
-                    offAll();
-                    initGame(d);
-                    listenGame();
-                }
-            });
-        })
-        .catch(function(err) {
-            toast("Hata: " + err.message, "t");
-            room = null; role = null;
+    fbPut("arenas/" + code, data).then(function(r) {
+        if (!r.ok) { toast("Oda kurulamadı!", "t"); room = null; return; }
+        document.getElementById("dCode").textContent = code;
+        sw("S1"); toast("Arena kuruldu: " + code, "s");
+        poll(function(d) {
+            if (!d) return;
+            if (d.status === "lobby") updateLobby(d, "lpL");
+            if (d.status === "playing") { stopPoll(); initGame(d); gamePoll(); }
         });
+    }).catch(function() { toast("Bağlantı hatası!", "t"); room = null; });
 }
 
-// ============================================
+// ==========================================
 // JOIN ROOM
-// ============================================
+// ==========================================
 function joinRoom() {
-    if (!dbOk) { toast("Firebase bağlı değil!", "t"); return; }
     var code = document.getElementById("inpCode").value.trim();
     pName = gn(); document.getElementById("inpName").value = pName;
     var err = document.getElementById("jErr");
     if (code.length !== 4) { err.textContent = "4 haneli kod girin."; return; }
 
-    db.ref("arenas/" + code).once("value")
-        .then(function(snap) {
-            var d = snap.val();
-            if (!d) { err.textContent = "Arena bulunamadı."; return; }
-            if (d.status !== "lobby") { err.textContent = "Maç başlamış."; return; }
+    fbGet("arenas/" + code).then(function(d) {
+        if (!d) { err.textContent = "Arena bulunamadı."; return; }
+        if (d.status !== "lobby") { err.textContent = "Maç başlamış."; return; }
+        var slot = null;
+        for (var i = 0; i < MAX_P; i++) { if (!d["p" + i]) { slot = "p" + i; break; } }
+        if (!slot) { err.textContent = "Arena dolu!"; return; }
 
-            // Find empty slot
-            var slot = null;
-            for (var i = 0; i < MAX_P; i++) {
-                if (!d["p" + i]) { slot = "p" + i; break; }
-            }
-            if (!slot) { err.textContent = "Arena dolu (10/10)."; return; }
+        room = code; role = "guest"; mySlot = slot; err.textContent = "";
+        var upd = {};
+        upd[slot] = { name: pName, alive: true, ready: false, angle: 0, power: 50, x: 0, y: 0, vx: 0, vy: 0 };
 
-            room = code; role = "guest"; mySlot = slot; err.textContent = "";
-
-            var upd = {};
-            upd[slot] = { name: pName, alive: true, ready: false, angle: 0, power: 50, x: 0, y: 0, vx: 0, vy: 0 };
-
-            db.ref("arenas/" + code).update(upd)
-                .then(function() {
-                    document.getElementById("dCode2").textContent = code;
-                    sw("S3");
-                    toast("Katıldın!", "s");
-
-                    listenRef("arenas/" + code, function(d2) {
-                        if (!d2) { toast("Arena silindi!", "t"); clean(); sw("S0"); return; }
-                        if (d2.status === "lobby") updateLobby(d2, "lpL2");
-                        if (d2.status === "playing") {
-                            offAll();
-                            initGame(d2);
-                            listenGame();
-                        }
-                    });
-                })
-                .catch(function(err2) { err.textContent = "Katılma hatası!"; room = null; });
-        })
-        .catch(function(err3) { err.textContent = "Bağlantı hatası!"; });
+        fbPatch("arenas/" + code, upd).then(function(r) {
+            if (!r.ok) { err.textContent = "Katılma hatası!"; room = null; return; }
+            document.getElementById("dCode2").textContent = code;
+            sw("S3"); toast("Katıldın!", "s");
+            poll(function(d2) {
+                if (!d2) { toast("Arena silindi!", "t"); clean(); sw("S0"); return; }
+                if (d2.status === "lobby") updateLobby(d2, "lpL2");
+                if (d2.status === "playing") { stopPoll(); initGame(d2); gamePoll(); }
+            });
+        });
+    }).catch(function() { err.textContent = "Bağlantı hatası!"; });
 }
 
-// ============================================
+// ==========================================
 // LOBBY
-// ============================================
+// ==========================================
 function updateLobby(d, elId) {
     var html = "", cnt = 0;
     for (var i = 0; i < MAX_P; i++) {
         var p = d["p" + i];
         if (p) {
             cnt++;
-            var cls = "pi";
-            if ("p" + i === mySlot) cls += " me";
+            var cls = "pi" + ("p" + i === mySlot ? " me" : "");
             html += '<div class="' + cls + '" style="border-left:3px solid ' + COLORS[i] + '">' + p.name + '</div>';
         }
     }
-    var el = document.getElementById(elId);
-    if (el) el.innerHTML = html;
-    if (document.getElementById("wTxt")) document.getElementById("wTxt").textContent = cnt + "/10 oyuncu";
+    var el = document.getElementById(elId); if (el) el.innerHTML = html;
+    var wt = document.getElementById("wTxt"); if (wt) wt.textContent = cnt + "/10 oyuncu";
     var sb = document.getElementById("startBtn");
     if (sb) { sb.disabled = cnt < 2; sb.textContent = "⚔️ Başlat (" + cnt + " kişi)"; }
 }
 
-// ============================================
+// ==========================================
 // START MATCH
-// ============================================
+// ==========================================
 function startMatch() {
     if (role !== "host" || !room) return;
-
-    db.ref("arenas/" + room).once("value").then(function(snap) {
-        var d = snap.val();
+    fbGet("arenas/" + room).then(function(d) {
         if (!d) return;
         var ps = [];
         for (var i = 0; i < MAX_P; i++) { if (d["p" + i]) ps.push(i); }
         if (ps.length < 2) { toast("En az 2 kişi!", "t"); return; }
 
-        var arenaSize = ARENA * CELL;
-        var cx = arenaSize / 2, cy = arenaSize / 2;
-        var r = arenaSize / 2 - RADIUS - 30;
-
+        var as = ARENA * CELL, cx = as / 2, cy = as / 2, r = as / 2 - RADIUS - 30;
         var upd = { status: "playing", round: 1, phase: "prep", prepStart: Date.now() };
         for (var j = 0; j < ps.length; j++) {
             var ang = 2 * Math.PI * j / ps.length;
-            var px = cx + Math.cos(ang) * r * 0.6;
-            var py = cy + Math.sin(ang) * r * 0.6;
             var slot = "p" + ps[j];
-            upd[slot + "/x"] = px;
-            upd[slot + "/y"] = py;
-            upd[slot + "/vx"] = 0;
-            upd[slot + "/vy"] = 0;
-            upd[slot + "/alive"] = true;
-            upd[slot + "/ready"] = false;
+            upd[slot + "/x"] = cx + Math.cos(ang) * r * 0.6;
+            upd[slot + "/y"] = cy + Math.sin(ang) * r * 0.6;
+            upd[slot + "/vx"] = 0; upd[slot + "/vy"] = 0;
+            upd[slot + "/alive"] = true; upd[slot + "/ready"] = false;
         }
-        db.ref("arenas/" + room).update(upd);
+        fbPatch("arenas/" + room, upd);
     });
 }
 
-// ============================================
-// GAME
-// ============================================
+// ==========================================
+// INIT GAME
+// ==========================================
 function initGame(d) {
     players = [];
     for (var i = 0; i < MAX_P; i++) {
         var p = d["p" + i];
-        if (p) {
-            players.push({
-                slot: "p" + i, idx: i, name: p.name,
-                x: p.x || 0, y: p.y || 0, vx: 0, vy: 0,
-                alive: p.alive !== false, ready: false,
-                angle: p.angle || 0, power: p.power || 50
-            });
-        }
+        if (p) players.push({ slot: "p" + i, idx: i, name: p.name, x: p.x || 0, y: p.y || 0, vx: 0, vy: 0, alive: p.alive !== false, ready: false, angle: p.angle || 0, power: p.power || 50 });
     }
-    roundNum = d.round || 1;
-    phase = "prep"; myAlive = true; simFrame = 0; prepCount = PREP_TIME;
+    roundNum = d.round || 1; phase = "prep"; myAlive = true; simFrame = 0;
+    for (var j = 0; j < players.length; j++) { if (players[j].slot === mySlot && !players[j].alive) myAlive = false; }
 
-    for (var j = 0; j < players.length; j++) {
-        if (players[j].slot === mySlot && !players[j].alive) myAlive = false;
-    }
-
-    sw("S4");
-    initCanvas();
+    sw("S4"); initCanvas();
     document.getElementById("ctrlPanel").style.display = myAlive ? "block" : "none";
     document.getElementById("readyBtn").disabled = false;
     document.getElementById("readyBtn").textContent = "✅ HAZIR";
     document.getElementById("hRound").textContent = roundNum;
-    updateAliveCount();
-    renderAll();
-    startPrepTimer();
+    updateAlive(); renderAll(); startPrep();
 }
 
-function listenGame() {
-    listenRef("arenas/" + room, function(d) {
+function gamePoll() {
+    poll(function(d) {
         if (!d) { toast("Arena kapandı!", "t"); clean(); sw("S0"); return; }
-
-        // Sync players
         for (var i = 0; i < players.length; i++) {
             var pd = d[players[i].slot];
             if (pd) {
                 players[i].ready = pd.ready || false;
-                if (d.phase === "prep" || d.phase === "lobby") {
+                if (d.phase === "prep") {
                     players[i].alive = pd.alive !== false;
-                    if (players[i].slot !== mySlot) {
-                        players[i].angle = pd.angle || 0;
-                        players[i].power = pd.power || 50;
-                    }
+                    if (players[i].slot !== mySlot) { players[i].angle = pd.angle || 0; players[i].power = pd.power || 50; }
                 }
             }
         }
-
-        // Phase transitions
-        if (d.phase === "sim" && phase === "prep") { startSim(d); }
-        if (d.phase === "prep" && phase !== "prep" && phase !== "wait") { roundNum = d.round || roundNum; resetForPrep(d); }
-        if (d.phase === "done") { showWinner(d); }
-
+        if (d.phase === "sim" && phase === "prep") startSim(d);
+        if (d.phase === "prep" && phase !== "prep" && phase !== "wait") { roundNum = d.round || roundNum; resetPrep(d); }
+        if (d.phase === "done") showWinner(d);
         document.getElementById("hRound").textContent = d.round || roundNum;
-        updateAliveCount();
-        renderAll();
+        updateAlive(); renderAll();
     });
 }
 
-function updateAliveCount() {
-    var c = 0;
-    for (var i = 0; i < players.length; i++) if (players[i].alive) c++;
+function updateAlive() {
+    var c = 0; for (var i = 0; i < players.length; i++) if (players[i].alive) c++;
     document.getElementById("hAlive").textContent = c;
 }
 
-// ============================================
+// ==========================================
 // CANVAS
-// ============================================
+// ==========================================
 function initCanvas() {
-    canvas = document.getElementById("gameCanvas");
-    ctx = canvas.getContext("2d");
-    resizeCanvas();
-    window.addEventListener("resize", resizeCanvas);
+    canvas = document.getElementById("gameCanvas"); ctx = canvas.getContext("2d");
+    resizeCanvas(); window.addEventListener("resize", resizeCanvas);
 }
-
 function resizeCanvas() {
     var wrap = canvas.parentElement;
     var s = Math.min(wrap.clientWidth, wrap.clientHeight, 460);
-    canvas.width = s; canvas.height = s;
-    cW = s; cH = s;
-    var arenaSize = ARENA * CELL;
-    var scale = Math.min((cW - 16) / arenaSize, (cH - 16) / arenaSize);
-    oX = (cW - arenaSize * scale) / 2;
-    oY = (cH - arenaSize * scale) / 2;
+    canvas.width = s; canvas.height = s; cW = s; cH = s;
+    var as = ARENA * CELL;
+    var sc = Math.min((cW - 16) / as, (cH - 16) / as);
+    oX = (cW - as * sc) / 2; oY = (cH - as * sc) / 2;
     renderAll();
 }
 
 function renderAll() {
     if (!ctx) return;
-    var arenaSize = ARENA * CELL;
-    var scale = Math.min((cW - 16) / arenaSize, (cH - 16) / arenaSize);
+    var as = ARENA * CELL, sc = Math.min((cW - 16) / as, (cH - 16) / as);
     ctx.clearRect(0, 0, cW, cH);
-    ctx.save();
-    ctx.translate(oX, oY);
-    ctx.scale(scale, scale);
+    ctx.save(); ctx.translate(oX, oY); ctx.scale(sc, sc);
 
-    // Arena background
-    var grad = ctx.createRadialGradient(arenaSize / 2, arenaSize / 2, 0, arenaSize / 2, arenaSize / 2, arenaSize / 2);
-    grad.addColorStop(0, "#1a1a2e");
-    grad.addColorStop(0.8, "#12121e");
-    grad.addColorStop(1, "#0a0a12");
-    ctx.fillStyle = grad;
-    ctx.beginPath();
-    ctx.arc(arenaSize / 2, arenaSize / 2, arenaSize / 2, 0, Math.PI * 2);
-    ctx.fill();
+    // Arena
+    var g = ctx.createRadialGradient(as/2, as/2, 0, as/2, as/2, as/2);
+    g.addColorStop(0, "#1a1a2e"); g.addColorStop(0.8, "#12121e"); g.addColorStop(1, "#0a0a12");
+    ctx.fillStyle = g;
+    ctx.beginPath(); ctx.arc(as/2, as/2, as/2, 0, Math.PI*2); ctx.fill();
 
     // Grid
-    ctx.strokeStyle = "#ffffff06";
-    ctx.lineWidth = 1;
+    ctx.strokeStyle = "#ffffff06"; ctx.lineWidth = 1;
     for (var i = 0; i <= ARENA; i++) {
-        ctx.beginPath(); ctx.moveTo(i * CELL, 0); ctx.lineTo(i * CELL, arenaSize); ctx.stroke();
-        ctx.beginPath(); ctx.moveTo(0, i * CELL); ctx.lineTo(arenaSize, i * CELL); ctx.stroke();
+        ctx.beginPath(); ctx.moveTo(i*CELL, 0); ctx.lineTo(i*CELL, as); ctx.stroke();
+        ctx.beginPath(); ctx.moveTo(0, i*CELL); ctx.lineTo(as, i*CELL); ctx.stroke();
     }
 
     // Border
     ctx.strokeStyle = "#ff6b6b33"; ctx.lineWidth = 3;
-    ctx.beginPath(); ctx.arc(arenaSize / 2, arenaSize / 2, arenaSize / 2 - 2, 0, Math.PI * 2); ctx.stroke();
+    ctx.beginPath(); ctx.arc(as/2, as/2, as/2-2, 0, Math.PI*2); ctx.stroke();
 
     // Players
     for (var j = 0; j < players.length; j++) {
-        var p = players[j];
-        if (!p.alive) continue;
-
+        var p = players[j]; if (!p.alive) continue;
         // Shadow
         ctx.fillStyle = "rgba(0,0,0,0.3)";
-        ctx.beginPath();
-        ctx.ellipse(p.x, p.y + RADIUS * 0.5, RADIUS * 0.85, RADIUS * 0.35, 0, 0, Math.PI * 2);
-        ctx.fill();
-
+        ctx.beginPath(); ctx.ellipse(p.x, p.y+RADIUS*0.5, RADIUS*0.85, RADIUS*0.35, 0, 0, Math.PI*2); ctx.fill();
         // Body
-        var g = ctx.createRadialGradient(p.x - 3, p.y - 5, 2, p.x, p.y, RADIUS);
-        g.addColorStop(0, lighten(COLORS[p.idx], 40));
-        g.addColorStop(1, COLORS[p.idx]);
-        ctx.fillStyle = g;
-        ctx.beginPath(); ctx.arc(p.x, p.y, RADIUS, 0, Math.PI * 2); ctx.fill();
-
+        var bg = ctx.createRadialGradient(p.x-3, p.y-5, 2, p.x, p.y, RADIUS);
+        bg.addColorStop(0, lighten(COLORS[p.idx], 40)); bg.addColorStop(1, COLORS[p.idx]);
+        ctx.fillStyle = bg;
+        ctx.beginPath(); ctx.arc(p.x, p.y, RADIUS, 0, Math.PI*2); ctx.fill();
         // Ring
         ctx.strokeStyle = p.slot === mySlot ? "#fff" : "rgba(255,255,255,0.15)";
         ctx.lineWidth = p.slot === mySlot ? 2.5 : 1;
-        ctx.beginPath(); ctx.arc(p.x, p.y, RADIUS, 0, Math.PI * 2); ctx.stroke();
-
-        // Direction arrow
+        ctx.beginPath(); ctx.arc(p.x, p.y, RADIUS, 0, Math.PI*2); ctx.stroke();
+        // Arrow
         if (phase === "prep" && p.slot === mySlot && myAlive) {
-            var ang2 = p.angle * Math.PI / 180;
-            var pwr = p.power / 100 * 55 + 20;
+            var a2 = p.angle * Math.PI / 180, pw = p.power/100*55+20;
             ctx.strokeStyle = "#ffd93daa"; ctx.lineWidth = 2.5;
-            ctx.beginPath(); ctx.moveTo(p.x, p.y);
-            ctx.lineTo(p.x + Math.cos(ang2) * pwr, p.y + Math.sin(ang2) * pwr);
-            ctx.stroke();
-            var ax = p.x + Math.cos(ang2) * pwr, ay = p.y + Math.sin(ang2) * pwr;
+            ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(p.x+Math.cos(a2)*pw, p.y+Math.sin(a2)*pw); ctx.stroke();
+            var ax = p.x+Math.cos(a2)*pw, ay = p.y+Math.sin(a2)*pw;
             ctx.fillStyle = "#ffd93d";
-            ctx.beginPath();
-            ctx.moveTo(ax, ay);
-            ctx.lineTo(ax - Math.cos(ang2 - 0.4) * 10, ay - Math.sin(ang2 - 0.4) * 10);
-            ctx.lineTo(ax - Math.cos(ang2 + 0.4) * 10, ay - Math.sin(ang2 + 0.4) * 10);
-            ctx.fill();
+            ctx.beginPath(); ctx.moveTo(ax, ay);
+            ctx.lineTo(ax-Math.cos(a2-0.4)*10, ay-Math.sin(a2-0.4)*10);
+            ctx.lineTo(ax-Math.cos(a2+0.4)*10, ay-Math.sin(a2+0.4)*10); ctx.fill();
         }
-
         // Name
         ctx.fillStyle = p.slot === mySlot ? "#fff" : "#aaa";
         ctx.font = "bold 10px Inter"; ctx.textAlign = "center";
-        ctx.fillText(p.name, p.x, p.y - RADIUS - 5);
-
-        // Ready check
+        ctx.fillText(p.name, p.x, p.y-RADIUS-5);
+        // Ready
         if (phase === "prep" && p.ready) {
             ctx.fillStyle = "#2ecc71"; ctx.font = "bold 14px Inter";
-            ctx.fillText("✓", p.x, p.y + 5);
+            ctx.fillText("✓", p.x, p.y+5);
         }
     }
 
     // Phase text
     if (phase === "prep") {
         ctx.fillStyle = "#ffd93d"; ctx.font = "bold 16px Inter"; ctx.textAlign = "center";
-        ctx.fillText("HAZIRLAN! " + Math.max(0, prepCount) + "s", arenaSize / 2, 28);
+        ctx.fillText("HAZIRLAN! " + Math.max(0, prepCount) + "s", as/2, 28);
     } else if (phase === "sim") {
         ctx.fillStyle = "#ff6b6b"; ctx.font = "bold 16px Inter"; ctx.textAlign = "center";
-        ctx.fillText("⚡ SAVAŞ!", arenaSize / 2, 28);
+        ctx.fillText("⚡ SAVAŞ!", as/2, 28);
     }
-
     ctx.restore();
 }
 
-function lighten(hex, pct) {
-    var r = parseInt(hex.slice(1, 3), 16);
-    var g = parseInt(hex.slice(3, 5), 16);
-    var b = parseInt(hex.slice(5, 7), 16);
-    r = Math.min(255, r + pct); g = Math.min(255, g + pct); b = Math.min(255, b + pct);
-    return "#" + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
+function lighten(h, p) {
+    var r = parseInt(h.slice(1,3),16), g = parseInt(h.slice(3,5),16), b = parseInt(h.slice(5,7),16);
+    return "#"+((1<<24)+(Math.min(255,r+p)<<16)+(Math.min(255,g+p)<<8)+Math.min(255,b+p)).toString(16).slice(1);
 }
 
-// ============================================
+// ==========================================
 // SLIDERS
-// ============================================
-document.getElementById("slAngle").addEventListener("input", function() {
-    var v = parseInt(this.value);
-    document.getElementById("vAngle").textContent = v + "°";
-    for (var i = 0; i < players.length; i++) {
-        if (players[i].slot === mySlot) players[i].angle = v;
-    }
+// ==========================================
+document.getElementById("slAngle").oninput = function() {
+    var v = parseInt(this.value); document.getElementById("vAngle").textContent = v + "°";
+    for (var i = 0; i < players.length; i++) if (players[i].slot === mySlot) players[i].angle = v;
     renderAll();
-});
-
-document.getElementById("slPower").addEventListener("input", function() {
-    var v = parseInt(this.value);
-    document.getElementById("vPower").textContent = v;
-    for (var i = 0; i < players.length; i++) {
-        if (players[i].slot === mySlot) players[i].power = v;
-    }
+};
+document.getElementById("slPower").oninput = function() {
+    var v = parseInt(this.value); document.getElementById("vPower").textContent = v;
+    for (var i = 0; i < players.length; i++) if (players[i].slot === mySlot) players[i].power = v;
     renderAll();
-});
+};
 
-// ============================================
+// ==========================================
 // READY
-// ============================================
+// ==========================================
 function sendReady() {
     if (!room || !mySlot || !myAlive) return;
-    var ang = parseInt(document.getElementById("slAngle").value);
-    var pwr = parseInt(document.getElementById("slPower").value);
     var upd = {};
     upd[mySlot + "/ready"] = true;
-    upd[mySlot + "/angle"] = ang;
-    upd[mySlot + "/power"] = pwr;
-
-    db.ref("arenas/" + room).update(upd)
-        .then(function() {
-            document.getElementById("readyBtn").disabled = true;
-            document.getElementById("readyBtn").textContent = "⏳ Bekleniyor...";
-            toast("Hazırsın!", "s");
-
-            // Check if all alive players ready (host only)
-            if (role === "host") checkAllReady();
-        });
-}
-
-function checkAllReady() {
-    db.ref("arenas/" + room).once("value").then(function(snap) {
-        var d = snap.val();
-        if (!d || d.phase !== "prep") return;
-        var allReady = true;
-        for (var i = 0; i < MAX_P; i++) {
-            var p = d["p" + i];
-            if (p && p.alive && !p.ready) { allReady = false; break; }
-        }
-        if (allReady) {
-            db.ref("arenas/" + room).update({ phase: "sim" });
-        }
+    upd[mySlot + "/angle"] = parseInt(document.getElementById("slAngle").value);
+    upd[mySlot + "/power"] = parseInt(document.getElementById("slPower").value);
+    fbPatch("arenas/" + room, upd).then(function() {
+        document.getElementById("readyBtn").disabled = true;
+        document.getElementById("readyBtn").textContent = "⏳ Bekleniyor...";
+        toast("Hazırsın!", "s");
+        if (role === "host") checkReady();
     });
 }
 
-// ============================================
-// PREP TIMER
-// ============================================
-function startPrepTimer() {
-    phase = "prep";
-    prepCount = PREP_TIME;
-    document.getElementById("hTimer").textContent = prepCount;
-    if (phaseT) clearInterval(phaseT);
+function checkReady() {
+    fbGet("arenas/" + room).then(function(d) {
+        if (!d || d.phase !== "prep") return;
+        var all = true;
+        for (var i = 0; i < MAX_P; i++) { var p = d["p"+i]; if (p && p.alive && !p.ready) { all = false; break; } }
+        if (all) fbPatch("arenas/" + room, { phase: "sim" });
+    });
+}
 
+// ==========================================
+// PREP TIMER
+// ==========================================
+function startPrep() {
+    phase = "prep"; prepCount = PREP_TIME;
+    document.getElementById("hTimer").textContent = prepCount;
+    stopPhase();
     phaseT = setInterval(function() {
         prepCount--;
         document.getElementById("hTimer").textContent = Math.max(0, prepCount);
         renderAll();
-        if (prepCount <= 0) {
-            clearInterval(phaseT); phaseT = null;
-            if (role === "host") {
-                db.ref("arenas/" + room).update({ phase: "sim" });
-            }
-        }
+        if (prepCount <= 0) { stopPhase(); if (role === "host") fbPatch("arenas/" + room, { phase: "sim" }); }
     }, 1000);
 }
 
-// ============================================
+// ==========================================
 // SIMULATION
-// ============================================
+// ==========================================
 function startSim(d) {
-    phase = "sim";
-    if (phaseT) { clearInterval(phaseT); phaseT = null; }
-
-    // Apply velocities
+    phase = "sim"; stopPhase();
     for (var i = 0; i < players.length; i++) {
-        var p = players[i];
-        if (!p.alive) continue;
+        var p = players[i]; if (!p.alive) continue;
         var pd = d[p.slot];
         if (pd) { p.angle = pd.angle || 0; p.power = pd.power || 50; p.ready = false; }
-        var ang = p.angle * Math.PI / 180;
-        var spd = p.power / 100 * 12 + 2;
-        p.vx = Math.cos(ang) * spd;
-        p.vy = Math.sin(ang) * spd;
+        var a = p.angle * Math.PI / 180, s = p.power/100*12+2;
+        p.vx = Math.cos(a)*s; p.vy = Math.sin(a)*s;
     }
-    simFrame = 0;
-    renderAll();
-    animateSim();
+    simFrame = 0; animSim();
 }
 
-function animateSim() {
-    var arenaSize = ARENA * CELL;
-    var cx = arenaSize / 2, cy = arenaSize / 2, ar = arenaSize / 2;
-
+function animSim() {
+    var as = ARENA*CELL, cx = as/2, cy = as/2, ar = as/2;
     for (var s = 0; s < 3; s++) {
         for (var i = 0; i < players.length; i++) {
-            var p = players[i];
-            if (!p.alive) continue;
-
-            p.x += p.vx;
-            p.y += p.vy;
-            p.vx *= FRICTION;
-            p.vy *= FRICTION;
-
-            // Player-player collision
-            for (var j = i + 1; j < players.length; j++) {
-                var q = players[j];
-                if (!q.alive) continue;
-                var dx = q.x - p.x, dy = q.y - p.y;
-                var dist = Math.sqrt(dx * dx + dy * dy);
-                var minD = RADIUS * 2;
+            var p = players[i]; if (!p.alive) continue;
+            p.x += p.vx; p.y += p.vy; p.vx *= FRICTION; p.vy *= FRICTION;
+            // Collision
+            for (var j = i+1; j < players.length; j++) {
+                var q = players[j]; if (!q.alive) continue;
+                var dx = q.x-p.x, dy = q.y-p.y, dist = Math.sqrt(dx*dx+dy*dy), minD = RADIUS*2;
                 if (dist < minD && dist > 0.01) {
-                    var nx = dx / dist, ny = dy / dist;
-                    var overlap = (minD - dist) / 2;
-                    p.x -= nx * overlap * 1.1;
-                    p.y -= ny * overlap * 1.1;
-                    q.x += nx * overlap * 1.1;
-                    q.y += ny * overlap * 1.1;
-                    var dvx = p.vx - q.vx, dvy = p.vy - q.vy;
-                    var dot = dvx * nx + dvy * ny;
-                    p.vx -= dot * nx * PUSH;
-                    p.vy -= dot * ny * PUSH;
-                    q.vx += dot * nx * PUSH;
-                    q.vy += dot * ny * PUSH;
+                    var nx = dx/dist, ny = dy/dist, ov = (minD-dist)/2;
+                    p.x -= nx*ov*1.1; p.y -= ny*ov*1.1; q.x += nx*ov*1.1; q.y += ny*ov*1.1;
+                    var dvx = p.vx-q.vx, dvy = p.vy-q.vy, dot = dvx*nx+dvy*ny;
+                    p.vx -= dot*nx*PUSH; p.vy -= dot*ny*PUSH; q.vx += dot*nx*PUSH; q.vy += dot*ny*PUSH;
                 }
             }
-
-            // Arena boundary
-            var distC = Math.sqrt((p.x - cx) * (p.x - cx) + (p.y - cy) * (p.y - cy));
-            if (distC + RADIUS > ar) {
-                if (distC > ar + RADIUS * 3) {
+            // Boundary
+            var dc = Math.sqrt((p.x-cx)*(p.x-cx)+(p.y-cy)*(p.y-cy));
+            if (dc + RADIUS > ar) {
+                if (dc > ar + RADIUS*3) {
                     p.alive = false;
                     if (p.slot === mySlot) {
                         myAlive = false;
                         document.getElementById("ctrlPanel").style.display = "none";
-                        var em = document.getElementById("elimMsg");
-                        em.classList.add("sh");
+                        var em = document.getElementById("elimMsg"); em.classList.add("sh");
                         setTimeout(function() { em.classList.remove("sh"); }, 2000);
                         toast("Elendin! 💀", "t");
                     }
-                } else if (distC + RADIUS > ar) {
-                    var bnx = (p.x - cx) / distC, bny = (p.y - cy) / distC;
-                    p.x = cx + bnx * (ar - RADIUS - 1);
-                    p.y = cy + bny * (ar - RADIUS - 1);
-                    var bDot = p.vx * bnx + p.vy * bny;
-                    if (bDot > 0) {
-                        p.vx -= 2 * bDot * bnx * BOUNCE;
-                        p.vy -= 2 * bDot * bny * BOUNCE;
-                    }
+                } else {
+                    var bnx = (p.x-cx)/dc, bny = (p.y-cy)/dc;
+                    p.x = cx+bnx*(ar-RADIUS-1); p.y = cy+bny*(ar-RADIUS-1);
+                    var bd = p.vx*bnx+p.vy*bny;
+                    if (bd > 0) { p.vx -= 2*bd*bnx*BOUNCE; p.vy -= 2*bd*bny*BOUNCE; }
                 }
             }
         }
     }
-
-    simFrame++;
-    updateAliveCount();
-    renderAll();
-
-    if (simFrame < SIM_STEPS) {
-        animId = requestAnimationFrame(animateSim);
-    } else {
-        phase = "wait";
-        if (role === "host") endRound();
-    }
+    simFrame++; updateAlive(); renderAll();
+    if (simFrame < SIM_STEPS) { animId = requestAnimationFrame(animSim); }
+    else { phase = "wait"; if (role === "host") endRound(); }
 }
 
-// ============================================
-// END ROUND
-// ============================================
 function endRound() {
-    var alive = [];
+    var alive = [], upd = {};
     for (var i = 0; i < players.length; i++) {
         if (players[i].alive) alive.push(players[i]);
+        upd[players[i].slot+"/alive"] = players[i].alive;
+        upd[players[i].slot+"/x"] = players[i].x;
+        upd[players[i].slot+"/y"] = players[i].y;
+        upd[players[i].slot+"/vx"] = 0; upd[players[i].slot+"/vy"] = 0;
+        upd[players[i].slot+"/ready"] = false;
     }
-
-    var upd = {};
-    for (var j = 0; j < players.length; j++) {
-        upd[players[j].slot + "/alive"] = players[j].alive;
-        upd[players[j].slot + "/x"] = players[j].x;
-        upd[players[j].slot + "/y"] = players[j].y;
-        upd[players[j].slot + "/vx"] = 0;
-        upd[players[j].slot + "/vy"] = 0;
-        upd[players[j].slot + "/ready"] = false;
-    }
-
     if (alive.length <= 1) {
-        upd.phase = "done";
-        upd.winner = alive.length === 1 ? alive[0].name : "Berabere";
+        upd.phase = "done"; upd.winner = alive.length === 1 ? alive[0].name : "Berabere";
     } else {
-        roundNum++;
-        upd.phase = "prep";
-        upd.round = roundNum;
-        upd.prepStart = Date.now();
+        roundNum++; upd.phase = "prep"; upd.round = roundNum;
     }
-    db.ref("arenas/" + room).update(upd);
+    fbPatch("arenas/" + room, upd);
 }
 
-function resetForPrep(d) {
-    phase = "prep";
+function resetPrep(d) {
+    phase = "prep"; stopAnim();
     for (var i = 0; i < players.length; i++) {
         var pd = d[players[i].slot];
-        if (pd) {
-            players[i].x = pd.x || players[i].x;
-            players[i].y = pd.y || players[i].y;
-            players[i].vx = 0; players[i].vy = 0;
-            players[i].alive = pd.alive !== false;
-            players[i].ready = false;
-        }
+        if (pd) { players[i].x = pd.x||players[i].x; players[i].y = pd.y||players[i].y; players[i].vx = 0; players[i].vy = 0; players[i].alive = pd.alive!==false; players[i].ready = false; }
         if (players[i].slot === mySlot) myAlive = players[i].alive;
     }
     document.getElementById("ctrlPanel").style.display = myAlive ? "block" : "none";
     document.getElementById("readyBtn").disabled = false;
     document.getElementById("readyBtn").textContent = "✅ HAZIR";
-    startPrepTimer();
-    renderAll();
+    startPrep(); renderAll();
 }
 
-// ============================================
+// ==========================================
 // WINNER
-// ============================================
+// ==========================================
 function showWinner(d) {
-    offAll();
-    if (phaseT) { clearInterval(phaseT); phaseT = null; }
-    if (animId) { cancelAnimationFrame(animId); animId = null; }
-    phase = "done";
-
-    for (var i = 0; i < players.length; i++) {
-        var pd = d[players[i].slot];
-        if (pd) players[i].alive = pd.alive !== false;
-    }
+    stopPoll(); stopAnim(); stopPhase(); phase = "done";
+    for (var i = 0; i < players.length; i++) { var pd = d[players[i].slot]; if (pd) players[i].alive = pd.alive!==false; }
     renderAll();
-
-    var winner = d.winner || "?";
-    var isMe = false;
-    for (var j = 0; j < players.length; j++) {
-        if (players[j].slot === mySlot && players[j].alive) isMe = true;
-    }
-
+    var w = d.winner||"?", isMe = false;
+    for (var j = 0; j < players.length; j++) if (players[j].slot === mySlot && players[j].alive) isMe = true;
     document.getElementById("rIco").textContent = isMe ? "🏆" : "💀";
     document.getElementById("rTit").textContent = isMe ? "KAZANDIN!" : "Oyun Bitti!";
     document.getElementById("rTit").style.color = isMe ? "#ffd93d" : "#e74c3c";
-    document.getElementById("rSub").textContent = "🏆 Kazanan: " + winner;
+    document.getElementById("rSub").textContent = "🏆 Kazanan: " + w;
     document.getElementById("resOv").classList.add("on");
-    if (isMe) doCft();
+    if (isMe) confetti();
 }
 
-function doCft() {
-    var cols = ["#ffd93d", "#ff6b6b", "#6bcb77", "#a29bfe", "#fd79a8"];
+function confetti() {
+    var cols = ["#ffd93d","#ff6b6b","#6bcb77","#a29bfe","#fd79a8"];
     for (var i = 0; i < 50; i++) {
         var p = document.createElement("div");
-        p.style.cssText = "position:fixed;z-index:300;pointer-events:none;border-radius:2px;left:" +
-            Math.random() * 100 + "vw;top:-10px;background:" + cols[Math.floor(Math.random() * cols.length)] +
-            ";width:" + (4 + Math.random() * 6) + "px;height:" + (4 + Math.random() * 6) + "px";
-        if (Math.random() > 0.5) p.style.borderRadius = "50%";
+        p.style.cssText = "position:fixed;z-index:300;pointer-events:none;left:"+Math.random()*100+"vw;top:-10px;background:"+cols[Math.floor(Math.random()*cols.length)]+";width:"+(4+Math.random()*6)+"px;height:"+(4+Math.random()*6)+"px;border-radius:"+(Math.random()>.5?"50%":"2px");
         document.body.appendChild(p);
-        var dur = 1200 + Math.random() * 1800;
-        var xd = (Math.random() - 0.5) * 200;
         p.animate([
-            { transform: "translateY(0) rotate(0)", opacity: 1 },
-            { transform: "translateY(" + window.innerHeight + "px) translateX(" + xd + "px) rotate(" + Math.random() * 720 + "deg)", opacity: 0 }
-        ], { duration: dur, easing: "ease-out" }).onfinish = function() { this.effect.target.remove(); };
+            {transform:"translateY(0) rotate(0)",opacity:1},
+            {transform:"translateY("+window.innerHeight+"px) translateX("+(Math.random()-.5)*200+"px) rotate("+Math.random()*720+"deg)",opacity:0}
+        ],{duration:1200+Math.random()*1800,easing:"ease-out"}).onfinish=function(){this.effect.target.remove()};
     }
 }
 
-// ============================================
+// ==========================================
 // LEAVE
-// ============================================
-function exitLobby() {
-    if (room) db.ref("arenas/" + room).remove();
-    clean(); sw("S0");
-}
-
-function exitP() {
-    if (room && mySlot) db.ref("arenas/" + room + "/" + mySlot).remove();
-    clean(); sw("S0");
-}
-
+// ==========================================
+function exitLobby() { if (room) fbDel("arenas/"+room); clean(); sw("S0"); }
+function exitP() { if (room&&mySlot) fbDel("arenas/"+room+"/"+mySlot); clean(); sw("S0"); }
 function quitGame() {
-    if (room && mySlot) db.ref("arenas/" + room + "/" + mySlot + "/alive").set(false);
-    if (room && role === "host") db.ref("arenas/" + room).remove();
-    clean(); toast("Ayrıldın.", "i"); sw("S0");
+    if (room&&mySlot) fbPut("arenas/"+room+"/"+mySlot+"/alive", false);
+    if (room&&role==="host") fbDel("arenas/"+room);
+    clean(); toast("Ayrıldın.","i"); sw("S0");
 }
-
 function goMenu() {
     document.getElementById("resOv").classList.remove("on");
-    if (room && role === "host") db.ref("arenas/" + room).remove();
+    if (room) fbDel("arenas/"+room);
     clean(); sw("S0");
 }
 
-// ============================================
-// INIT
-// ============================================
+// ==========================================
+// START
+// ==========================================
 testConn();
 </script>
 </body>
