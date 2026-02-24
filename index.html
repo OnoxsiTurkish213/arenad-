@@ -3,81 +3,81 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
-<title>Arena Smash</title>
+<title>Arena Smash 3D</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;user-select:none}
-body{font-family:'Inter',sans-serif;background:#08080f;color:#e0e0e0;min-height:100vh;overflow:hidden}
-.wrap{max-width:480px;margin:0 auto;padding:10px;min-height:100vh;display:flex;flex-direction:column}
-.hdr{text-align:center;padding:14px 0 4px}
-.hdr h1{font-size:24px;font-weight:900;background:linear-gradient(135deg,#ff6b6b,#ffd93d,#6bcb77);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-.hdr small{font-size:10px;color:#555;letter-spacing:3px;text-transform:uppercase}
-#dbS{text-align:center;padding:8px;font-size:12px;border-radius:8px;margin:8px 0;font-weight:600}
-#dbS.ok{background:#2ecc7118;color:#2ecc71;border:1px solid #2ecc7125}
-#dbS.no{background:#e74c3c18;color:#e74c3c;border:1px solid #e74c3c25}
-#dbS.wt{background:#f39c1218;color:#f39c12;border:1px solid #f39c1225}
+body{font-family:'Inter',sans-serif;background:#060610;color:#e0e0e0;min-height:100vh;overflow:hidden}
+.wrap{max-width:480px;margin:0 auto;padding:8px;min-height:100vh;display:flex;flex-direction:column}
+.hdr{text-align:center;padding:10px 0 2px}
+.hdr h1{font-size:22px;font-weight:900;background:linear-gradient(135deg,#ff6b6b,#ffd93d,#6bcb77);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hdr small{font-size:9px;color:#444;letter-spacing:3px;text-transform:uppercase}
+#dbS{text-align:center;padding:6px;font-size:11px;border-radius:8px;margin:6px 0;font-weight:600}
+#dbS.ok{background:#2ecc7115;color:#2ecc71;border:1px solid #2ecc7120}
+#dbS.no{background:#e74c3c15;color:#e74c3c;border:1px solid #e74c3c20}
+#dbS.wt{background:#f39c1215;color:#f39c12;border:1px solid #f39c1220}
 .scr{display:none;flex:1;flex-direction:column}.scr.on{display:flex}
-.btn{display:block;width:100%;padding:14px;border:none;border-radius:12px;font-family:'Inter',sans-serif;font-size:14px;font-weight:700;cursor:pointer;transition:transform .12s;outline:none}
-.btn:active:not(:disabled){transform:scale(.96)}.btn:disabled{opacity:.35;cursor:not-allowed}
-.bg{background:linear-gradient(135deg,#ff6b6b,#ee5a24);color:#fff;box-shadow:0 4px 16px #ff6b6b30}
-.bd{background:#151520;color:#aaa;border:1px solid #252535}
+.btn{display:block;width:100%;padding:13px;border:none;border-radius:12px;font-family:'Inter',sans-serif;font-size:13px;font-weight:700;cursor:pointer;transition:transform .1s;outline:none}
+.btn:active:not(:disabled){transform:scale(.96)}.btn:disabled{opacity:.3;cursor:not-allowed}
+.bg{background:linear-gradient(135deg,#ff6b6b,#ee5a24);color:#fff}
+.bd{background:#131320;color:#999;border:1px solid #222235}
 .bgr{background:linear-gradient(135deg,#6bcb77,#27ae60);color:#fff}
 .br{background:linear-gradient(135deg,#e74c3c,#c0392b);color:#fff}
-.by{background:linear-gradient(135deg,#ffd93d,#f39c12);color:#1a1a2e}
-.bs{padding:10px;font-size:12px;border-radius:10px}
-.gap{display:flex;flex-direction:column;gap:12px;margin-top:20px}
-.ibox{margin:16px 0}
-.ibox label{display:block;font-size:12px;color:#666;margin-bottom:5px}
-.ibox input{width:100%;padding:12px;border:2px solid #1e1e30;border-radius:10px;background:#0d0d16;color:#eee;font-family:'Inter',sans-serif;font-size:18px;font-weight:700;text-align:center;letter-spacing:5px;outline:none;transition:border-color .2s}
+.by{background:linear-gradient(135deg,#ffd93d,#f39c12);color:#111}
+.bs{padding:9px;font-size:11px;border-radius:10px}
+.gap{display:flex;flex-direction:column;gap:10px;margin-top:16px}
+.ibox{margin:14px 0}
+.ibox label{display:block;font-size:11px;color:#666;margin-bottom:4px}
+.ibox input{width:100%;padding:11px;border:2px solid #1a1a2a;border-radius:10px;background:#0a0a14;color:#eee;font-family:'Inter',sans-serif;font-size:17px;font-weight:700;text-align:center;letter-spacing:5px;outline:none;transition:border-color .2s}
 .ibox input:focus{border-color:#ff6b6b}
-.ibox input.nm{font-size:15px;letter-spacing:1px}
-.ibox input::placeholder{color:#2a2a3a;letter-spacing:2px;font-size:13px}
-.err{color:#e74c3c;font-size:11px;text-align:center;min-height:16px;margin-top:4px}
-.cshow{text-align:center;margin:24px 0}
-.cshow .lb{font-size:12px;color:#666;margin-bottom:6px}
-.cshow .cd{font-size:44px;font-weight:900;letter-spacing:10px;background:linear-gradient(135deg,#ff6b6b,#ffd93d);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-.cshow .wt{margin-top:10px;font-size:12px;color:#555}
-.bk{background:none;border:none;color:#666;font-size:12px;font-family:'Inter',sans-serif;cursor:pointer;padding:6px 0}
-.bk:active{color:#ddd}
-.rules{margin-top:16px;padding:14px;background:#0d0d16;border-radius:12px;border:1px solid #1a1a28}
-.rules h3{font-size:12px;color:#ff6b6b;margin-bottom:6px}
-.rules ul{list-style:none;font-size:11px;color:#666;line-height:1.9}
+.ibox input.nm{font-size:14px;letter-spacing:1px}
+.ibox input::placeholder{color:#252535;letter-spacing:2px;font-size:12px}
+.err{color:#e74c3c;font-size:10px;text-align:center;min-height:14px;margin-top:4px}
+.cshow{text-align:center;margin:20px 0}
+.cshow .lb{font-size:11px;color:#666;margin-bottom:5px}
+.cshow .cd{font-size:40px;font-weight:900;letter-spacing:10px;background:linear-gradient(135deg,#ff6b6b,#ffd93d);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.cshow .wt{margin-top:8px;font-size:11px;color:#555}
+.bk{background:none;border:none;color:#555;font-size:11px;font-family:'Inter',sans-serif;cursor:pointer;padding:5px 0}
+.rules{margin-top:14px;padding:12px;background:#0a0a14;border-radius:10px;border:1px solid #151525}
+.rules h3{font-size:11px;color:#ff6b6b;margin-bottom:5px}
+.rules ul{list-style:none;font-size:10px;color:#555;line-height:1.9}
 .rules li::before{content:'• ';color:#ff6b6b}
-.plist{margin:12px 0;padding:10px;background:#0d0d16;border-radius:10px;border:1px solid #1a1a28}
-.plist h4{font-size:11px;color:#666;margin-bottom:6px}
-.plist .pl{display:flex;flex-wrap:wrap;gap:6px}
-.plist .pi{padding:4px 10px;border-radius:8px;font-size:11px;font-weight:600;background:#151520;border:1px solid #252535}
+.plist{margin:10px 0;padding:8px;background:#0a0a14;border-radius:8px;border:1px solid #151525}
+.plist h4{font-size:10px;color:#555;margin-bottom:5px}
+.plist .pl{display:flex;flex-wrap:wrap;gap:5px}
+.plist .pi{padding:3px 8px;border-radius:6px;font-size:10px;font-weight:600;background:#111120;border:1px solid #222235}
 .plist .pi.me{border-color:#ff6b6b;color:#ff6b6b}
-.canvas-wrap{flex:1;display:flex;align-items:center;justify-content:center;position:relative;min-height:0}
-#gameCanvas{border-radius:12px;touch-action:none;max-width:100%;max-height:100%}
-.hud{display:flex;justify-content:space-between;align-items:center;padding:6px 0;font-size:11px;color:#888}
-.hud .round{color:#ffd93d;font-weight:700}
-.hud .timer{color:#ff6b6b;font-weight:700;font-size:14px}
-.hud .alive{color:#6bcb77;font-weight:600}
-.ctrl{padding:8px 0;flex-shrink:0}
-.ctrl-row{display:flex;gap:8px;align-items:center;margin-bottom:6px}
-.ctrl-row label{font-size:11px;color:#666;min-width:36px}
-.ctrl-row input[type=range]{flex:1;-webkit-appearance:none;height:6px;border-radius:3px;background:#1a1a28;outline:none}
-.ctrl-row input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:22px;height:22px;border-radius:50%;background:#ff6b6b;cursor:pointer}
-.ctrl-row .val{font-size:12px;font-weight:700;color:#ff6b6b;min-width:30px;text-align:right}
-.ready-bar{display:flex;gap:8px;margin-top:4px}
-.ready-bar .btn{flex:1}
-.tbox{position:fixed;top:10px;left:50%;transform:translateX(-50%);z-index:200;display:flex;flex-direction:column;gap:4px;pointer-events:none}
-.tst{padding:6px 14px;border-radius:8px;font-size:11px;font-weight:700;opacity:0;transform:translateY(-6px) scale(.95);transition:opacity .2s,transform .2s;white-space:nowrap}
+.canvas-wrap{flex:1;display:flex;align-items:center;justify-content:center;min-height:0}
+#gc{border-radius:10px;touch-action:none;max-width:100%;max-height:100%}
+.hud{display:flex;justify-content:space-between;align-items:center;padding:4px 0;font-size:10px;color:#777}
+.hud .rnd{color:#ffd93d;font-weight:700}
+.hud .tmr{color:#ff6b6b;font-weight:700;font-size:13px}
+.hud .alv{color:#6bcb77;font-weight:600}
+.ctrl{padding:6px 0;flex-shrink:0}
+.cr{display:flex;gap:6px;align-items:center;margin-bottom:5px}
+.cr label{font-size:10px;color:#555;min-width:30px}
+.cr input[type=range]{flex:1;-webkit-appearance:none;height:5px;border-radius:3px;background:#151525;outline:none}
+.cr input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:20px;height:20px;border-radius:50%;background:#ff6b6b;cursor:pointer}
+.cr .vl{font-size:11px;font-weight:700;color:#ff6b6b;min-width:28px;text-align:right}
+.rbar{display:flex;gap:6px;margin-top:4px}
+.rbar .btn{flex:1}
+.tbox{position:fixed;top:8px;left:50%;transform:translateX(-50%);z-index:200;display:flex;flex-direction:column;gap:4px;pointer-events:none}
+.tst{padding:5px 12px;border-radius:7px;font-size:10px;font-weight:700;opacity:0;transform:translateY(-5px) scale(.95);transition:opacity .2s,transform .2s;white-space:nowrap}
 .tst.sh{opacity:1;transform:translateY(0) scale(1)}
-.tst.tg{background:#ffd93dee;color:#1a1a2e}
+.tst.tg{background:#ffd93dee;color:#111}
 .tst.tt{background:#e74c3cee;color:#fff}
 .tst.ti{background:#3498dbee;color:#fff}
 .tst.ts{background:#2ecc71ee;color:#fff}
-.ov{display:none;position:fixed;inset:0;background:#000c;z-index:100;align-items:center;justify-content:center;padding:16px;backdrop-filter:blur(4px)}
+.ov{display:none;position:fixed;inset:0;background:#000c;z-index:100;align-items:center;justify-content:center;padding:14px;backdrop-filter:blur(4px)}
 .ov.on{display:flex}
-.md{background:#111119;border-radius:18px;padding:24px 18px;text-align:center;max-width:320px;width:100%;border:1px solid #222235}
-.md h2{font-size:20px;font-weight:900;margin-bottom:4px}
-.md .ic{font-size:50px;margin-bottom:10px}
-.md p{font-size:12px;color:#777;margin:8px 0}
-.elim-msg{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);z-index:150;font-size:28px;font-weight:900;color:#e74c3c;text-shadow:0 0 20px #e74c3c88;opacity:0;transition:opacity .5s;pointer-events:none}
+.md{background:#0e0e18;border-radius:16px;padding:22px 16px;text-align:center;max-width:300px;width:100%;border:1px solid #1e1e30}
+.md h2{font-size:18px;font-weight:900;margin-bottom:4px}
+.md .ic{font-size:46px;margin-bottom:8px}
+.md p{font-size:11px;color:#666;margin:6px 0}
+.md .bbx{display:flex;flex-direction:column;gap:8px;margin-top:12px}
+.elim-msg{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);z-index:150;font-size:24px;font-weight:900;color:#e74c3c;text-shadow:0 0 20px #e74c3c88;opacity:0;transition:opacity .4s;pointer-events:none}
 .elim-msg.sh{opacity:1}
-@media(max-width:370px){.hdr h1{font-size:20px}.cshow .cd{font-size:36px}}
+.spec-bar{text-align:center;padding:8px;background:#e74c3c15;border:1px solid #e74c3c25;border-radius:8px;margin-top:6px;font-size:11px;color:#e74c3c;font-weight:600}
 </style>
 </head>
 <body>
@@ -87,33 +87,35 @@ body{font-family:'Inter',sans-serif;background:#08080f;color:#e0e0e0;min-height:
 <div class="ic" id="rIco">🏆</div>
 <h2 id="rTit">Oyun Bitti!</h2>
 <p id="rSub"></p>
-<button class="btn bg" onclick="goMenu()" style="margin-top:12px">Ana Menü</button>
+<div class="bbx">
+<button class="btn bgr" onclick="rematch()" id="rematchBtn">🔄 Tekrar Oyna</button>
+<button class="btn bg" onclick="goMenu()">🏠 Ana Menü</button>
 </div>
 </div>
-<div class="elim-msg" id="elimMsg">ELENDİN!</div>
+</div>
+<div class="elim-msg" id="elimMsg">SUYA DÜŞTÜN! 🌊</div>
 
 <div class="wrap">
-<div class="hdr"><h1>⚔️ Arena Smash</h1><small>10 Kişilik Arena</small></div>
-<div id="dbS" class="wt">🔄 Firebase test ediliyor...</div>
+<div class="hdr"><h1>⚔️ Arena Smash 3D</h1><small>Su Üstü Arena</small></div>
+<div id="dbS" class="wt">🔄 Bağlanıyor...</div>
 
 <div class="scr on" id="S0">
-<div class="ibox" style="margin-top:10px">
+<div class="ibox" style="margin-top:8px">
 <label>Oyuncu Adın</label>
 <input type="text" id="inpName" class="nm" placeholder="Adını yaz..." maxlength="10">
 </div>
 <div class="gap">
 <button class="btn bg" onclick="createRoom()" id="btnC" disabled>🏟️ Arena Kur</button>
-<button class="btn bd" onclick="sw('S2')" id="btnJ" disabled>🚪 Arenaya Katıl</button>
+<button class="btn bd" onclick="sw('S2')" id="btnJ" disabled>🚪 Katıl</button>
 </div>
 <div class="rules">
-<h3>⚔️ Nasıl Oynanır?</h3>
+<h3>⚔️ Kurallar</h3>
 <ul>
-<li>10 kişiye kadar arena savaşı</li>
-<li>Her tur yön ve güç seç, HAZIR bas</li>
-<li>7sn dolunca karakterler fırlar</li>
-<li>Çarpışınca birbirini iter</li>
-<li>Arena dışı = elenirsin</li>
-<li>Son kalan kazanır! 🏆</li>
+<li>Suyun üstündeki arenada savaş</li>
+<li>Yön ve güç seç → HAZIR bas</li>
+<li>7sn dolunca herkes fırlar</li>
+<li>Suya düşen elenir ve izleyici olur</li>
+<li>Son kalan kazanır!</li>
 </ul>
 </div>
 </div>
@@ -123,7 +125,7 @@ body{font-family:'Inter',sans-serif;background:#08080f;color:#e0e0e0;min-height:
 <div class="cshow">
 <div class="lb">Arena Kodu</div>
 <div class="cd" id="dCode">----</div>
-<div class="wt" id="wTxt">⏳ Oyuncular bekleniyor...</div>
+<div class="wt" id="wTxt">⏳ Bekleniyor...</div>
 </div>
 <div class="plist"><h4>Oyuncular</h4><div class="pl" id="lpL"></div></div>
 <button class="btn bgr" onclick="startMatch()" id="startBtn" disabled>⚔️ Başlat</button>
@@ -132,7 +134,7 @@ body{font-family:'Inter',sans-serif;background:#08080f;color:#e0e0e0;min-height:
 <div class="scr" id="S2">
 <button class="bk" onclick="sw('S0')">← Geri</button>
 <div class="ibox">
-<label>Arena Kodu (4 Haneli)</label>
+<label>Arena Kodu</label>
 <input type="text" id="inpCode" placeholder="1234" maxlength="4" inputmode="numeric">
 </div>
 <div class="err" id="jErr"></div>
@@ -151,557 +153,247 @@ body{font-family:'Inter',sans-serif;background:#08080f;color:#e0e0e0;min-height:
 
 <div class="scr" id="S4">
 <div class="hud">
-<div class="round">Tur: <span id="hRound">1</span></div>
-<div class="timer" id="hTimer">7</div>
-<div class="alive">Kalan: <span id="hAlive">0</span></div>
+<div class="rnd">Tur <span id="hR">1</span></div>
+<div class="tmr" id="hT">7</div>
+<div class="alv">Kalan: <span id="hA">0</span></div>
 </div>
-<div class="canvas-wrap"><canvas id="gameCanvas"></canvas></div>
-<div class="ctrl" id="ctrlPanel">
-<div class="ctrl-row">
-<label>Yön</label>
-<input type="range" id="slAngle" min="0" max="360" value="0">
-<div class="val" id="vAngle">0°</div>
-</div>
-<div class="ctrl-row">
-<label>Güç</label>
-<input type="range" id="slPower" min="1" max="100" value="50">
-<div class="val" id="vPower">50</div>
-</div>
-<div class="ready-bar">
-<button class="btn by bs" onclick="sendReady()" id="readyBtn">✅ HAZIR</button>
+<div class="canvas-wrap"><canvas id="gc"></canvas></div>
+<div class="ctrl" id="ctrlP">
+<div class="cr"><label>Yön</label><input type="range" id="slA" min="0" max="360" value="0"><div class="vl" id="vA">0°</div></div>
+<div class="cr"><label>Güç</label><input type="range" id="slP" min="5" max="100" value="50"><div class="vl" id="vP">50</div></div>
+<div class="rbar">
+<button class="btn by bs" onclick="sendReady()" id="rdBtn">✅ HAZIR</button>
 <button class="btn br bs" onclick="quitGame()">🚪 Çık</button>
 </div>
 </div>
+<div class="spec-bar" id="specBar" style="display:none">👁️ İzliyorsun — Suya düştün!</div>
 </div>
 </div>
 
 <script>
-// ==========================================
-// FIREBASE REST API - SDK YOK, FETCH KULLAN
-// ==========================================
-var DB = "https://mobilgame1-f03ac-default-rtdb.europe-west1.firebasedatabase.app";
+var DB="https://mobilgame1-f03ac-default-rtdb.europe-west1.firebasedatabase.app";
+function fbPut(p,d){return fetch(DB+"/"+p+".json",{method:"PUT",headers:{"Content-Type":"application/json"},body:JSON.stringify(d)})}
+function fbPatch(p,d){return fetch(DB+"/"+p+".json",{method:"PATCH",headers:{"Content-Type":"application/json"},body:JSON.stringify(d)})}
+function fbGet(p){return fetch(DB+"/"+p+".json").then(function(r){return r.json()})}
+function fbDel(p){return fetch(DB+"/"+p+".json",{method:"DELETE"})}
 
-function fbPut(path, data) {
-    return fetch(DB + "/" + path + ".json", {
-        method: "PUT",
-        headers: {"Content-Type": "application/json"},
-        body: JSON.stringify(data)
-    });
-}
-function fbPatch(path, data) {
-    return fetch(DB + "/" + path + ".json", {
-        method: "PATCH",
-        headers: {"Content-Type": "application/json"},
-        body: JSON.stringify(data)
-    });
-}
-function fbGet(path) {
-    return fetch(DB + "/" + path + ".json").then(function(r) { return r.json(); });
-}
-function fbDel(path) {
-    return fetch(DB + "/" + path + ".json", { method: "DELETE" });
-}
+function testConn(){
+setS("wt","🔄 Test ediliyor...");
+fbPut("_t",{ok:1}).then(function(r){
+if(r.ok){fbDel("_t");setS("ok","✅ Bağlı!");document.getElementById("btnC").disabled=false;document.getElementById("btnJ").disabled=false}
+else r.text().then(function(t){setS("no","❌ "+t)})
+}).catch(function(e){setS("no","❌ "+e.message)})}
+function setS(c,t){var e=document.getElementById("dbS");e.className=c;e.textContent=t}
 
-// ==========================================
-// TEST CONNECTION
-// ==========================================
-function testConn() {
-    setS("wt", "🔄 Firebase test ediliyor...");
-    fbPut("_test", {ok: true, t: Date.now()})
-        .then(function(res) {
-            if (res.ok) {
-                fbDel("_test");
-                setS("ok", "✅ Firebase bağlı — Hazır!");
-                document.getElementById("btnC").disabled = false;
-                document.getElementById("btnJ").disabled = false;
-            } else {
-                res.text().then(function(t) {
-                    setS("no", "❌ Hata: " + t);
-                });
-            }
-        })
-        .catch(function(err) {
-            setS("no", "❌ Bağlantı hatası: " + err.message);
-        });
-}
-function setS(c, t) { var e = document.getElementById("dbS"); e.className = c; e.textContent = t; }
+var A=8,CL=50,R=16,FR=0.91,BN=0.6,PU=1.6,MP=10,PT=7,SS=150;
+var COLS=["#ff6b6b","#ffd93d","#6bcb77","#4ecdc4","#a29bfe","#fd79a8","#fdcb6e","#00cec9","#e17055","#74b9ff"];
+var room=null,rl=null,ms=null,pN="",pollT=null,phT=null,anId=null;
+var pls=[],rn=0,ph="w",myA=true,sf=0,pc=0;
+var cv,cx,cW,cH,oX,oY;
+var ISO_ANGLE=0.6,CAM_ROT=-0.4;
+var waterOff=0;
 
-// ==========================================
-// CONSTS & STATE
-// ==========================================
-var ARENA = 8, CELL = 50, RADIUS = 18;
-var FRICTION = 0.92, BOUNCE = 0.7, PUSH = 1.5;
-var MAX_P = 10, PREP_TIME = 7, SIM_STEPS = 120;
-var COLORS = ["#ff6b6b","#ffd93d","#6bcb77","#4ecdc4","#a29bfe","#fd79a8","#fdcb6e","#00cec9","#e17055","#dfe6e9"];
+function rc(){return String(1000+Math.floor(Math.random()*9000))}
+function gn(){var v=document.getElementById("inpName").value.trim();return v||("P"+Math.floor(Math.random()*99))}
+function sw(id){var a=document.querySelectorAll(".scr");for(var i=0;i<a.length;i++)a[i].classList.remove("on");document.getElementById(id).classList.add("on")}
+function toast(m,t){var c=document.getElementById("TB"),d=document.createElement("div");d.className="tst t"+t;d.textContent=m;c.appendChild(d);setTimeout(function(){d.classList.add("sh")},10);setTimeout(function(){d.classList.remove("sh");setTimeout(function(){d.remove()},250)},2e3)}
+function sP(){if(pollT){clearInterval(pollT);pollT=null}}
+function sA(){if(anId){cancelAnimationFrame(anId);anId=null}}
+function sPh(){if(phT){clearInterval(phT);phT=null}}
+function clean(){sP();sA();sPh();room=null;rl=null;ms=null;pls=[];rn=0;ph="w";myA=true;sf=0;
+document.getElementById("inpCode").value="";document.getElementById("jErr").textContent="";document.getElementById("resOv").classList.remove("on")}
+function poll(cb){sP();function go(){if(!room)return;fbGet("arenas/"+room).then(cb).catch(function(){})}go();pollT=setInterval(go,800)}
 
-var room = null, role = null, mySlot = null, pName = "";
-var pollT = null, phaseT = null, animId = null;
-var players = [], roundNum = 0, phase = "wait";
-var myAlive = true, simFrame = 0, prepCount = 0;
-var canvas, ctx, cW, cH, oX, oY;
+// === ISO TRANSFORM ===
+function toIso(x,y,z){
+var sx=x-y;
+var sy=(x+y)*ISO_ANGLE-z;
+return{x:sx,y:sy}}
 
-// ==========================================
-// UTILS
-// ==========================================
-function rc() { return String(1000 + Math.floor(Math.random() * 9000)); }
-function gn() { var v = document.getElementById("inpName").value.trim(); return v || ("P" + Math.floor(Math.random() * 99)); }
-function sw(id) { var a = document.querySelectorAll(".scr"); for (var i = 0; i < a.length; i++) a[i].classList.remove("on"); document.getElementById(id).classList.add("on"); }
-function toast(m, t) {
-    var c = document.getElementById("TB"), d = document.createElement("div");
-    d.className = "tst t" + t; d.textContent = m; c.appendChild(d);
-    setTimeout(function() { d.classList.add("sh"); }, 10);
-    setTimeout(function() { d.classList.remove("sh"); setTimeout(function() { d.remove(); }, 300); }, 2200);
-}
-function stopPoll() { if (pollT) { clearInterval(pollT); pollT = null; } }
-function stopAnim() { if (animId) { cancelAnimationFrame(animId); animId = null; } }
-function stopPhase() { if (phaseT) { clearInterval(phaseT); phaseT = null; } }
-function clean() {
-    stopPoll(); stopAnim(); stopPhase();
-    room = null; role = null; mySlot = null;
-    players = []; roundNum = 0; phase = "wait"; myAlive = true; simFrame = 0;
-    document.getElementById("inpCode").value = "";
-    document.getElementById("jErr").textContent = "";
-    document.getElementById("resOv").classList.remove("on");
-}
+// === CREATE ===
+function createRoom(){
+pN=gn();document.getElementById("inpName").value=pN;
+var code=rc();room=code;rl="host";ms="p0";
+var data={status:"lobby",host:pN,round:0,phase:"lobby"};
+data.p0={name:pN,alive:true,ready:false,angle:0,power:50,x:0,y:0,z:0,vx:0,vy:0,vz:0,fell:false};
+fbPut("arenas/"+code,data).then(function(r){
+if(!r.ok){toast("Hata!","t");room=null;return}
+document.getElementById("dCode").textContent=code;sw("S1");toast("Kod: "+code,"s");
+poll(function(d){if(!d)return;if(d.status==="lobby")uLob(d,"lpL");if(d.status==="playing"){sP();initGame(d);gPoll()}})
+})}
 
-function poll(cb) {
-    stopPoll();
-    function go() { if (!room) return; fbGet("arenas/" + room).then(cb).catch(function() {}); }
-    go();
-    pollT = setInterval(go, 1000);
-}
+// === JOIN ===
+function joinRoom(){
+var code=document.getElementById("inpCode").value.trim();pN=gn();document.getElementById("inpName").value=pN;
+var err=document.getElementById("jErr");
+if(code.length!==4){err.textContent="4 haneli kod girin.";return}
+fbGet("arenas/"+code).then(function(d){
+if(!d){err.textContent="Bulunamadı.";return}
+if(d.status!=="lobby"){err.textContent="Maç başlamış.";return}
+var sl=null;for(var i=0;i<MP;i++){if(!d["p"+i]){sl="p"+i;break}}
+if(!sl){err.textContent="Dolu!";return}
+room=code;rl="guest";ms=sl;err.textContent="";
+var u={};u[sl]={name:pN,alive:true,ready:false,angle:0,power:50,x:0,y:0,z:0,vx:0,vy:0,vz:0,fell:false};
+fbPatch("arenas/"+code,u).then(function(r){
+if(!r.ok){err.textContent="Hata!";room=null;return}
+document.getElementById("dCode2").textContent=code;sw("S3");toast("Katıldın!","s");
+poll(function(d2){if(!d2){toast("Silindi!","t");clean();sw("S0");return}
+if(d2.status==="lobby")uLob(d2,"lpL2");if(d2.status==="playing"){sP();initGame(d2);gPoll()}})
+})})}
 
-// ==========================================
-// CREATE ROOM
-// ==========================================
-function createRoom() {
-    pName = gn(); document.getElementById("inpName").value = pName;
-    var code = rc(); room = code; role = "host"; mySlot = "p0";
-    var data = { status: "lobby", host: pName, round: 0, phase: "lobby" };
-    data.p0 = { name: pName, alive: true, ready: false, angle: 0, power: 50, x: 0, y: 0, vx: 0, vy: 0 };
+function uLob(d,el){
+var h="",c=0;
+for(var i=0;i<MP;i++){var p=d["p"+i];if(p){c++;h+='<div class="pi'+("p"+i===ms?" me":"")+ '" style="border-left:3px solid '+COLS[i]+'">'+p.name+'</div>'}}
+var e=document.getElementById(el);if(e)e.innerHTML=h;
+var w=document.getElementById("wTxt");if(w)w.textContent=c+"/10";
+var sb=document.getElementById("startBtn");if(sb){sb.disabled=c<2;sb.textContent="⚔️ Başlat ("+c+")"}}
 
-    fbPut("arenas/" + code, data).then(function(r) {
-        if (!r.ok) { toast("Oda kurulamadı!", "t"); room = null; return; }
-        document.getElementById("dCode").textContent = code;
-        sw("S1"); toast("Arena kuruldu: " + code, "s");
-        poll(function(d) {
-            if (!d) return;
-            if (d.status === "lobby") updateLobby(d, "lpL");
-            if (d.status === "playing") { stopPoll(); initGame(d); gamePoll(); }
-        });
-    }).catch(function() { toast("Bağlantı hatası!", "t"); room = null; });
-}
+// === START ===
+function startMatch(){
+if(rl!=="host"||!room)return;
+fbGet("arenas/"+room).then(function(d){
+if(!d)return;var ps=[];for(var i=0;i<MP;i++)if(d["p"+i])ps.push(i);
+if(ps.length<2){toast("Min 2!","t");return}
+var as=A*CL,cx2=as/2,cy2=as/2,r2=as/2-R-25;
+var u={status:"playing",round:1,phase:"prep",prepStart:Date.now()};
+for(var j=0;j<ps.length;j++){
+var ag=2*Math.PI*j/ps.length,s="p"+ps[j];
+u[s+"/x"]=cx2+Math.cos(ag)*r2*.55;u[s+"/y"]=cy2+Math.sin(ag)*r2*.55;u[s+"/z"]=0;
+u[s+"/vx"]=0;u[s+"/vy"]=0;u[s+"/vz"]=0;u[s+"/alive"]=true;u[s+"/ready"]=false;u[s+"/fell"]=false}
+fbPatch("arenas/"+room,u)})}
 
-// ==========================================
-// JOIN ROOM
-// ==========================================
-function joinRoom() {
-    var code = document.getElementById("inpCode").value.trim();
-    pName = gn(); document.getElementById("inpName").value = pName;
-    var err = document.getElementById("jErr");
-    if (code.length !== 4) { err.textContent = "4 haneli kod girin."; return; }
+// === INIT GAME ===
+function initGame(d){
+pls=[];for(var i=0;i<MP;i++){var p=d["p"+i];if(p)pls.push({sl:"p"+i,ix:i,nm:p.name,x:p.x||0,y:p.y||0,z:0,vx:0,vy:0,vz:0,alive:p.alive!==false,ready:false,angle:p.angle||0,power:p.power||50,fell:false,fallY:0})}
+rn=d.round||1;ph="prep";myA=true;sf=0;waterOff=0;
+for(var j=0;j<pls.length;j++)if(pls[j].sl===ms&&!pls[j].alive)myA=false;
+sw("S4");initCv();
+document.getElementById("ctrlP").style.display=myA?"block":"none";
+document.getElementById("specBar").style.display=myA?"none":"block";
+document.getElementById("rdBtn").disabled=false;document.getElementById("rdBtn").textContent="✅ HAZIR";
+document.getElementById("hR").textContent=rn;uAlv();render();startPrep()}
 
-    fbGet("arenas/" + code).then(function(d) {
-        if (!d) { err.textContent = "Arena bulunamadı."; return; }
-        if (d.status !== "lobby") { err.textContent = "Maç başlamış."; return; }
-        var slot = null;
-        for (var i = 0; i < MAX_P; i++) { if (!d["p" + i]) { slot = "p" + i; break; } }
-        if (!slot) { err.textContent = "Arena dolu!"; return; }
+function gPoll(){poll(function(d){
+if(!d){toast("Kapandı!","t");clean();sw("S0");return}
+for(var i=0;i<pls.length;i++){var pd=d[pls[i].sl];if(pd){pls[i].ready=pd.ready||false;
+if(d.phase==="prep"){pls[i].alive=pd.alive!==false;if(pls[i].sl!==ms){pls[i].angle=pd.angle||0;pls[i].power=pd.power||50}}}}
+if(d.phase==="sim"&&ph==="prep")startSim(d);
+if(d.phase==="prep"&&ph!=="prep"&&ph!=="w"){rn=d.round||rn;resetPrep(d)}
+if(d.phase==="done")showWin(d);
+document.getElementById("hR").textContent=d.round||rn;uAlv();render()})}
 
-        room = code; role = "guest"; mySlot = slot; err.textContent = "";
-        var upd = {};
-        upd[slot] = { name: pName, alive: true, ready: false, angle: 0, power: 50, x: 0, y: 0, vx: 0, vy: 0 };
+function uAlv(){var c=0;for(var i=0;i<pls.length;i++)if(pls[i].alive)c++;document.getElementById("hA").textContent=c}
 
-        fbPatch("arenas/" + code, upd).then(function(r) {
-            if (!r.ok) { err.textContent = "Katılma hatası!"; room = null; return; }
-            document.getElementById("dCode2").textContent = code;
-            sw("S3"); toast("Katıldın!", "s");
-            poll(function(d2) {
-                if (!d2) { toast("Arena silindi!", "t"); clean(); sw("S0"); return; }
-                if (d2.status === "lobby") updateLobby(d2, "lpL2");
-                if (d2.status === "playing") { stopPoll(); initGame(d2); gamePoll(); }
-            });
-        });
-    }).catch(function() { err.textContent = "Bağlantı hatası!"; });
-}
+// === CANVAS ===
+function initCv(){cv=document.getElementById("gc");cx=cv.getContext("2d");rsCv();window.onresize=rsCv}
+function rsCv(){var w=cv.parentElement;var s=Math.min(w.clientWidth,w.clientHeight,460);cv.width=s;cv.height=s;cW=s;cH=s;render()}
 
-// ==========================================
-// LOBBY
-// ==========================================
-function updateLobby(d, elId) {
-    var html = "", cnt = 0;
-    for (var i = 0; i < MAX_P; i++) {
-        var p = d["p" + i];
-        if (p) {
-            cnt++;
-            var cls = "pi" + ("p" + i === mySlot ? " me" : "");
-            html += '<div class="' + cls + '" style="border-left:3px solid ' + COLORS[i] + '">' + p.name + '</div>';
-        }
-    }
-    var el = document.getElementById(elId); if (el) el.innerHTML = html;
-    var wt = document.getElementById("wTxt"); if (wt) wt.textContent = cnt + "/10 oyuncu";
-    var sb = document.getElementById("startBtn");
-    if (sb) { sb.disabled = cnt < 2; sb.textContent = "⚔️ Başlat (" + cnt + " kişi)"; }
-}
+// === 3D RENDER ===
+function render(){
+if(!cx)return;
+var as=A*CL,half=as/2;
+var scale=Math.min((cW-10)/as/1.5,(cH-10)/as/1.2);
+cx.clearRect(0,0,cW,cH);
+cx.save();cx.translate(cW/2,cH*0.55);cx.scale(scale,scale);
 
-// ==========================================
-// START MATCH
-// ==========================================
-function startMatch() {
-    if (role !== "host" || !room) return;
-    fbGet("arenas/" + room).then(function(d) {
-        if (!d) return;
-        var ps = [];
-        for (var i = 0; i < MAX_P; i++) { if (d["p" + i]) ps.push(i); }
-        if (ps.length < 2) { toast("En az 2 kişi!", "t"); return; }
+// Water
+waterOff+=0.3;
+var wGrad=cx.createRadialGradient(0,0,0,0,0,as);
+wGrad.addColorStop(0,"#0a4a7a");wGrad.addColorStop(0.5,"#063d6b");wGrad.addColorStop(1,"#042a4a");
+cx.fillStyle=wGrad;cx.beginPath();
+var wr=as*0.85;
+cx.ellipse(0,as*ISO_ANGLE*0.15,wr,wr*ISO_ANGLE,0,0,Math.PI*2);cx.fill();
 
-        var as = ARENA * CELL, cx = as / 2, cy = as / 2, r = as / 2 - RADIUS - 30;
-        var upd = { status: "playing", round: 1, phase: "prep", prepStart: Date.now() };
-        for (var j = 0; j < ps.length; j++) {
-            var ang = 2 * Math.PI * j / ps.length;
-            var slot = "p" + ps[j];
-            upd[slot + "/x"] = cx + Math.cos(ang) * r * 0.6;
-            upd[slot + "/y"] = cy + Math.sin(ang) * r * 0.6;
-            upd[slot + "/vx"] = 0; upd[slot + "/vy"] = 0;
-            upd[slot + "/alive"] = true; upd[slot + "/ready"] = false;
-        }
-        fbPatch("arenas/" + room, upd);
-    });
-}
+// Water waves
+cx.strokeStyle="#ffffff08";cx.lineWidth=1.5;
+for(var w=0;w<5;w++){
+cx.beginPath();
+var ww=wr*0.4+w*wr*0.15;
+for(var a=0;a<Math.PI*2;a+=0.1){
+var wx=Math.cos(a)*ww+Math.sin(a*3+waterOff*0.05+w)*4;
+var wy=Math.sin(a)*ww*ISO_ANGLE+Math.cos(a*2+waterOff*0.03+w)*2+as*ISO_ANGLE*0.15;
+if(a===0)cx.moveTo(wx,wy);else cx.lineTo(wx,wy)}
+cx.closePath();cx.stroke()}
 
-// ==========================================
-// INIT GAME
-// ==========================================
-function initGame(d) {
-    players = [];
-    for (var i = 0; i < MAX_P; i++) {
-        var p = d["p" + i];
-        if (p) players.push({ slot: "p" + i, idx: i, name: p.name, x: p.x || 0, y: p.y || 0, vx: 0, vy: 0, alive: p.alive !== false, ready: false, angle: p.angle || 0, power: p.power || 50 });
-    }
-    roundNum = d.round || 1; phase = "prep"; myAlive = true; simFrame = 0;
-    for (var j = 0; j < players.length; j++) { if (players[j].slot === mySlot && !players[j].alive) myAlive = false; }
+// Platform shadow
+cx.fillStyle="rgba(0,0,0,0.4)";cx.beginPath();
+cx.ellipse(0,as*ISO_ANGLE*0.05+8,half*1.05,half*ISO_ANGLE*1.05,0,0,Math.PI*2);cx.fill();
 
-    sw("S4"); initCanvas();
-    document.getElementById("ctrlPanel").style.display = myAlive ? "block" : "none";
-    document.getElementById("readyBtn").disabled = false;
-    document.getElementById("readyBtn").textContent = "✅ HAZIR";
-    document.getElementById("hRound").textContent = roundNum;
-    updateAlive(); renderAll(); startPrep();
-}
+// Platform top
+var pGrad=cx.createRadialGradient(0,-10,0,0,0,half);
+pGrad.addColorStop(0,"#2a2a42");pGrad.addColorStop(0.7,"#1e1e35");pGrad.addColorStop(1,"#14142a");
+cx.fillStyle=pGrad;cx.beginPath();
+cx.ellipse(0,0,half,half*ISO_ANGLE,0,0,Math.PI*2);cx.fill();
 
-function gamePoll() {
-    poll(function(d) {
-        if (!d) { toast("Arena kapandı!", "t"); clean(); sw("S0"); return; }
-        for (var i = 0; i < players.length; i++) {
-            var pd = d[players[i].slot];
-            if (pd) {
-                players[i].ready = pd.ready || false;
-                if (d.phase === "prep") {
-                    players[i].alive = pd.alive !== false;
-                    if (players[i].slot !== mySlot) { players[i].angle = pd.angle || 0; players[i].power = pd.power || 50; }
-                }
-            }
-        }
-        if (d.phase === "sim" && phase === "prep") startSim(d);
-        if (d.phase === "prep" && phase !== "prep" && phase !== "wait") { roundNum = d.round || roundNum; resetPrep(d); }
-        if (d.phase === "done") showWinner(d);
-        document.getElementById("hRound").textContent = d.round || roundNum;
-        updateAlive(); renderAll();
-    });
-}
+// Platform edge (3D depth)
+cx.fillStyle="#0e0e20";cx.beginPath();
+cx.ellipse(0,12,half,half*ISO_ANGLE,0,0,Math.PI);cx.lineTo(-half,0);
+cx.ellipse(0,0,half,half*ISO_ANGLE,0,Math.PI,0,true);cx.fill();
 
-function updateAlive() {
-    var c = 0; for (var i = 0; i < players.length; i++) if (players[i].alive) c++;
-    document.getElementById("hAlive").textContent = c;
-}
+// Platform border
+cx.strokeStyle="#ff6b6b22";cx.lineWidth=2;
+cx.beginPath();cx.ellipse(0,0,half,half*ISO_ANGLE,0,0,Math.PI*2);cx.stroke();
 
-// ==========================================
-// CANVAS
-// ==========================================
-function initCanvas() {
-    canvas = document.getElementById("gameCanvas"); ctx = canvas.getContext("2d");
-    resizeCanvas(); window.addEventListener("resize", resizeCanvas);
-}
-function resizeCanvas() {
-    var wrap = canvas.parentElement;
-    var s = Math.min(wrap.clientWidth, wrap.clientHeight, 460);
-    canvas.width = s; canvas.height = s; cW = s; cH = s;
-    var as = ARENA * CELL;
-    var sc = Math.min((cW - 16) / as, (cH - 16) / as);
-    oX = (cW - as * sc) / 2; oY = (cH - as * sc) / 2;
-    renderAll();
-}
+// Grid on platform
+cx.strokeStyle="#ffffff05";cx.lineWidth=0.5;
+for(var gi=-A/2;gi<=A/2;gi++){
+var gx1=gi*CL,gy1=-half;var gx2=gi*CL,gy2=half;
+var i1=toIso(gx1,gy1,0),i2=toIso(gx2,gy2,0);
+// Clip to ellipse approximately
+cx.beginPath();cx.moveTo(gx1,-A/2*CL*ISO_ANGLE);cx.lineTo(gx1,A/2*CL*ISO_ANGLE);cx.stroke();
+cx.beginPath();cx.moveTo(-A/2*CL,gi*CL*ISO_ANGLE);cx.lineTo(A/2*CL,gi*CL*ISO_ANGLE);cx.stroke()}
 
-function renderAll() {
-    if (!ctx) return;
-    var as = ARENA * CELL, sc = Math.min((cW - 16) / as, (cH - 16) / as);
-    ctx.clearRect(0, 0, cW, cH);
-    ctx.save(); ctx.translate(oX, oY); ctx.scale(sc, sc);
+// Sort players by y for depth
+var sorted=pls.slice().sort(function(a,b){return a.y-b.y});
 
-    // Arena
-    var g = ctx.createRadialGradient(as/2, as/2, 0, as/2, as/2, as/2);
-    g.addColorStop(0, "#1a1a2e"); g.addColorStop(0.8, "#12121e"); g.addColorStop(1, "#0a0a12");
-    ctx.fillStyle = g;
-    ctx.beginPath(); ctx.arc(as/2, as/2, as/2, 0, Math.PI*2); ctx.fill();
+for(var j=0;j<sorted.length;j++){
+var p=sorted[j];
+var px=p.x-half,py=(p.y-half)*ISO_ANGLE;
+var pz=p.fell?p.fallY:0;
 
-    // Grid
-    ctx.strokeStyle = "#ffffff06"; ctx.lineWidth = 1;
-    for (var i = 0; i <= ARENA; i++) {
-        ctx.beginPath(); ctx.moveTo(i*CELL, 0); ctx.lineTo(i*CELL, as); ctx.stroke();
-        ctx.beginPath(); ctx.moveTo(0, i*CELL); ctx.lineTo(as, i*CELL); ctx.stroke();
-    }
+if(p.fell){
+// Falling into water animation
+py+=pz*ISO_ANGLE;
+// Splash
+if(p.fallY<30){
+cx.fillStyle="rgba(100,180,255,0.3)";cx.beginPath();
+cx.ellipse(px,py+5,R+p.fallY*0.5,R*0.3+p.fallY*0.2,0,0,Math.PI*2);cx.fill()}
+if(p.fallY>60)continue}
 
-    // Border
-    ctx.strokeStyle = "#ff6b6b33"; ctx.lineWidth = 3;
-    ctx.beginPath(); ctx.arc(as/2, as/2, as/2-2, 0, Math.PI*2); ctx.stroke();
+if(!p.alive&&!p.fell)continue;
 
-    // Players
-    for (var j = 0; j < players.length; j++) {
-        var p = players[j]; if (!p.alive) continue;
-        // Shadow
-        ctx.fillStyle = "rgba(0,0,0,0.3)";
-        ctx.beginPath(); ctx.ellipse(p.x, p.y+RADIUS*0.5, RADIUS*0.85, RADIUS*0.35, 0, 0, Math.PI*2); ctx.fill();
-        // Body
-        var bg = ctx.createRadialGradient(p.x-3, p.y-5, 2, p.x, p.y, RADIUS);
-        bg.addColorStop(0, lighten(COLORS[p.idx], 40)); bg.addColorStop(1, COLORS[p.idx]);
-        ctx.fillStyle = bg;
-        ctx.beginPath(); ctx.arc(p.x, p.y, RADIUS, 0, Math.PI*2); ctx.fill();
-        // Ring
-        ctx.strokeStyle = p.slot === mySlot ? "#fff" : "rgba(255,255,255,0.15)";
-        ctx.lineWidth = p.slot === mySlot ? 2.5 : 1;
-        ctx.beginPath(); ctx.arc(p.x, p.y, RADIUS, 0, Math.PI*2); ctx.stroke();
-        // Arrow
-        if (phase === "prep" && p.slot === mySlot && myAlive) {
-            var a2 = p.angle * Math.PI / 180, pw = p.power/100*55+20;
-            ctx.strokeStyle = "#ffd93daa"; ctx.lineWidth = 2.5;
-            ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(p.x+Math.cos(a2)*pw, p.y+Math.sin(a2)*pw); ctx.stroke();
-            var ax = p.x+Math.cos(a2)*pw, ay = p.y+Math.sin(a2)*pw;
-            ctx.fillStyle = "#ffd93d";
-            ctx.beginPath(); ctx.moveTo(ax, ay);
-            ctx.lineTo(ax-Math.cos(a2-0.4)*10, ay-Math.sin(a2-0.4)*10);
-            ctx.lineTo(ax-Math.cos(a2+0.4)*10, ay-Math.sin(a2+0.4)*10); ctx.fill();
-        }
-        // Name
-        ctx.fillStyle = p.slot === mySlot ? "#fff" : "#aaa";
-        ctx.font = "bold 10px Inter"; ctx.textAlign = "center";
-        ctx.fillText(p.name, p.x, p.y-RADIUS-5);
-        // Ready
-        if (phase === "prep" && p.ready) {
-            ctx.fillStyle = "#2ecc71"; ctx.font = "bold 14px Inter";
-            ctx.fillText("✓", p.x, p.y+5);
-        }
-    }
+// Shadow
+var shAlpha=p.fell?Math.max(0,0.25-p.fallY*0.004):0.3;
+cx.fillStyle="rgba(0,0,0,"+shAlpha+")";
+cx.beginPath();cx.ellipse(px,py+R*0.4-pz*0.3,R*0.8,R*0.3,0,0,Math.PI*2);cx.fill();
 
-    // Phase text
-    if (phase === "prep") {
-        ctx.fillStyle = "#ffd93d"; ctx.font = "bold 16px Inter"; ctx.textAlign = "center";
-        ctx.fillText("HAZIRLAN! " + Math.max(0, prepCount) + "s", as/2, 28);
-    } else if (phase === "sim") {
-        ctx.fillStyle = "#ff6b6b"; ctx.font = "bold 16px Inter"; ctx.textAlign = "center";
-        ctx.fillText("⚡ SAVAŞ!", as/2, 28);
-    }
-    ctx.restore();
-}
+// Body - 3D sphere effect
+var by=py-pz;
+var grad=cx.createRadialGradient(px-R*0.3,by-R*0.4,R*0.15,px,by,R);
+grad.addColorStop(0,lighten(COLS[p.ix],60));grad.addColorStop(0.6,COLS[p.ix]);grad.addColorStop(1,darken(COLS[p.ix],40));
+cx.fillStyle=grad;cx.beginPath();cx.arc(px,by,R,0,Math.PI*2);cx.fill();
 
-function lighten(h, p) {
-    var r = parseInt(h.slice(1,3),16), g = parseInt(h.slice(3,5),16), b = parseInt(h.slice(5,7),16);
-    return "#"+((1<<24)+(Math.min(255,r+p)<<16)+(Math.min(255,g+p)<<8)+Math.min(255,b+p)).toString(16).slice(1);
-}
+// Highlight
+cx.fillStyle="rgba(255,255,255,0.15)";cx.beginPath();cx.arc(px-R*0.25,by-R*0.3,R*0.35,0,Math.PI*2);cx.fill();
 
-// ==========================================
-// SLIDERS
-// ==========================================
-document.getElementById("slAngle").oninput = function() {
-    var v = parseInt(this.value); document.getElementById("vAngle").textContent = v + "°";
-    for (var i = 0; i < players.length; i++) if (players[i].slot === mySlot) players[i].angle = v;
-    renderAll();
-};
-document.getElementById("slPower").oninput = function() {
-    var v = parseInt(this.value); document.getElementById("vPower").textContent = v;
-    for (var i = 0; i < players.length; i++) if (players[i].slot === mySlot) players[i].power = v;
-    renderAll();
-};
+// Ring
+cx.strokeStyle=p.sl===ms?"#ffffffcc":"rgba(255,255,255,0.1)";
+cx.lineWidth=p.sl===ms?2:0.8;
+cx.beginPath();cx.arc(px,by,R,0,Math.PI*2);cx.stroke();
 
-// ==========================================
-// READY
-// ==========================================
-function sendReady() {
-    if (!room || !mySlot || !myAlive) return;
-    var upd = {};
-    upd[mySlot + "/ready"] = true;
-    upd[mySlot + "/angle"] = parseInt(document.getElementById("slAngle").value);
-    upd[mySlot + "/power"] = parseInt(document.getElementById("slPower").value);
-    fbPatch("arenas/" + room, upd).then(function() {
-        document.getElementById("readyBtn").disabled = true;
-        document.getElementById("readyBtn").textContent = "⏳ Bekleniyor...";
-        toast("Hazırsın!", "s");
-        if (role === "host") checkReady();
-    });
-}
+// Arrow
+if(ph==="prep"&&p.sl===ms&&myA){
+var a2=p.angle*Math.PI/180,pw=p.power/100*50+18;
+cx.strokeStyle="#ffd93dbb";cx.lineWidth=2.5;cx.setLineDash([4,3]);
+cx.beginPath();cx.moveTo(px,by);cx.lineTo(px+Math.cos(a2)*pw,by+Math.sin(a2)*pw*ISO_ANGLE);cx.stroke();
+cx.setLineDash([]);
+var ax2=px+Math.cos(a2)*pw,ay2=by+Math.sin(a2)*pw*ISO_ANGLE;
+cx.fillStyle="#ffd93d";cx.beginPath();cx.moveTo(ax2,ay2);
+cx.lineTo(ax2-Math.cos(a2-0.4)*8,ay2-Math.sin(a2-0.4)*8*ISO_ANGLE);
+cx.lineTo(ax2-Math.cos(a2+0.4)*8,ay2-Math.sin(a2+0.4)*8*ISO_ANGLE);cx.fill()}
 
-function checkReady() {
-    fbGet("arenas/" + room).then(function(d) {
-        if (!d || d.phase !== "prep") return;
-        var all = true;
-        for (var i = 0; i < MAX_P; i++) { var p = d["p"+i]; if (p && p.alive && !p.ready) { all = false; break; } }
-        if (all) fbPatch("arenas/" + room, { phase: "sim" });
-    });
-}
+// Name
+cx.fillStyle=p.sl===ms?"#fff":"#bbb";cx.font="bold 9px Inter";cx.textAlign="center";
+cx.fillText(p.nm,px,by-R-4);
 
-// ==========================================
-// PREP TIMER
-// ==========================================
-function startPrep() {
-    phase = "prep"; prepCount = PREP_TIME;
-    document.getElementById("hTimer").textContent = prepCount;
-    stopPhase();
-    phaseT = setInterval(function() {
-        prepCount--;
-        document.getElementById("hTimer").textContent = Math.max(0, prepCount);
-        renderAll();
-        if (prepCount <= 0) { stopPhase(); if (role === "host") fbPatch("arenas/" + room, { phase: "sim" }); }
-    }, 1000);
-}
-
-// ==========================================
-// SIMULATION
-// ==========================================
-function startSim(d) {
-    phase = "sim"; stopPhase();
-    for (var i = 0; i < players.length; i++) {
-        var p = players[i]; if (!p.alive) continue;
-        var pd = d[p.slot];
-        if (pd) { p.angle = pd.angle || 0; p.power = pd.power || 50; p.ready = false; }
-        var a = p.angle * Math.PI / 180, s = p.power/100*12+2;
-        p.vx = Math.cos(a)*s; p.vy = Math.sin(a)*s;
-    }
-    simFrame = 0; animSim();
-}
-
-function animSim() {
-    var as = ARENA*CELL, cx = as/2, cy = as/2, ar = as/2;
-    for (var s = 0; s < 3; s++) {
-        for (var i = 0; i < players.length; i++) {
-            var p = players[i]; if (!p.alive) continue;
-            p.x += p.vx; p.y += p.vy; p.vx *= FRICTION; p.vy *= FRICTION;
-            // Collision
-            for (var j = i+1; j < players.length; j++) {
-                var q = players[j]; if (!q.alive) continue;
-                var dx = q.x-p.x, dy = q.y-p.y, dist = Math.sqrt(dx*dx+dy*dy), minD = RADIUS*2;
-                if (dist < minD && dist > 0.01) {
-                    var nx = dx/dist, ny = dy/dist, ov = (minD-dist)/2;
-                    p.x -= nx*ov*1.1; p.y -= ny*ov*1.1; q.x += nx*ov*1.1; q.y += ny*ov*1.1;
-                    var dvx = p.vx-q.vx, dvy = p.vy-q.vy, dot = dvx*nx+dvy*ny;
-                    p.vx -= dot*nx*PUSH; p.vy -= dot*ny*PUSH; q.vx += dot*nx*PUSH; q.vy += dot*ny*PUSH;
-                }
-            }
-            // Boundary
-            var dc = Math.sqrt((p.x-cx)*(p.x-cx)+(p.y-cy)*(p.y-cy));
-            if (dc + RADIUS > ar) {
-                if (dc > ar + RADIUS*3) {
-                    p.alive = false;
-                    if (p.slot === mySlot) {
-                        myAlive = false;
-                        document.getElementById("ctrlPanel").style.display = "none";
-                        var em = document.getElementById("elimMsg"); em.classList.add("sh");
-                        setTimeout(function() { em.classList.remove("sh"); }, 2000);
-                        toast("Elendin! 💀", "t");
-                    }
-                } else {
-                    var bnx = (p.x-cx)/dc, bny = (p.y-cy)/dc;
-                    p.x = cx+bnx*(ar-RADIUS-1); p.y = cy+bny*(ar-RADIUS-1);
-                    var bd = p.vx*bnx+p.vy*bny;
-                    if (bd > 0) { p.vx -= 2*bd*bnx*BOUNCE; p.vy -= 2*bd*bny*BOUNCE; }
-                }
-            }
-        }
-    }
-    simFrame++; updateAlive(); renderAll();
-    if (simFrame < SIM_STEPS) { animId = requestAnimationFrame(animSim); }
-    else { phase = "wait"; if (role === "host") endRound(); }
-}
-
-function endRound() {
-    var alive = [], upd = {};
-    for (var i = 0; i < players.length; i++) {
-        if (players[i].alive) alive.push(players[i]);
-        upd[players[i].slot+"/alive"] = players[i].alive;
-        upd[players[i].slot+"/x"] = players[i].x;
-        upd[players[i].slot+"/y"] = players[i].y;
-        upd[players[i].slot+"/vx"] = 0; upd[players[i].slot+"/vy"] = 0;
-        upd[players[i].slot+"/ready"] = false;
-    }
-    if (alive.length <= 1) {
-        upd.phase = "done"; upd.winner = alive.length === 1 ? alive[0].name : "Berabere";
-    } else {
-        roundNum++; upd.phase = "prep"; upd.round = roundNum;
-    }
-    fbPatch("arenas/" + room, upd);
-}
-
-function resetPrep(d) {
-    phase = "prep"; stopAnim();
-    for (var i = 0; i < players.length; i++) {
-        var pd = d[players[i].slot];
-        if (pd) { players[i].x = pd.x||players[i].x; players[i].y = pd.y||players[i].y; players[i].vx = 0; players[i].vy = 0; players[i].alive = pd.alive!==false; players[i].ready = false; }
-        if (players[i].slot === mySlot) myAlive = players[i].alive;
-    }
-    document.getElementById("ctrlPanel").style.display = myAlive ? "block" : "none";
-    document.getElementById("readyBtn").disabled = false;
-    document.getElementById("readyBtn").textContent = "✅ HAZIR";
-    startPrep(); renderAll();
-}
-
-// ==========================================
-// WINNER
-// ==========================================
-function showWinner(d) {
-    stopPoll(); stopAnim(); stopPhase(); phase = "done";
-    for (var i = 0; i < players.length; i++) { var pd = d[players[i].slot]; if (pd) players[i].alive = pd.alive!==false; }
-    renderAll();
-    var w = d.winner||"?", isMe = false;
-    for (var j = 0; j < players.length; j++) if (players[j].slot === mySlot && players[j].alive) isMe = true;
-    document.getElementById("rIco").textContent = isMe ? "🏆" : "💀";
-    document.getElementById("rTit").textContent = isMe ? "KAZANDIN!" : "Oyun Bitti!";
-    document.getElementById("rTit").style.color = isMe ? "#ffd93d" : "#e74c3c";
-    document.getElementById("rSub").textContent = "🏆 Kazanan: " + w;
-    document.getElementById("resOv").classList.add("on");
-    if (isMe) confetti();
-}
-
-function confetti() {
-    var cols = ["#ffd93d","#ff6b6b","#6bcb77","#a29bfe","#fd79a8"];
-    for (var i = 0; i < 50; i++) {
-        var p = document.createElement("div");
-        p.style.cssText = "position:fixed;z-index:300;pointer-events:none;left:"+Math.random()*100+"vw;top:-10px;background:"+cols[Math.floor(Math.random()*cols.length)]+";width:"+(4+Math.random()*6)+"px;height:"+(4+Math.random()*6)+"px;border-radius:"+(Math.random()>.5?"50%":"2px");
-        document.body.appendChild(p);
-        p.animate([
-            {transform:"translateY(0) rotate(0)",opacity:1},
-            {transform:"translateY("+window.innerHeight+"px) translateX("+(Math.random()-.5)*200+"px) rotate("+Math.random()*720+"deg)",opacity:0}
-        ],{duration:1200+Math.random()*1800,easing:"ease-out"}).onfinish=function(){this.effect.target.remove()};
-    }
-}
-
-// ==========================================
-// LEAVE
-// ==========================================
-function exitLobby() { if (room) fbDel("arenas/"+room); clean(); sw("S0"); }
-function exitP() { if (room&&mySlot) fbDel("arenas/"+room+"/"+mySlot); clean(); sw("S0"); }
-function quitGame() {
-    if (room&&mySlot) fbPut("arenas/"+room+"/"+mySlot+"/alive", false);
-    if (room&&role==="host") fbDel("arenas/"+room);
-    clean(); toast("Ayrıldın.","i"); sw("S0");
-}
-function goMenu() {
-    document.getElementById("resOv").classList.remove("on");
-    if (room) fbDel("arenas/"+room);
-    clean(); sw("S0");
-}
-
-// ==========================================
-// START
-// ==========================================
-testConn();
-</script>
-</body>
-</html>
+// Read
