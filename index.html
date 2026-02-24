@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+<title>Arena Smash</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;user-select:none}
+body{font-family:'Inter',sans-serif;background:#08080f;color:#e0e0e0;min-height:100vh;overflow:hidden}
+.wrap{max-width:500px;margin:0 auto;padding:10px;min-height:100vh;display:flex;flex-direction:column}
+.hdr{text-align:center;padding:12px 0 4px}
+.hdr h1{font-size:24px;font-weight:900;background:linear-gradient(135deg,#ff6b6b,#ffd93d,#6bcb77);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hdr small{font-size:10px;color:#555;letter-spacing:3px;text-transform:uppercase}
+#dbS{text-align:center;padding:6px;font-size:11px;border-radius:8px;margin:6px 0;font-weight:600}
+#dbS.ok{background:#2ecc7118;color:#2ecc71;border:1px solid #2ecc7125}
+#dbS.no{background:#e74c3c18;color:#e74c3c;border:1px solid #e74c3c25}
+#dbS.wt{background:#f39c1218;color:#f39c12;border:1px solid #f39c1225}
+.scr{display:none;flex:1;flex-direction:column}.scr.on{display:flex}
+.btn{display:block;width:100%;padding:14px;border:none;border-radius:12px;font-family:'Inter',sans-serif;font-size:14px;font-weight:700;cursor:pointer;transition:transform .12s;outline:none}
+.btn:active:not(:disabled){transform:scale(.96)}.btn:disabled{opacity:.35;cursor:not-allowed}
+.bg{background:linear-gradient(135deg,#ff6b6b,#ee5a24);color:#fff;box-shadow:0 4px 16px #ff6b6b30}
+.bd{background:#151520;color:#aaa;border:1px solid #252535}
+.bgr{background:linear-gradient(135deg,#6bcb77,#27ae60);color:#fff}
+.br{background:linear-gradient(135deg,#e74c3c,#c0392b);color:#fff}
+.by{background:linear-gradient(135deg,#ffd93d,#f39c12);color:#1a1a2e}
+.bs{padding:10px;font-size:12px;border-radius:10px}
+.gap{display:flex;flex-direction:column;gap:12px;margin-top:20px}
+.ibox{margin:16px 0}
+.ibox label{display:block;font-size:12px;color:#666;margin-bottom:5px}
+.ibox input{width:100%;padding:12px;border:2px solid #1e1e30;border-radius:10px;background:#0d0d16;color:#eee;font-family:'Inter',sans-serif;font-size:18px;font-weight:700;text-align:center;letter-spacing:5px;outline:none;transition:border-color .2s}
+.ibox input:focus{border-color:#ff6b6b}
+.ibox input.nm{font-size:15px;letter-spacing:1px}
+.ibox input::placeholder{color:#2a2a3a;letter-spacing:2px;font-size:13px}
+.err{color:#e74c3c;font-size:11px;text-align:center;min-height:16px;margin-top:4px}
+.cshow{text-align:center;margin:24px 0}
+.cshow .lb{font-size:12px;color:#666;margin-bottom:6px}
+.cshow .cd{font-size:42px;font-weight:900;letter-spacing:10px;background:linear-gradient(135deg,#ff6b6b,#ffd93d);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.cshow .wt{margin-top:10px;font-size:12px;color:#555}
+.bk{background:none;border:none;color:#666;font-size:12px;font-family:'Inter',sans-serif;cursor:pointer;padding:6px 0}
+.bk:active{color:#ddd}
+.rules{margin-top:18px;padding:14px;background:#0d0d16;border-radius:12px;border:1px solid #1a1a28;flex-shrink:0}
+.rules h3{font-size:12px;color:#ff6b6b;margin-bottom:6px}
+.rules ul{list-style:none;font-size:11px;color:#666;line-height:1.9}
+.rules li::before{content:'• ';color:#ff6b6b}
+.plist{margin:12px 0;padding:10px;background:#0d0d16;border-radius:10px;border:1px solid #1a1a28}
+.plist h4{font-size:11px;color:#666;margin-bottom:6px}
+.plist .pl{display:flex;flex-wrap:wrap;gap:6px}
+.plist .pi{padding:4px 10px;border-radius:8px;font-size:11px;font-weight:600;background:#151520;border:1px solid #252535}
+.plist .pi.me{border-color:#ff6b6b;color:#ff6b6b}
+.plist .pi.ready{border-color:#2ecc71;color:#2ecc71}
+.plist .pi.dead{opacity:.3;text-decoration:line-through}
+.canvas-wrap{flex:1;display:flex;align-items:center;justify-content:center;position:relative;min-height:0}
+#gameCanvas{border-radius:12px;touch-action:none;max-width:100%;max-height:100%}
+.hud{display:flex;justify-content:space-between;align-items:center;padding:6px 0;font-size:11px;color:#888}
+.hud .round{color:#ffd93d;font-weight:700}
+.hud .timer{color:#ff6b6b;font-weight:700;font-size:14px}
+.hud .alive{color:#6bcb77;font-weight:600}
+.ctrl{padding:8px 0;flex-shrink:0}
+.ctrl-row{display:flex;gap:8px;align-items:center;margin-bottom:6px}
+.ctrl-row label{font-size:11px;color:#666;min-width:40px}
+.ctrl-row input[type=range]{flex:1;-webkit-appearance:none;height:6px;border-radius:3px;background:#1a1a28;outline:none}
+.ctrl-row input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:22px;height:22px;border-radius:50%;background:#ff6b6b;cursor:pointer}
+.ctrl-row .val{font-size:12px;font-weight:700;color:#ff6b6b;min-width:30px;text-align:right}
+.ready-bar{display:flex;gap:8px;margin-top:4px}
+.ready-bar .btn{flex:1}
+.tbox{position:fixed;top:10px;left:50%;transform:translateX(-50%);z-index:200;display:flex;flex-direction:column;gap:4px;pointer-events:none}
+.tst{padding:6px 14px;border-radius:8px;font-size:11px;font-weight:700;opacity:0;transform:translateY(-6px) scale(.95);transition:opacity .2s,transform .2s;white-space:nowrap}
+.tst.sh{opacity:1;transform:translateY(0) scale(1)}
+.tst.tg{background:#ffd93dee;color:#1a1a2e}
+.tst.tt{background:#e74c3cee;color:#fff}
+.tst.ti{background:#3498dbee;color:#fff}
+.tst.ts{background:#2ecc71ee;color:#fff}
+.ov{display:none;position:fixed;inset:0;background:#000c;z-index:100;align-items:center;justify-content:center;padding:16px;backdrop-filter:blur(4px)}
+.ov.on{display:flex}
+.md{background:#111119;border-radius:18px;padding:24px 18px;text-align:center;max-width:320px;width:100%;border:1px solid #222235}
+.md h2{font-size:20px;font-weight:900;margin-bottom:4px}
+.md .ic{font-size:50px;margin-bottom:10px}
+.md p{font-size:12px;color:#777;margin:8px 0}
+.elim-msg{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);z-index:150;font-size:28px;font-weight:900;color:#e74c3c;text-shadow:0 0 20px #e74c3c88;opacity:0;transition:opacity .5s;pointer-events:none}
+.elim-msg.sh{opacity:1}
+@media(max-width:370px){.hdr h1{font-size:20px}.cshow .cd{font-size:36px}}
+</style>
+</head>
+<body>
+<div class="tbox" id="TB"></div>
+<div class="ov" id="resOv">
+<div class="md">
+<div class="ic" id="rIco">🏆</div>
+<h2 id="rTit">Oyun Bitti!</h2>
+<p id="rSub"></p>
+<button class="btn bg" onclick="goMenu()" style="margin-top:12px">Ana Menü</button>
+</div>
+</div>
+<div class="elim-msg" id="elimMsg">ELENDİN!</div>
+
+<div class="wrap">
+<div class="hdr"><h1>⚔️ Arena Smash</h1><small>10 Kişilik Arena</small></div>
+<div id="dbS" class="wt">🔄 Bağlanıyor...</div>
+
+<!-- MENU -->
+<div class="scr on" id="S0">
+<div class="ibox" style="margin-top:10px">
+<label>Oyuncu Adın</label>
+<input type="text" id="inpName" class="nm" placeholder="Adını yaz..." maxlength="10">
+</div>
+<div class="gap">
+<button class="btn bg" onclick="createRoom()" id="btnC" disabled>🏟️ Arena Kur</button>
+<button class="btn bd" onclick="sw('S2')" id="btnJ" disabled>🚪 Arenaya Katıl</button>
+</div>
+<div class="rules">
+<h3>⚔️ Nasıl Oynanır?</h3>
+<ul>
+<li>10 kişiye kadar aynı arenada savaş</li>
+<li>Her tur yön ve güç seç, HAZIR bas</li>
+<li>Herkes hazır olunca karakterler fırlar</li>
+<li>Çarpışınca birbirini it, arena dışı = ölüm</li>
+<li>Son kalan kazanır! 🏆</li>
+</ul>
+</div>
+</div>
+
+<!-- LOBBY -->
+<div class="scr" id="S1">
+<button class="bk" onclick="exitLobby()">← Geri</button>
+<div class="cshow">
+<div class="lb">Arena Kodu</div>
+<div class="cd" id="dCode">----</div>
+<div class="wt" id="wTxt">⏳ Oyuncular bekleniyor...</div>
+</div>
+<div class="plist" id="lobbyPlayers"><h4>Oyuncular</h4><div class="pl" id="lpList"></div></div>
+<div id="stBox">
+<button class="btn bgr" onclick="startMatch()" id="startBtn" disabled>⚔️ Maçı Başlat (min 2 kişi)</button>
+</div>
+</div>
+
+<!-- JOIN -->
+<div class="scr" id="S2">
+<button class="bk" onclick="sw('S0')">← Geri</button>
+<div class="ibox">
+<label>Arena Kodu (4 Haneli)</label>
+<input type="text" id="inpCode" placeholder="1234" maxlength="4" inputmode="numeric">
+</div>
+<div class="err" id="jErr"></div>
+<button class="btn bg" onclick="joinRoom()">🚪 Katıl</button>
+</div>
+
+<!-- WAIT (non-host) -->
+<div class="scr" id="S3">
+<button class="bk" onclick="exitP()">← Geri</button>
+<div class="cshow">
+<div class="lb">Arena</div>
+<div class="cd" id="dCode2">----</div>
+<div class="wt">⏳ Kurucu başlatacak...</div>
+</div>
+<div class="plist"><h4>Oyuncular</h4><div class="pl" id="lpList2"></div></div>
+</div>
+
+<!-- GAME -->
+<div class="scr" id="S4">
+<div class="hud">
+<div class="round">Tur: <span id="hRound">1</span></div>
+<div class="timer" id="hTimer">7</div>
+<div class="alive">Kalan: <span id="hAlive">0</span></div>
+</div>
+<div class="canvas-wrap"><canvas id="gameCanvas"></canvas></div>
+<div class="ctrl" id="ctrlPanel">
+<div class="ctrl-row">
+<label>Yön</label>
+<input type="range" id="slAngle" min="0" max="360" value="0">
+<div class="val" id="vAngle">0°</div>
+</div>
+<div class="ctrl-row">
+<label>Güç</label>
+<input type="range" id="slPower" min="1" max="100" value="50">
+<div class="val" id="vPower">50</div>
+</div>
+<div class="ready-bar">
+<button class="btn by bs" onclick="sendReady()" id="readyBtn">✅ HAZIR</button>
+<button class="btn br bs" onclick="quitGame()">🚪 Çık</button>
+</div>
+</div>
+</div>
+</div>
+
+<script>
+var DB="https://mobilgame1-f03ac-default-rtdb.europe-west1.firebasedatabase.app";
+var room=null,role=null,mySlot=null,pName="",pollT=null,gameT=null,phaseT=null;
+var ARENA=8,CELL=50,PAD=40,RADIUS=18,FRICTION=.92,BOUNCE=.7,PUSH_FORCE=1.5;
+var MAX_PLAYERS=10,PREP_TIME=7,SIM_STEPS=120,SIM_DT=1/60;
+var players=[],roundNum=0,phase="wait",myAlive=true,simFrame=0,prepCount=0;
+var canvas,ctx,cW,cH,oX,oY,animId=null;
+
+// === DB HELPERS ===
+function dbW(p,d,cb){var x=new XMLHttpRequest();x.open("PUT",DB+"/"+p+".json",true);x.setRequestHeader("Content-Type","application/json");x.onreadystatechange=function(){if(x.readyState===4&&cb)cb(x.status===200)};x.onerror=function(){if(cb)cb(false)};x.send(JSON.stringify(d))}
+function dbU(p,d,cb){var x=new XMLHttpRequest();x.open("PATCH",DB+"/"+p+".json",true);x.setRequestHeader("Content-Type","application/json");x.onreadystatechange=function(){if(x.readyState===4&&cb)cb(x.status===200)};x.onerror=function(){if(cb)cb(false)};x.send(JSON.stringify(d))}
+function dbR(p,cb){var x=new XMLHttpRequest();x.open("GET",DB+"/"+p+".json",true);x.onreadystatechange=function(){if(x.readyState===4){if(x.status===200){try{cb(true,JSON.parse(x.responseText))}catch(e){cb(false,null)}}else cb(false,null)}};x.onerror=function(){cb(false,null)};x.send()}
+function dbD(p,cb){var x=new XMLHttpRequest();x.open("DELETE",DB+"/"+p+".json",true);x.onreadystatechange=function(){if(x.readyState===4&&cb)cb(x.status===200)};x.onerror=function(){if(cb)cb(false)};x.send()}
+
+function testConn(){setS("wt","🔄 Test...");dbW("_t",{t:Date.now()},function(ok){if(ok){dbD("_t");setS("ok","✅ Bağlı!");document.getElementById("btnC").disabled=false;document.getElementById("btnJ").disabled=false}else setS("no","❌ Bağlantı yok!")})}
+function setS(c,t){var e=document.getElementById("dbS");e.className=c;e.textContent=t}
+
+// === UTILS ===
+function rc(){return String(1000+Math.floor(Math.random()*9000))}
+function gn(){var v=document.getElementById("inpName").value.trim();return v||("P"+Math.floor(Math.random()*99))}
+function sw(id){var a=document.querySelectorAll(".scr");for(var i=0;i<a.length;i++)a[i].classList.remove("on");document.getElementById(id).classList.add("on")}
+function toast(m,t){var c=document.getElementById("TB"),d=document.createElement("div");d.className="tst t"+t;d.textContent=m;c.appendChild(d);setTimeout(function(){d.classList.add("sh")},10);setTimeout(function(){d.classList.remove("sh");setTimeout(function(){d.remove()},300)},2200)}
+function stopPoll(){if(pollT){clearInterval(pollT);pollT=null}}
+function stopGame(){if(gameT){clearInterval(gameT);gameT=null}if(phaseT){clearTimeout(phaseT);phaseT=null}if(animId){cancelAnimationFrame(animId);animId=null}}
+function clean(){stopPoll();stopGame();room=null;role=null;mySlot=null;players=[];roundNum=0;phase="wait";myAlive=true;simFrame=0;document.getElementById("inpCode").value="";document.getElementById("jErr").textContent="";document.getElementById("resOv").classList.remove("on")}
+
+var COLORS=["#ff6b6b","#ffd93d","#6bcb77","#4ecdc4","#a29bfe","#fd79a8","#fdcb6e","#00cec9","#e17055","#dfe6e9"];
+
+function startPoll(cb){stopPoll();function go(){if(!room)return;dbR("arenas/"+room,function(ok,d){if(ok)cb(d)})}go();pollT=setInterval(go,1200)}
+
+// === CREATE ===
+function createRoom(){
+    pName=gn();document.getElementById("inpName").value=pName;
+    var code=rc();room=code;role="host";mySlot="p0";
+    var data={status:"lobby",host:pName,round:0,phase:"lobby"};
+    data["p0"]={name:pName,alive:true,ready:false,angle:0,power:50,x:0,y:0,vx:0,vy:0};
+    dbW("arenas/"+code,data,function(ok){
+        if(!ok){toast("Hata!","t");room=null;return}
+        document.getElementById("dCode").textContent=code;
+        sw("S1");updateLobby(data);
+        startPoll(function(d){
+            if(!d)return;
+            if(d.status==="lobby")updateLobby(d);
+            if(d.status==="playing"){stopPoll();initGame(d)}
+        })
+    })
+}
+
+// === JOIN ===
+function joinRoom(){
+    var code=document.getElementById("inpCode").value.trim();
+    pName=gn();document.getElementById("inpName").value=pName;
+    var err=document.getElementById("jErr");
+    if(code.length!==4){err.textContent="4 haneli kod girin.";return}
+    dbR("arenas/"+code,function(ok,d){
+        if(!ok||!d){err.textContent="Arena bulunamadı.";return}
+        if(d.status!=="lobby"){err.textContent="Maç başlamış.";return}
+        var slot=null;
+        for(var i=0;i<MAX_PLAYERS;i++){if(!d["p"+i]){slot="p"+i;break}}
+        if(!slot){err.textContent="Arena dolu (10/10).";return}
+        room=code;role="guest";mySlot=slot;err.textContent="";
+        var upd={};upd[slot]={name:pName,alive:true,ready:false,angle:0,power:50,x:0,y:0,vx:0,vy:0};
+        dbU("arenas/"+code,upd,function(ok2){
+            if(!ok2){err.textContent="Katılma hatası!";room=null;return}
+            document.getElementById("dCode2").textContent=code;
+            sw("S3");toast("Katıldın!","i");
+            startPoll(function(d2){
+                if(!d2){toast("Arena silindi!","t");clean();sw("S0");return}
+                if(d2.status==="lobby")updateLobby2(d2);
+                if(d2.status==="playing"){stopPoll();initGame(d2)}
+            })
+        })
+    })
+}
+
+function updateLobby(d){
+    var html="",cnt=0;
+    for(var i=0;i<MAX_PLAYERS;i++){var p=d["p"+i];if(p){cnt++;var cls="pi";if("p"+i===mySlot)cls+=" me";html+='<div class="'+cls+'" style="border-left:3px solid '+COLORS[i]+'">'+p.name+'</div>'}}
+    document.getElementById("lpList").innerHTML=html;
+    document.getElementById("wTxt").textContent=cnt+"/10 oyuncu";
+    document.getElementById("startBtn").disabled=cnt<2;
+    document.getElementById("startBtn").textContent="⚔️ Başlat ("+cnt+" kişi)"
+}
+function updateLobby2(d){
+    var html="",cnt=0;
+    for(var i=0;i<MAX_PLAYERS;i++){var p=d["p"+i];if(p){cnt++;var cls="pi";if("p"+i===mySlot)cls+=" me";html+='<div class="'+cls+'" style="border-left:3px solid '+COLORS[i]+'">'+p.name+'</div>'}}
+    document.getElementById("lpList2").innerHTML=html
+}
+
+// === START MATCH ===
+function startMatch(){
+    if(role!=="host"||!room)return;
+    dbR("arenas/"+room,function(ok,d){
+        if(!ok||!d)return;
+        var ps=[];
+        for(var i=0;i<MAX_PLAYERS;i++){if(d["p"+i])ps.push(i)}
+        if(ps.length<2){toast("En az 2 kişi gerekli!","t");return}
+        // Place players in circle
+        var cx=ARENA*CELL/2,cy=ARENA*CELL/2,r=ARENA*CELL/2-RADIUS-20;
+        var upd={status:"playing",round:1,phase:"prep",prepStart:Date.now()};
+        for(var j=0;j<ps.length;j++){
+            var ang=2*Math.PI*j/ps.length;
+            var px=cx+Math.cos(ang)*r*.6;
+            var py=cy+Math.sin(ang)*r*.6;
+            var slot="p"+ps[j];
+            upd[slot+"/x"]=px;upd[slot+"/y"]=py;
+            upd[slot+"/vx"]=0;upd[slot+"/vy"]=0;
+            upd[slot+"/alive"]=true;
+            upd[slot+"/ready"]=false
+        }
+        dbU("arenas/"+room,upd,function(){})
+    })
+}
+
+// === INIT GAME ===
+function initGame(d){
+    players=[];
+    for(var i=0;i<MAX_PLAYERS;i++){
+        var p=d["p"+i];
+        if(p)players.push({slot:"p"+i,idx:i,name:p.name,x:p.x,y:p.y,vx:0,vy:0,alive:p.alive!==false,ready:false,angle:p.angle||0,power:p.power||50})
+    }
+    roundNum=d.round||1;phase="prep";myAlive=true;simFrame=0;prepCount=PREP_TIME;
+    for(var j=0;j<players.length;j++){if(players[j].slot===mySlot&&!players[j].alive)myAlive=false}
+    sw("S4");initCanvas();renderAll();
+    document.getElementById("ctrlPanel").style.display=myAlive?"block":"none";
+    document.getElementById("readyBtn").disabled=false;
+    document.getElementById("readyBtn").textContent="✅ HAZIR";
+    startGamePoll();startPrepTimer()
+}
+
+// === CANVAS ===
+function initCanvas(){
+    canvas=document.getElementById("gameCanvas");ctx=canvas.getContext("2d");
+    resizeCanvas();window.addEventListener("resize",resizeCanvas)
+}
+function resizeCanvas(){
+    var wrap=canvas.parentElement;
+    var s=Math.min(wrap.clientWidth,wrap.clientHeight,500);
+    canvas.width=s;canvas.height=s;
+    cW=s;cH=s;
+    var arenaSize=ARENA*CELL;
+    var scale=Math.min((cW-20)/arenaSize,(cH-20)/arenaSize);
+    oX=(cW-arenaSize*scale)/2;oY=(cH-arenaSize*scale)/2;
+    renderAll()
+}
+
+function renderAll(){
+    if(!ctx)return;
+    var arenaSize=ARENA*CELL;
+    var scale=Math.min((cW-20)/arenaSize,(cH-20)/arenaSize);
+    ctx.clearRect(0,0,cW,cH);
+    ctx.save();ctx.translate(oX,oY);ctx.scale(scale,scale);
+
+    // Arena bg - isometric feel
+    ctx.save();
+    var grad=ctx.createRadialGradient(arenaSize/2,arenaSize/2,0,arenaSize/2,arenaSize/2,arenaSize/2);
+    grad.addColorStop(0,"#1a1a2e");grad.addColorStop(.8,"#12121e");grad.addColorStop(1,"#0a0a12");
+    ctx.fillStyle=grad;
+    ctx.beginPath();ctx.arc(arenaSize/2,arenaSize/2,arenaSize/2,0,Math.PI*2);ctx.fill();
+
+    // Grid lines
+    ctx.strokeStyle="#ffffff08";ctx.lineWidth=1;
+    for(var i=0;i<=ARENA;i++){
+        var p=i*CELL;
+        ctx.beginPath();ctx.moveTo(p,0);ctx.lineTo(p,arenaSize);ctx.stroke();
+        ctx.beginPath();ctx.moveTo(0,p);ctx.lineTo(arenaSize,p);ctx.stroke()
+    }
+
+    // Border glow
+    ctx.strokeStyle="#ff6b6b33";ctx.lineWidth=3;
+    ctx.beginPath();ctx.arc(arenaSize/2,arenaSize/2,arenaSize/2-2,0,Math.PI*2);ctx.stroke();
+    ctx.strokeStyle="#ff6b6b11";ctx.lineWidth=8;
+    ctx.beginPath();ctx.arc(arenaSize/2,arenaSize/2,arenaSize/2+2,0,Math.PI*2);ctx.stroke();
+    ctx.restore();
+
+    // Players
+    for(var j=0;j<players.length;j++){
+        var p=players[j];
+        if(!p.alive)continue;
+        var px=p.x,py=p.y;
+
+        // Shadow (2.5D)
+        ctx.fillStyle="rgba(0,0,0,0.3)";
+        ctx.beginPath();ctx.ellipse(px,py+RADIUS*0.6,RADIUS*0.9,RADIUS*0.4,0,0,Math.PI*2);ctx.fill();
+
+        // Body
+        var g=ctx.createRadialGradient(px-4,py-6,2,px,py,RADIUS);
+        g.addColorStop(0,lighten(COLORS[p.idx],30));g.addColorStop(1,COLORS[p.idx]);
+        ctx.fillStyle=g;
+        ctx.beginPath();ctx.arc(px,py,RADIUS,0,Math.PI*2);ctx.fill();
+
+        // Border
+        ctx.strokeStyle=p.slot===mySlot?"#fff":"rgba(255,255,255,0.2)";
+        ctx.lineWidth=p.slot===mySlot?2.5:1;
+        ctx.beginPath();ctx.arc(px,py,RADIUS,0,Math.PI*2);ctx.stroke();
+
+        // Direction arrow (prep phase, my player)
+        if(phase==="prep"&&p.slot===mySlot&&myAlive){
+            var ang=p.angle*Math.PI/180;
+            var pwr=p.power/100*60+20;
+            ctx.strokeStyle="#ffd93daa";ctx.lineWidth=2;
+            ctx.beginPath();ctx.moveTo(px,py);
+            ctx.lineTo(px+Math.cos(ang)*pwr,py+Math.sin(ang)*pwr);ctx.stroke();
+            // Arrow head
+            var ax=px+Math.cos(ang)*pwr,ay=
