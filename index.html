@@ -8,11 +8,11 @@
 <style>
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;user-select:none}
 body{font-family:'Inter',sans-serif;background:#08080f;color:#e0e0e0;min-height:100vh;overflow:hidden}
-.wrap{max-width:500px;margin:0 auto;padding:10px;min-height:100vh;display:flex;flex-direction:column}
-.hdr{text-align:center;padding:12px 0 4px}
+.wrap{max-width:480px;margin:0 auto;padding:10px;min-height:100vh;display:flex;flex-direction:column}
+.hdr{text-align:center;padding:14px 0 4px}
 .hdr h1{font-size:24px;font-weight:900;background:linear-gradient(135deg,#ff6b6b,#ffd93d,#6bcb77);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
 .hdr small{font-size:10px;color:#555;letter-spacing:3px;text-transform:uppercase}
-#dbS{text-align:center;padding:6px;font-size:11px;border-radius:8px;margin:6px 0;font-weight:600}
+#dbS{text-align:center;padding:8px;font-size:12px;border-radius:8px;margin:8px 0;font-weight:600}
 #dbS.ok{background:#2ecc7118;color:#2ecc71;border:1px solid #2ecc7125}
 #dbS.no{background:#e74c3c18;color:#e74c3c;border:1px solid #e74c3c25}
 #dbS.wt{background:#f39c1218;color:#f39c12;border:1px solid #f39c1225}
@@ -35,11 +35,11 @@ body{font-family:'Inter',sans-serif;background:#08080f;color:#e0e0e0;min-height:
 .err{color:#e74c3c;font-size:11px;text-align:center;min-height:16px;margin-top:4px}
 .cshow{text-align:center;margin:24px 0}
 .cshow .lb{font-size:12px;color:#666;margin-bottom:6px}
-.cshow .cd{font-size:42px;font-weight:900;letter-spacing:10px;background:linear-gradient(135deg,#ff6b6b,#ffd93d);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.cshow .cd{font-size:44px;font-weight:900;letter-spacing:10px;background:linear-gradient(135deg,#ff6b6b,#ffd93d);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
 .cshow .wt{margin-top:10px;font-size:12px;color:#555}
 .bk{background:none;border:none;color:#666;font-size:12px;font-family:'Inter',sans-serif;cursor:pointer;padding:6px 0}
 .bk:active{color:#ddd}
-.rules{margin-top:18px;padding:14px;background:#0d0d16;border-radius:12px;border:1px solid #1a1a28;flex-shrink:0}
+.rules{margin-top:16px;padding:14px;background:#0d0d16;border-radius:12px;border:1px solid #1a1a28}
 .rules h3{font-size:12px;color:#ff6b6b;margin-bottom:6px}
 .rules ul{list-style:none;font-size:11px;color:#666;line-height:1.9}
 .rules li::before{content:'• ';color:#ff6b6b}
@@ -48,8 +48,6 @@ body{font-family:'Inter',sans-serif;background:#08080f;color:#e0e0e0;min-height:
 .plist .pl{display:flex;flex-wrap:wrap;gap:6px}
 .plist .pi{padding:4px 10px;border-radius:8px;font-size:11px;font-weight:600;background:#151520;border:1px solid #252535}
 .plist .pi.me{border-color:#ff6b6b;color:#ff6b6b}
-.plist .pi.ready{border-color:#2ecc71;color:#2ecc71}
-.plist .pi.dead{opacity:.3;text-decoration:line-through}
 .canvas-wrap{flex:1;display:flex;align-items:center;justify-content:center;position:relative;min-height:0}
 #gameCanvas{border-radius:12px;touch-action:none;max-width:100%;max-height:100%}
 .hud{display:flex;justify-content:space-between;align-items:center;padding:6px 0;font-size:11px;color:#888}
@@ -58,7 +56,7 @@ body{font-family:'Inter',sans-serif;background:#08080f;color:#e0e0e0;min-height:
 .hud .alive{color:#6bcb77;font-weight:600}
 .ctrl{padding:8px 0;flex-shrink:0}
 .ctrl-row{display:flex;gap:8px;align-items:center;margin-bottom:6px}
-.ctrl-row label{font-size:11px;color:#666;min-width:40px}
+.ctrl-row label{font-size:11px;color:#666;min-width:36px}
 .ctrl-row input[type=range]{flex:1;-webkit-appearance:none;height:6px;border-radius:3px;background:#1a1a28;outline:none}
 .ctrl-row input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:22px;height:22px;border-radius:50%;background:#ff6b6b;cursor:pointer}
 .ctrl-row .val{font-size:12px;font-weight:700;color:#ff6b6b;min-width:30px;text-align:right}
@@ -96,7 +94,7 @@ body{font-family:'Inter',sans-serif;background:#08080f;color:#e0e0e0;min-height:
 
 <div class="wrap">
 <div class="hdr"><h1>⚔️ Arena Smash</h1><small>10 Kişilik Arena</small></div>
-<div id="dbS" class="wt">🔄 Bağlanıyor...</div>
+<div id="dbS" class="wt">🔄 Firebase'e bağlanılıyor...</div>
 
 <!-- MENU -->
 <div class="scr on" id="S0">
@@ -111,16 +109,17 @@ body{font-family:'Inter',sans-serif;background:#08080f;color:#e0e0e0;min-height:
 <div class="rules">
 <h3>⚔️ Nasıl Oynanır?</h3>
 <ul>
-<li>10 kişiye kadar aynı arenada savaş</li>
+<li>10 kişiye kadar arena savaşı</li>
 <li>Her tur yön ve güç seç, HAZIR bas</li>
-<li>Herkes hazır olunca karakterler fırlar</li>
-<li>Çarpışınca birbirini it, arena dışı = ölüm</li>
+<li>7 saniye dolunca karakterler fırlar</li>
+<li>Çarpışınca birbirini iter</li>
+<li>Arena dışına çıkan elenir</li>
 <li>Son kalan kazanır! 🏆</li>
 </ul>
 </div>
 </div>
 
-<!-- LOBBY -->
+<!-- LOBBY HOST -->
 <div class="scr" id="S1">
 <button class="bk" onclick="exitLobby()">← Geri</button>
 <div class="cshow">
@@ -128,10 +127,8 @@ body{font-family:'Inter',sans-serif;background:#08080f;color:#e0e0e0;min-height:
 <div class="cd" id="dCode">----</div>
 <div class="wt" id="wTxt">⏳ Oyuncular bekleniyor...</div>
 </div>
-<div class="plist" id="lobbyPlayers"><h4>Oyuncular</h4><div class="pl" id="lpList"></div></div>
-<div id="stBox">
-<button class="btn bgr" onclick="startMatch()" id="startBtn" disabled>⚔️ Maçı Başlat (min 2 kişi)</button>
-</div>
+<div class="plist"><h4>Oyuncular</h4><div class="pl" id="lpL"></div></div>
+<button class="btn bgr" onclick="startMatch()" id="startBtn" disabled>⚔️ Başlat</button>
 </div>
 
 <!-- JOIN -->
@@ -145,7 +142,7 @@ body{font-family:'Inter',sans-serif;background:#08080f;color:#e0e0e0;min-height:
 <button class="btn bg" onclick="joinRoom()">🚪 Katıl</button>
 </div>
 
-<!-- WAIT (non-host) -->
+<!-- WAIT GUEST -->
 <div class="scr" id="S3">
 <button class="bk" onclick="exitP()">← Geri</button>
 <div class="cshow">
@@ -153,7 +150,7 @@ body{font-family:'Inter',sans-serif;background:#08080f;color:#e0e0e0;min-height:
 <div class="cd" id="dCode2">----</div>
 <div class="wt">⏳ Kurucu başlatacak...</div>
 </div>
-<div class="plist"><h4>Oyuncular</h4><div class="pl" id="lpList2"></div></div>
+<div class="plist"><h4>Oyuncular</h4><div class="pl" id="lpL2"></div></div>
 </div>
 
 <!-- GAME -->
@@ -183,208 +180,774 @@ body{font-family:'Inter',sans-serif;background:#08080f;color:#e0e0e0;min-height:
 </div>
 </div>
 
+<!-- FIREBASE SDK -->
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+
 <script>
-var DB="https://mobilgame1-f03ac-default-rtdb.europe-west1.firebasedatabase.app";
-var room=null,role=null,mySlot=null,pName="",pollT=null,gameT=null,phaseT=null;
-var ARENA=8,CELL=50,PAD=40,RADIUS=18,FRICTION=.92,BOUNCE=.7,PUSH_FORCE=1.5;
-var MAX_PLAYERS=10,PREP_TIME=7,SIM_STEPS=120,SIM_DT=1/60;
-var players=[],roundNum=0,phase="wait",myAlive=true,simFrame=0,prepCount=0;
-var canvas,ctx,cW,cH,oX,oY,animId=null;
+// ============================================
+// FIREBASE CONFIG + INIT
+// ============================================
+var firebaseConfig = {
+    apiKey: "AIzaSyDXgndR3i2p0ovRXVxqGb24d7lMXdTTX9I",
+    authDomain: "mobilgame1-f03ac.firebaseapp.com",
+    databaseURL: "https://mobilgame1-f03ac-default-rtdb.europe-west1.firebasedatabase.app",
+    projectId: "mobilgame1-f03ac",
+    storageBucket: "mobilgame1-f03ac.firebasestorage.app",
+    messagingSenderId: "188464433527",
+    appId: "1:188464433527:web:baed82070bfed9652df972",
+    measurementId: "G-0G2FXDPVKM"
+};
 
-// === DB HELPERS ===
-function dbW(p,d,cb){var x=new XMLHttpRequest();x.open("PUT",DB+"/"+p+".json",true);x.setRequestHeader("Content-Type","application/json");x.onreadystatechange=function(){if(x.readyState===4&&cb)cb(x.status===200)};x.onerror=function(){if(cb)cb(false)};x.send(JSON.stringify(d))}
-function dbU(p,d,cb){var x=new XMLHttpRequest();x.open("PATCH",DB+"/"+p+".json",true);x.setRequestHeader("Content-Type","application/json");x.onreadystatechange=function(){if(x.readyState===4&&cb)cb(x.status===200)};x.onerror=function(){if(cb)cb(false)};x.send(JSON.stringify(d))}
-function dbR(p,cb){var x=new XMLHttpRequest();x.open("GET",DB+"/"+p+".json",true);x.onreadystatechange=function(){if(x.readyState===4){if(x.status===200){try{cb(true,JSON.parse(x.responseText))}catch(e){cb(false,null)}}else cb(false,null)}};x.onerror=function(){cb(false,null)};x.send()}
-function dbD(p,cb){var x=new XMLHttpRequest();x.open("DELETE",DB+"/"+p+".json",true);x.onreadystatechange=function(){if(x.readyState===4&&cb)cb(x.status===200)};x.onerror=function(){if(cb)cb(false)};x.send()}
+var app = firebase.initializeApp(firebaseConfig);
+var db = firebase.database();
+var dbOk = false;
 
-function testConn(){setS("wt","🔄 Test...");dbW("_t",{t:Date.now()},function(ok){if(ok){dbD("_t");setS("ok","✅ Bağlı!");document.getElementById("btnC").disabled=false;document.getElementById("btnJ").disabled=false}else setS("no","❌ Bağlantı yok!")})}
-function setS(c,t){var e=document.getElementById("dbS");e.className=c;e.textContent=t}
+// ============================================
+// CONNECTION TEST
+// ============================================
+function testConn() {
+    setS("wt", "🔄 Firebase'e bağlanılıyor...");
 
-// === UTILS ===
-function rc(){return String(1000+Math.floor(Math.random()*9000))}
-function gn(){var v=document.getElementById("inpName").value.trim();return v||("P"+Math.floor(Math.random()*99))}
-function sw(id){var a=document.querySelectorAll(".scr");for(var i=0;i<a.length;i++)a[i].classList.remove("on");document.getElementById(id).classList.add("on")}
-function toast(m,t){var c=document.getElementById("TB"),d=document.createElement("div");d.className="tst t"+t;d.textContent=m;c.appendChild(d);setTimeout(function(){d.classList.add("sh")},10);setTimeout(function(){d.classList.remove("sh");setTimeout(function(){d.remove()},300)},2200)}
-function stopPoll(){if(pollT){clearInterval(pollT);pollT=null}}
-function stopGame(){if(gameT){clearInterval(gameT);gameT=null}if(phaseT){clearTimeout(phaseT);phaseT=null}if(animId){cancelAnimationFrame(animId);animId=null}}
-function clean(){stopPoll();stopGame();room=null;role=null;mySlot=null;players=[];roundNum=0;phase="wait";myAlive=true;simFrame=0;document.getElementById("inpCode").value="";document.getElementById("jErr").textContent="";document.getElementById("resOv").classList.remove("on")}
-
-var COLORS=["#ff6b6b","#ffd93d","#6bcb77","#4ecdc4","#a29bfe","#fd79a8","#fdcb6e","#00cec9","#e17055","#dfe6e9"];
-
-function startPoll(cb){stopPoll();function go(){if(!room)return;dbR("arenas/"+room,function(ok,d){if(ok)cb(d)})}go();pollT=setInterval(go,1200)}
-
-// === CREATE ===
-function createRoom(){
-    pName=gn();document.getElementById("inpName").value=pName;
-    var code=rc();room=code;role="host";mySlot="p0";
-    var data={status:"lobby",host:pName,round:0,phase:"lobby"};
-    data["p0"]={name:pName,alive:true,ready:false,angle:0,power:50,x:0,y:0,vx:0,vy:0};
-    dbW("arenas/"+code,data,function(ok){
-        if(!ok){toast("Hata!","t");room=null;return}
-        document.getElementById("dCode").textContent=code;
-        sw("S1");updateLobby(data);
-        startPoll(function(d){
-            if(!d)return;
-            if(d.status==="lobby")updateLobby(d);
-            if(d.status==="playing"){stopPoll();initGame(d)}
-        })
-    })
-}
-
-// === JOIN ===
-function joinRoom(){
-    var code=document.getElementById("inpCode").value.trim();
-    pName=gn();document.getElementById("inpName").value=pName;
-    var err=document.getElementById("jErr");
-    if(code.length!==4){err.textContent="4 haneli kod girin.";return}
-    dbR("arenas/"+code,function(ok,d){
-        if(!ok||!d){err.textContent="Arena bulunamadı.";return}
-        if(d.status!=="lobby"){err.textContent="Maç başlamış.";return}
-        var slot=null;
-        for(var i=0;i<MAX_PLAYERS;i++){if(!d["p"+i]){slot="p"+i;break}}
-        if(!slot){err.textContent="Arena dolu (10/10).";return}
-        room=code;role="guest";mySlot=slot;err.textContent="";
-        var upd={};upd[slot]={name:pName,alive:true,ready:false,angle:0,power:50,x:0,y:0,vx:0,vy:0};
-        dbU("arenas/"+code,upd,function(ok2){
-            if(!ok2){err.textContent="Katılma hatası!";room=null;return}
-            document.getElementById("dCode2").textContent=code;
-            sw("S3");toast("Katıldın!","i");
-            startPoll(function(d2){
-                if(!d2){toast("Arena silindi!","t");clean();sw("S0");return}
-                if(d2.status==="lobby")updateLobby2(d2);
-                if(d2.status==="playing"){stopPoll();initGame(d2)}
-            })
-        })
-    })
-}
-
-function updateLobby(d){
-    var html="",cnt=0;
-    for(var i=0;i<MAX_PLAYERS;i++){var p=d["p"+i];if(p){cnt++;var cls="pi";if("p"+i===mySlot)cls+=" me";html+='<div class="'+cls+'" style="border-left:3px solid '+COLORS[i]+'">'+p.name+'</div>'}}
-    document.getElementById("lpList").innerHTML=html;
-    document.getElementById("wTxt").textContent=cnt+"/10 oyuncu";
-    document.getElementById("startBtn").disabled=cnt<2;
-    document.getElementById("startBtn").textContent="⚔️ Başlat ("+cnt+" kişi)"
-}
-function updateLobby2(d){
-    var html="",cnt=0;
-    for(var i=0;i<MAX_PLAYERS;i++){var p=d["p"+i];if(p){cnt++;var cls="pi";if("p"+i===mySlot)cls+=" me";html+='<div class="'+cls+'" style="border-left:3px solid '+COLORS[i]+'">'+p.name+'</div>'}}
-    document.getElementById("lpList2").innerHTML=html
-}
-
-// === START MATCH ===
-function startMatch(){
-    if(role!=="host"||!room)return;
-    dbR("arenas/"+room,function(ok,d){
-        if(!ok||!d)return;
-        var ps=[];
-        for(var i=0;i<MAX_PLAYERS;i++){if(d["p"+i])ps.push(i)}
-        if(ps.length<2){toast("En az 2 kişi gerekli!","t");return}
-        // Place players in circle
-        var cx=ARENA*CELL/2,cy=ARENA*CELL/2,r=ARENA*CELL/2-RADIUS-20;
-        var upd={status:"playing",round:1,phase:"prep",prepStart:Date.now()};
-        for(var j=0;j<ps.length;j++){
-            var ang=2*Math.PI*j/ps.length;
-            var px=cx+Math.cos(ang)*r*.6;
-            var py=cy+Math.sin(ang)*r*.6;
-            var slot="p"+ps[j];
-            upd[slot+"/x"]=px;upd[slot+"/y"]=py;
-            upd[slot+"/vx"]=0;upd[slot+"/vy"]=0;
-            upd[slot+"/alive"]=true;
-            upd[slot+"/ready"]=false
+    // Method 1: .info/connected
+    db.ref(".info/connected").on("value", function(snap) {
+        if (snap.val() === true) {
+            dbOk = true;
+            setS("ok", "✅ Firebase bağlı — Hazır!");
+            document.getElementById("btnC").disabled = false;
+            document.getElementById("btnJ").disabled = false;
         }
-        dbU("arenas/"+room,upd,function(){})
-    })
+    });
+
+    // Method 2: Fallback test write
+    setTimeout(function() {
+        if (!dbOk) {
+            db.ref("_test").set({ t: Date.now() })
+                .then(function() {
+                    db.ref("_test").remove();
+                    dbOk = true;
+                    setS("ok", "✅ Firebase bağlı — Hazır!");
+                    document.getElementById("btnC").disabled = false;
+                    document.getElementById("btnJ").disabled = false;
+                })
+                .catch(function(err) {
+                    setS("no", "❌ Bağlantı hatası: " + err.message);
+                });
+        }
+    }, 3000);
+
+    // Method 3: Timeout
+    setTimeout(function() {
+        if (!dbOk) {
+            setS("no", "❌ Bağlantı zaman aşımı! Sayfayı yenile.");
+        }
+    }, 8000);
 }
 
-// === INIT GAME ===
-function initGame(d){
-    players=[];
-    for(var i=0;i<MAX_PLAYERS;i++){
-        var p=d["p"+i];
-        if(p)players.push({slot:"p"+i,idx:i,name:p.name,x:p.x,y:p.y,vx:0,vy:0,alive:p.alive!==false,ready:false,angle:p.angle||0,power:p.power||50})
+function setS(c, t) {
+    var e = document.getElementById("dbS");
+    e.className = c;
+    e.textContent = t;
+}
+
+// ============================================
+// CONSTANTS
+// ============================================
+var ARENA = 8, CELL = 50, RADIUS = 18;
+var FRICTION = 0.92, BOUNCE = 0.7, PUSH = 1.5;
+var MAX_P = 10, PREP_TIME = 7, SIM_STEPS = 120;
+var COLORS = ["#ff6b6b","#ffd93d","#6bcb77","#4ecdc4","#a29bfe","#fd79a8","#fdcb6e","#00cec9","#e17055","#dfe6e9"];
+
+// ============================================
+// STATE
+// ============================================
+var room = null, role = null, mySlot = null, pName = "";
+var listeners = [];
+var players = [], roundNum = 0, phase = "wait";
+var myAlive = true, simFrame = 0, prepCount = 0;
+var canvas, ctx, cW, cH, oX, oY, animId = null, phaseT = null;
+
+// ============================================
+// UTILS
+// ============================================
+function rc() { return String(1000 + Math.floor(Math.random() * 9000)); }
+function gn() { var v = document.getElementById("inpName").value.trim(); return v || ("P" + Math.floor(Math.random() * 99)); }
+function sw(id) { var a = document.querySelectorAll(".scr"); for (var i = 0; i < a.length; i++) a[i].classList.remove("on"); document.getElementById(id).classList.add("on"); }
+function toast(m, t) {
+    var c = document.getElementById("TB"), d = document.createElement("div");
+    d.className = "tst t" + t; d.textContent = m; c.appendChild(d);
+    setTimeout(function() { d.classList.add("sh"); }, 10);
+    setTimeout(function() { d.classList.remove("sh"); setTimeout(function() { d.remove(); }, 300); }, 2200);
+}
+
+function offAll() { for (var i = 0; i < listeners.length; i++) { try { listeners[i](); } catch(e) {} } listeners = []; }
+function clean() {
+    offAll();
+    if (phaseT) { clearInterval(phaseT); phaseT = null; }
+    if (animId) { cancelAnimationFrame(animId); animId = null; }
+    room = null; role = null; mySlot = null;
+    players = []; roundNum = 0; phase = "wait"; myAlive = true; simFrame = 0;
+    document.getElementById("inpCode").value = "";
+    document.getElementById("jErr").textContent = "";
+    document.getElementById("resOv").classList.remove("on");
+}
+
+// ============================================
+// FIREBASE LISTEN HELPER
+// ============================================
+function listenRef(path, cb) {
+    var ref = db.ref(path);
+    var handler = ref.on("value", function(snap) { cb(snap.val()); });
+    listeners.push(function() { ref.off("value", handler); });
+}
+
+// ============================================
+// CREATE ROOM
+// ============================================
+function createRoom() {
+    if (!dbOk) { toast("Firebase bağlı değil!", "t"); return; }
+    pName = gn(); document.getElementById("inpName").value = pName;
+    var code = rc();
+    room = code; role = "host"; mySlot = "p0";
+
+    var data = {
+        status: "lobby",
+        host: pName,
+        round: 0,
+        phase: "lobby",
+        p0: { name: pName, alive: true, ready: false, angle: 0, power: 50, x: 0, y: 0, vx: 0, vy: 0 }
+    };
+
+    db.ref("arenas/" + code).set(data)
+        .then(function() {
+            db.ref("arenas/" + code).onDisconnect().remove();
+            document.getElementById("dCode").textContent = code;
+            sw("S1");
+            toast("Arena kuruldu! Kod: " + code, "s");
+
+            // Listen for changes
+            listenRef("arenas/" + code, function(d) {
+                if (!d) { toast("Arena silindi!", "t"); clean(); sw("S0"); return; }
+                if (d.status === "lobby") updateLobby(d, "lpL");
+                if (d.status === "playing") {
+                    offAll();
+                    initGame(d);
+                    listenGame();
+                }
+            });
+        })
+        .catch(function(err) {
+            toast("Hata: " + err.message, "t");
+            room = null; role = null;
+        });
+}
+
+// ============================================
+// JOIN ROOM
+// ============================================
+function joinRoom() {
+    if (!dbOk) { toast("Firebase bağlı değil!", "t"); return; }
+    var code = document.getElementById("inpCode").value.trim();
+    pName = gn(); document.getElementById("inpName").value = pName;
+    var err = document.getElementById("jErr");
+    if (code.length !== 4) { err.textContent = "4 haneli kod girin."; return; }
+
+    db.ref("arenas/" + code).once("value")
+        .then(function(snap) {
+            var d = snap.val();
+            if (!d) { err.textContent = "Arena bulunamadı."; return; }
+            if (d.status !== "lobby") { err.textContent = "Maç başlamış."; return; }
+
+            // Find empty slot
+            var slot = null;
+            for (var i = 0; i < MAX_P; i++) {
+                if (!d["p" + i]) { slot = "p" + i; break; }
+            }
+            if (!slot) { err.textContent = "Arena dolu (10/10)."; return; }
+
+            room = code; role = "guest"; mySlot = slot; err.textContent = "";
+
+            var upd = {};
+            upd[slot] = { name: pName, alive: true, ready: false, angle: 0, power: 50, x: 0, y: 0, vx: 0, vy: 0 };
+
+            db.ref("arenas/" + code).update(upd)
+                .then(function() {
+                    document.getElementById("dCode2").textContent = code;
+                    sw("S3");
+                    toast("Katıldın!", "s");
+
+                    listenRef("arenas/" + code, function(d2) {
+                        if (!d2) { toast("Arena silindi!", "t"); clean(); sw("S0"); return; }
+                        if (d2.status === "lobby") updateLobby(d2, "lpL2");
+                        if (d2.status === "playing") {
+                            offAll();
+                            initGame(d2);
+                            listenGame();
+                        }
+                    });
+                })
+                .catch(function(err2) { err.textContent = "Katılma hatası!"; room = null; });
+        })
+        .catch(function(err3) { err.textContent = "Bağlantı hatası!"; });
+}
+
+// ============================================
+// LOBBY
+// ============================================
+function updateLobby(d, elId) {
+    var html = "", cnt = 0;
+    for (var i = 0; i < MAX_P; i++) {
+        var p = d["p" + i];
+        if (p) {
+            cnt++;
+            var cls = "pi";
+            if ("p" + i === mySlot) cls += " me";
+            html += '<div class="' + cls + '" style="border-left:3px solid ' + COLORS[i] + '">' + p.name + '</div>';
+        }
     }
-    roundNum=d.round||1;phase="prep";myAlive=true;simFrame=0;prepCount=PREP_TIME;
-    for(var j=0;j<players.length;j++){if(players[j].slot===mySlot&&!players[j].alive)myAlive=false}
-    sw("S4");initCanvas();renderAll();
-    document.getElementById("ctrlPanel").style.display=myAlive?"block":"none";
-    document.getElementById("readyBtn").disabled=false;
-    document.getElementById("readyBtn").textContent="✅ HAZIR";
-    startGamePoll();startPrepTimer()
+    var el = document.getElementById(elId);
+    if (el) el.innerHTML = html;
+    if (document.getElementById("wTxt")) document.getElementById("wTxt").textContent = cnt + "/10 oyuncu";
+    var sb = document.getElementById("startBtn");
+    if (sb) { sb.disabled = cnt < 2; sb.textContent = "⚔️ Başlat (" + cnt + " kişi)"; }
 }
 
-// === CANVAS ===
-function initCanvas(){
-    canvas=document.getElementById("gameCanvas");ctx=canvas.getContext("2d");
-    resizeCanvas();window.addEventListener("resize",resizeCanvas)
-}
-function resizeCanvas(){
-    var wrap=canvas.parentElement;
-    var s=Math.min(wrap.clientWidth,wrap.clientHeight,500);
-    canvas.width=s;canvas.height=s;
-    cW=s;cH=s;
-    var arenaSize=ARENA*CELL;
-    var scale=Math.min((cW-20)/arenaSize,(cH-20)/arenaSize);
-    oX=(cW-arenaSize*scale)/2;oY=(cH-arenaSize*scale)/2;
-    renderAll()
+// ============================================
+// START MATCH
+// ============================================
+function startMatch() {
+    if (role !== "host" || !room) return;
+
+    db.ref("arenas/" + room).once("value").then(function(snap) {
+        var d = snap.val();
+        if (!d) return;
+        var ps = [];
+        for (var i = 0; i < MAX_P; i++) { if (d["p" + i]) ps.push(i); }
+        if (ps.length < 2) { toast("En az 2 kişi!", "t"); return; }
+
+        var arenaSize = ARENA * CELL;
+        var cx = arenaSize / 2, cy = arenaSize / 2;
+        var r = arenaSize / 2 - RADIUS - 30;
+
+        var upd = { status: "playing", round: 1, phase: "prep", prepStart: Date.now() };
+        for (var j = 0; j < ps.length; j++) {
+            var ang = 2 * Math.PI * j / ps.length;
+            var px = cx + Math.cos(ang) * r * 0.6;
+            var py = cy + Math.sin(ang) * r * 0.6;
+            var slot = "p" + ps[j];
+            upd[slot + "/x"] = px;
+            upd[slot + "/y"] = py;
+            upd[slot + "/vx"] = 0;
+            upd[slot + "/vy"] = 0;
+            upd[slot + "/alive"] = true;
+            upd[slot + "/ready"] = false;
+        }
+        db.ref("arenas/" + room).update(upd);
+    });
 }
 
-function renderAll(){
-    if(!ctx)return;
-    var arenaSize=ARENA*CELL;
-    var scale=Math.min((cW-20)/arenaSize,(cH-20)/arenaSize);
-    ctx.clearRect(0,0,cW,cH);
-    ctx.save();ctx.translate(oX,oY);ctx.scale(scale,scale);
+// ============================================
+// GAME
+// ============================================
+function initGame(d) {
+    players = [];
+    for (var i = 0; i < MAX_P; i++) {
+        var p = d["p" + i];
+        if (p) {
+            players.push({
+                slot: "p" + i, idx: i, name: p.name,
+                x: p.x || 0, y: p.y || 0, vx: 0, vy: 0,
+                alive: p.alive !== false, ready: false,
+                angle: p.angle || 0, power: p.power || 50
+            });
+        }
+    }
+    roundNum = d.round || 1;
+    phase = "prep"; myAlive = true; simFrame = 0; prepCount = PREP_TIME;
 
-    // Arena bg - isometric feel
+    for (var j = 0; j < players.length; j++) {
+        if (players[j].slot === mySlot && !players[j].alive) myAlive = false;
+    }
+
+    sw("S4");
+    initCanvas();
+    document.getElementById("ctrlPanel").style.display = myAlive ? "block" : "none";
+    document.getElementById("readyBtn").disabled = false;
+    document.getElementById("readyBtn").textContent = "✅ HAZIR";
+    document.getElementById("hRound").textContent = roundNum;
+    updateAliveCount();
+    renderAll();
+    startPrepTimer();
+}
+
+function listenGame() {
+    listenRef("arenas/" + room, function(d) {
+        if (!d) { toast("Arena kapandı!", "t"); clean(); sw("S0"); return; }
+
+        // Sync players
+        for (var i = 0; i < players.length; i++) {
+            var pd = d[players[i].slot];
+            if (pd) {
+                players[i].ready = pd.ready || false;
+                if (d.phase === "prep" || d.phase === "lobby") {
+                    players[i].alive = pd.alive !== false;
+                    if (players[i].slot !== mySlot) {
+                        players[i].angle = pd.angle || 0;
+                        players[i].power = pd.power || 50;
+                    }
+                }
+            }
+        }
+
+        // Phase transitions
+        if (d.phase === "sim" && phase === "prep") { startSim(d); }
+        if (d.phase === "prep" && phase !== "prep" && phase !== "wait") { roundNum = d.round || roundNum; resetForPrep(d); }
+        if (d.phase === "done") { showWinner(d); }
+
+        document.getElementById("hRound").textContent = d.round || roundNum;
+        updateAliveCount();
+        renderAll();
+    });
+}
+
+function updateAliveCount() {
+    var c = 0;
+    for (var i = 0; i < players.length; i++) if (players[i].alive) c++;
+    document.getElementById("hAlive").textContent = c;
+}
+
+// ============================================
+// CANVAS
+// ============================================
+function initCanvas() {
+    canvas = document.getElementById("gameCanvas");
+    ctx = canvas.getContext("2d");
+    resizeCanvas();
+    window.addEventListener("resize", resizeCanvas);
+}
+
+function resizeCanvas() {
+    var wrap = canvas.parentElement;
+    var s = Math.min(wrap.clientWidth, wrap.clientHeight, 460);
+    canvas.width = s; canvas.height = s;
+    cW = s; cH = s;
+    var arenaSize = ARENA * CELL;
+    var scale = Math.min((cW - 16) / arenaSize, (cH - 16) / arenaSize);
+    oX = (cW - arenaSize * scale) / 2;
+    oY = (cH - arenaSize * scale) / 2;
+    renderAll();
+}
+
+function renderAll() {
+    if (!ctx) return;
+    var arenaSize = ARENA * CELL;
+    var scale = Math.min((cW - 16) / arenaSize, (cH - 16) / arenaSize);
+    ctx.clearRect(0, 0, cW, cH);
     ctx.save();
-    var grad=ctx.createRadialGradient(arenaSize/2,arenaSize/2,0,arenaSize/2,arenaSize/2,arenaSize/2);
-    grad.addColorStop(0,"#1a1a2e");grad.addColorStop(.8,"#12121e");grad.addColorStop(1,"#0a0a12");
-    ctx.fillStyle=grad;
-    ctx.beginPath();ctx.arc(arenaSize/2,arenaSize/2,arenaSize/2,0,Math.PI*2);ctx.fill();
+    ctx.translate(oX, oY);
+    ctx.scale(scale, scale);
 
-    // Grid lines
-    ctx.strokeStyle="#ffffff08";ctx.lineWidth=1;
-    for(var i=0;i<=ARENA;i++){
-        var p=i*CELL;
-        ctx.beginPath();ctx.moveTo(p,0);ctx.lineTo(p,arenaSize);ctx.stroke();
-        ctx.beginPath();ctx.moveTo(0,p);ctx.lineTo(arenaSize,p);ctx.stroke()
+    // Arena background
+    var grad = ctx.createRadialGradient(arenaSize / 2, arenaSize / 2, 0, arenaSize / 2, arenaSize / 2, arenaSize / 2);
+    grad.addColorStop(0, "#1a1a2e");
+    grad.addColorStop(0.8, "#12121e");
+    grad.addColorStop(1, "#0a0a12");
+    ctx.fillStyle = grad;
+    ctx.beginPath();
+    ctx.arc(arenaSize / 2, arenaSize / 2, arenaSize / 2, 0, Math.PI * 2);
+    ctx.fill();
+
+    // Grid
+    ctx.strokeStyle = "#ffffff06";
+    ctx.lineWidth = 1;
+    for (var i = 0; i <= ARENA; i++) {
+        ctx.beginPath(); ctx.moveTo(i * CELL, 0); ctx.lineTo(i * CELL, arenaSize); ctx.stroke();
+        ctx.beginPath(); ctx.moveTo(0, i * CELL); ctx.lineTo(arenaSize, i * CELL); ctx.stroke();
     }
 
-    // Border glow
-    ctx.strokeStyle="#ff6b6b33";ctx.lineWidth=3;
-    ctx.beginPath();ctx.arc(arenaSize/2,arenaSize/2,arenaSize/2-2,0,Math.PI*2);ctx.stroke();
-    ctx.strokeStyle="#ff6b6b11";ctx.lineWidth=8;
-    ctx.beginPath();ctx.arc(arenaSize/2,arenaSize/2,arenaSize/2+2,0,Math.PI*2);ctx.stroke();
-    ctx.restore();
+    // Border
+    ctx.strokeStyle = "#ff6b6b33"; ctx.lineWidth = 3;
+    ctx.beginPath(); ctx.arc(arenaSize / 2, arenaSize / 2, arenaSize / 2 - 2, 0, Math.PI * 2); ctx.stroke();
 
     // Players
-    for(var j=0;j<players.length;j++){
-        var p=players[j];
-        if(!p.alive)continue;
-        var px=p.x,py=p.y;
+    for (var j = 0; j < players.length; j++) {
+        var p = players[j];
+        if (!p.alive) continue;
 
-        // Shadow (2.5D)
-        ctx.fillStyle="rgba(0,0,0,0.3)";
-        ctx.beginPath();ctx.ellipse(px,py+RADIUS*0.6,RADIUS*0.9,RADIUS*0.4,0,0,Math.PI*2);ctx.fill();
+        // Shadow
+        ctx.fillStyle = "rgba(0,0,0,0.3)";
+        ctx.beginPath();
+        ctx.ellipse(p.x, p.y + RADIUS * 0.5, RADIUS * 0.85, RADIUS * 0.35, 0, 0, Math.PI * 2);
+        ctx.fill();
 
         // Body
-        var g=ctx.createRadialGradient(px-4,py-6,2,px,py,RADIUS);
-        g.addColorStop(0,lighten(COLORS[p.idx],30));g.addColorStop(1,COLORS[p.idx]);
-        ctx.fillStyle=g;
-        ctx.beginPath();ctx.arc(px,py,RADIUS,0,Math.PI*2);ctx.fill();
+        var g = ctx.createRadialGradient(p.x - 3, p.y - 5, 2, p.x, p.y, RADIUS);
+        g.addColorStop(0, lighten(COLORS[p.idx], 40));
+        g.addColorStop(1, COLORS[p.idx]);
+        ctx.fillStyle = g;
+        ctx.beginPath(); ctx.arc(p.x, p.y, RADIUS, 0, Math.PI * 2); ctx.fill();
 
-        // Border
-        ctx.strokeStyle=p.slot===mySlot?"#fff":"rgba(255,255,255,0.2)";
-        ctx.lineWidth=p.slot===mySlot?2.5:1;
-        ctx.beginPath();ctx.arc(px,py,RADIUS,0,Math.PI*2);ctx.stroke();
+        // Ring
+        ctx.strokeStyle = p.slot === mySlot ? "#fff" : "rgba(255,255,255,0.15)";
+        ctx.lineWidth = p.slot === mySlot ? 2.5 : 1;
+        ctx.beginPath(); ctx.arc(p.x, p.y, RADIUS, 0, Math.PI * 2); ctx.stroke();
 
-        // Direction arrow (prep phase, my player)
-        if(phase==="prep"&&p.slot===mySlot&&myAlive){
-            var ang=p.angle*Math.PI/180;
-            var pwr=p.power/100*60+20;
-            ctx.strokeStyle="#ffd93daa";ctx.lineWidth=2;
-            ctx.beginPath();ctx.moveTo(px,py);
-            ctx.lineTo(px+Math.cos(ang)*pwr,py+Math.sin(ang)*pwr);ctx.stroke();
-            // Arrow head
-            var ax=px+Math.cos(ang)*pwr,ay=
+        // Direction arrow
+        if (phase === "prep" && p.slot === mySlot && myAlive) {
+            var ang2 = p.angle * Math.PI / 180;
+            var pwr = p.power / 100 * 55 + 20;
+            ctx.strokeStyle = "#ffd93daa"; ctx.lineWidth = 2.5;
+            ctx.beginPath(); ctx.moveTo(p.x, p.y);
+            ctx.lineTo(p.x + Math.cos(ang2) * pwr, p.y + Math.sin(ang2) * pwr);
+            ctx.stroke();
+            var ax = p.x + Math.cos(ang2) * pwr, ay = p.y + Math.sin(ang2) * pwr;
+            ctx.fillStyle = "#ffd93d";
+            ctx.beginPath();
+            ctx.moveTo(ax, ay);
+            ctx.lineTo(ax - Math.cos(ang2 - 0.4) * 10, ay - Math.sin(ang2 - 0.4) * 10);
+            ctx.lineTo(ax - Math.cos(ang2 + 0.4) * 10, ay - Math.sin(ang2 + 0.4) * 10);
+            ctx.fill();
+        }
+
+        // Name
+        ctx.fillStyle = p.slot === mySlot ? "#fff" : "#aaa";
+        ctx.font = "bold 10px Inter"; ctx.textAlign = "center";
+        ctx.fillText(p.name, p.x, p.y - RADIUS - 5);
+
+        // Ready check
+        if (phase === "prep" && p.ready) {
+            ctx.fillStyle = "#2ecc71"; ctx.font = "bold 14px Inter";
+            ctx.fillText("✓", p.x, p.y + 5);
+        }
+    }
+
+    // Phase text
+    if (phase === "prep") {
+        ctx.fillStyle = "#ffd93d"; ctx.font = "bold 16px Inter"; ctx.textAlign = "center";
+        ctx.fillText("HAZIRLAN! " + Math.max(0, prepCount) + "s", arenaSize / 2, 28);
+    } else if (phase === "sim") {
+        ctx.fillStyle = "#ff6b6b"; ctx.font = "bold 16px Inter"; ctx.textAlign = "center";
+        ctx.fillText("⚡ SAVAŞ!", arenaSize / 2, 28);
+    }
+
+    ctx.restore();
+}
+
+function lighten(hex, pct) {
+    var r = parseInt(hex.slice(1, 3), 16);
+    var g = parseInt(hex.slice(3, 5), 16);
+    var b = parseInt(hex.slice(5, 7), 16);
+    r = Math.min(255, r + pct); g = Math.min(255, g + pct); b = Math.min(255, b + pct);
+    return "#" + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
+}
+
+// ============================================
+// SLIDERS
+// ============================================
+document.getElementById("slAngle").addEventListener("input", function() {
+    var v = parseInt(this.value);
+    document.getElementById("vAngle").textContent = v + "°";
+    for (var i = 0; i < players.length; i++) {
+        if (players[i].slot === mySlot) players[i].angle = v;
+    }
+    renderAll();
+});
+
+document.getElementById("slPower").addEventListener("input", function() {
+    var v = parseInt(this.value);
+    document.getElementById("vPower").textContent = v;
+    for (var i = 0; i < players.length; i++) {
+        if (players[i].slot === mySlot) players[i].power = v;
+    }
+    renderAll();
+});
+
+// ============================================
+// READY
+// ============================================
+function sendReady() {
+    if (!room || !mySlot || !myAlive) return;
+    var ang = parseInt(document.getElementById("slAngle").value);
+    var pwr = parseInt(document.getElementById("slPower").value);
+    var upd = {};
+    upd[mySlot + "/ready"] = true;
+    upd[mySlot + "/angle"] = ang;
+    upd[mySlot + "/power"] = pwr;
+
+    db.ref("arenas/" + room).update(upd)
+        .then(function() {
+            document.getElementById("readyBtn").disabled = true;
+            document.getElementById("readyBtn").textContent = "⏳ Bekleniyor...";
+            toast("Hazırsın!", "s");
+
+            // Check if all alive players ready (host only)
+            if (role === "host") checkAllReady();
+        });
+}
+
+function checkAllReady() {
+    db.ref("arenas/" + room).once("value").then(function(snap) {
+        var d = snap.val();
+        if (!d || d.phase !== "prep") return;
+        var allReady = true;
+        for (var i = 0; i < MAX_P; i++) {
+            var p = d["p" + i];
+            if (p && p.alive && !p.ready) { allReady = false; break; }
+        }
+        if (allReady) {
+            db.ref("arenas/" + room).update({ phase: "sim" });
+        }
+    });
+}
+
+// ============================================
+// PREP TIMER
+// ============================================
+function startPrepTimer() {
+    phase = "prep";
+    prepCount = PREP_TIME;
+    document.getElementById("hTimer").textContent = prepCount;
+    if (phaseT) clearInterval(phaseT);
+
+    phaseT = setInterval(function() {
+        prepCount--;
+        document.getElementById("hTimer").textContent = Math.max(0, prepCount);
+        renderAll();
+        if (prepCount <= 0) {
+            clearInterval(phaseT); phaseT = null;
+            if (role === "host") {
+                db.ref("arenas/" + room).update({ phase: "sim" });
+            }
+        }
+    }, 1000);
+}
+
+// ============================================
+// SIMULATION
+// ============================================
+function startSim(d) {
+    phase = "sim";
+    if (phaseT) { clearInterval(phaseT); phaseT = null; }
+
+    // Apply velocities
+    for (var i = 0; i < players.length; i++) {
+        var p = players[i];
+        if (!p.alive) continue;
+        var pd = d[p.slot];
+        if (pd) { p.angle = pd.angle || 0; p.power = pd.power || 50; p.ready = false; }
+        var ang = p.angle * Math.PI / 180;
+        var spd = p.power / 100 * 12 + 2;
+        p.vx = Math.cos(ang) * spd;
+        p.vy = Math.sin(ang) * spd;
+    }
+    simFrame = 0;
+    renderAll();
+    animateSim();
+}
+
+function animateSim() {
+    var arenaSize = ARENA * CELL;
+    var cx = arenaSize / 2, cy = arenaSize / 2, ar = arenaSize / 2;
+
+    for (var s = 0; s < 3; s++) {
+        for (var i = 0; i < players.length; i++) {
+            var p = players[i];
+            if (!p.alive) continue;
+
+            p.x += p.vx;
+            p.y += p.vy;
+            p.vx *= FRICTION;
+            p.vy *= FRICTION;
+
+            // Player-player collision
+            for (var j = i + 1; j < players.length; j++) {
+                var q = players[j];
+                if (!q.alive) continue;
+                var dx = q.x - p.x, dy = q.y - p.y;
+                var dist = Math.sqrt(dx * dx + dy * dy);
+                var minD = RADIUS * 2;
+                if (dist < minD && dist > 0.01) {
+                    var nx = dx / dist, ny = dy / dist;
+                    var overlap = (minD - dist) / 2;
+                    p.x -= nx * overlap * 1.1;
+                    p.y -= ny * overlap * 1.1;
+                    q.x += nx * overlap * 1.1;
+                    q.y += ny * overlap * 1.1;
+                    var dvx = p.vx - q.vx, dvy = p.vy - q.vy;
+                    var dot = dvx * nx + dvy * ny;
+                    p.vx -= dot * nx * PUSH;
+                    p.vy -= dot * ny * PUSH;
+                    q.vx += dot * nx * PUSH;
+                    q.vy += dot * ny * PUSH;
+                }
+            }
+
+            // Arena boundary
+            var distC = Math.sqrt((p.x - cx) * (p.x - cx) + (p.y - cy) * (p.y - cy));
+            if (distC + RADIUS > ar) {
+                if (distC > ar + RADIUS * 3) {
+                    p.alive = false;
+                    if (p.slot === mySlot) {
+                        myAlive = false;
+                        document.getElementById("ctrlPanel").style.display = "none";
+                        var em = document.getElementById("elimMsg");
+                        em.classList.add("sh");
+                        setTimeout(function() { em.classList.remove("sh"); }, 2000);
+                        toast("Elendin! 💀", "t");
+                    }
+                } else if (distC + RADIUS > ar) {
+                    var bnx = (p.x - cx) / distC, bny = (p.y - cy) / distC;
+                    p.x = cx + bnx * (ar - RADIUS - 1);
+                    p.y = cy + bny * (ar - RADIUS - 1);
+                    var bDot = p.vx * bnx + p.vy * bny;
+                    if (bDot > 0) {
+                        p.vx -= 2 * bDot * bnx * BOUNCE;
+                        p.vy -= 2 * bDot * bny * BOUNCE;
+                    }
+                }
+            }
+        }
+    }
+
+    simFrame++;
+    updateAliveCount();
+    renderAll();
+
+    if (simFrame < SIM_STEPS) {
+        animId = requestAnimationFrame(animateSim);
+    } else {
+        phase = "wait";
+        if (role === "host") endRound();
+    }
+}
+
+// ============================================
+// END ROUND
+// ============================================
+function endRound() {
+    var alive = [];
+    for (var i = 0; i < players.length; i++) {
+        if (players[i].alive) alive.push(players[i]);
+    }
+
+    var upd = {};
+    for (var j = 0; j < players.length; j++) {
+        upd[players[j].slot + "/alive"] = players[j].alive;
+        upd[players[j].slot + "/x"] = players[j].x;
+        upd[players[j].slot + "/y"] = players[j].y;
+        upd[players[j].slot + "/vx"] = 0;
+        upd[players[j].slot + "/vy"] = 0;
+        upd[players[j].slot + "/ready"] = false;
+    }
+
+    if (alive.length <= 1) {
+        upd.phase = "done";
+        upd.winner = alive.length === 1 ? alive[0].name : "Berabere";
+    } else {
+        roundNum++;
+        upd.phase = "prep";
+        upd.round = roundNum;
+        upd.prepStart = Date.now();
+    }
+    db.ref("arenas/" + room).update(upd);
+}
+
+function resetForPrep(d) {
+    phase = "prep";
+    for (var i = 0; i < players.length; i++) {
+        var pd = d[players[i].slot];
+        if (pd) {
+            players[i].x = pd.x || players[i].x;
+            players[i].y = pd.y || players[i].y;
+            players[i].vx = 0; players[i].vy = 0;
+            players[i].alive = pd.alive !== false;
+            players[i].ready = false;
+        }
+        if (players[i].slot === mySlot) myAlive = players[i].alive;
+    }
+    document.getElementById("ctrlPanel").style.display = myAlive ? "block" : "none";
+    document.getElementById("readyBtn").disabled = false;
+    document.getElementById("readyBtn").textContent = "✅ HAZIR";
+    startPrepTimer();
+    renderAll();
+}
+
+// ============================================
+// WINNER
+// ============================================
+function showWinner(d) {
+    offAll();
+    if (phaseT) { clearInterval(phaseT); phaseT = null; }
+    if (animId) { cancelAnimationFrame(animId); animId = null; }
+    phase = "done";
+
+    for (var i = 0; i < players.length; i++) {
+        var pd = d[players[i].slot];
+        if (pd) players[i].alive = pd.alive !== false;
+    }
+    renderAll();
+
+    var winner = d.winner || "?";
+    var isMe = false;
+    for (var j = 0; j < players.length; j++) {
+        if (players[j].slot === mySlot && players[j].alive) isMe = true;
+    }
+
+    document.getElementById("rIco").textContent = isMe ? "🏆" : "💀";
+    document.getElementById("rTit").textContent = isMe ? "KAZANDIN!" : "Oyun Bitti!";
+    document.getElementById("rTit").style.color = isMe ? "#ffd93d" : "#e74c3c";
+    document.getElementById("rSub").textContent = "🏆 Kazanan: " + winner;
+    document.getElementById("resOv").classList.add("on");
+    if (isMe) doCft();
+}
+
+function doCft() {
+    var cols = ["#ffd93d", "#ff6b6b", "#6bcb77", "#a29bfe", "#fd79a8"];
+    for (var i = 0; i < 50; i++) {
+        var p = document.createElement("div");
+        p.style.cssText = "position:fixed;z-index:300;pointer-events:none;border-radius:2px;left:" +
+            Math.random() * 100 + "vw;top:-10px;background:" + cols[Math.floor(Math.random() * cols.length)] +
+            ";width:" + (4 + Math.random() * 6) + "px;height:" + (4 + Math.random() * 6) + "px";
+        if (Math.random() > 0.5) p.style.borderRadius = "50%";
+        document.body.appendChild(p);
+        var dur = 1200 + Math.random() * 1800;
+        var xd = (Math.random() - 0.5) * 200;
+        p.animate([
+            { transform: "translateY(0) rotate(0)", opacity: 1 },
+            { transform: "translateY(" + window.innerHeight + "px) translateX(" + xd + "px) rotate(" + Math.random() * 720 + "deg)", opacity: 0 }
+        ], { duration: dur, easing: "ease-out" }).onfinish = function() { this.effect.target.remove(); };
+    }
+}
+
+// ============================================
+// LEAVE
+// ============================================
+function exitLobby() {
+    if (room) db.ref("arenas/" + room).remove();
+    clean(); sw("S0");
+}
+
+function exitP() {
+    if (room && mySlot) db.ref("arenas/" + room + "/" + mySlot).remove();
+    clean(); sw("S0");
+}
+
+function quitGame() {
+    if (room && mySlot) db.ref("arenas/" + room + "/" + mySlot + "/alive").set(false);
+    if (room && role === "host") db.ref("arenas/" + room).remove();
+    clean(); toast("Ayrıldın.", "i"); sw("S0");
+}
+
+function goMenu() {
+    document.getElementById("resOv").classList.remove("on");
+    if (room && role === "host") db.ref("arenas/" + room).remove();
+    clean(); sw("S0");
+}
+
+// ============================================
+// INIT
+// ============================================
+testConn();
+</script>
+</body>
+</html>
