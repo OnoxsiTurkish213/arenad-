@@ -2,184 +2,163 @@
 <html lang="tr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-<title>HaxBall Mobile Clone</title>
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<title>HaxBall Mobile Pro</title>
 <style>
-*{margin:0;padding:0;box-sizing:border-box;-webkit-touch-callout:none;-webkit-user-select:none;user-select:none;-webkit-tap-highlight-color:transparent;}
-html,body{width:100%;height:100%;overflow:hidden;background:#0a0a1a;font-family:'Segoe UI',Arial,sans-serif;touch-action:none;position:fixed;top:0;left:0;}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-touch-callout:none;-webkit-user-select:none;user-select:none;-webkit-tap-highlight-color:transparent}
+html,body{width:100%;height:100%;overflow:hidden;background:#0a0a1a;font-family:'Segoe UI',Arial,sans-serif;touch-action:none;position:fixed;top:0;left:0}
+.scr{position:absolute;top:0;left:0;width:100%;height:100%;display:none}
+#menuScreen{display:flex;flex-direction:column;align-items:center;justify-content:center;background:linear-gradient(135deg,#0f0c29,#302b63,#24243e);z-index:100;overflow-y:auto;padding:10px}
+#menuScreen h1{color:#fff;font-size:26px;margin-bottom:2px}
+#menuScreen .sub{color:#777;font-size:12px;margin-bottom:18px}
+.mbox{background:rgba(255,255,255,.06);border-radius:14px;padding:18px;width:300px;max-width:90vw;border:1px solid rgba(255,255,255,.08)}
+.mbox input,.mbox select{width:100%;padding:10px 12px;margin-bottom:8px;border:1px solid rgba(255,255,255,.1);border-radius:8px;background:rgba(255,255,255,.05);color:#fff;font-size:13px;outline:none;-webkit-appearance:none}
+.mbox input::placeholder{color:rgba(255,255,255,.3)}
+.mbox select option{background:#1a1a2e;color:#fff}
+.dv{display:flex;align-items:center;margin:10px 0;color:rgba(255,255,255,.2);font-size:11px}
+.dv::before,.dv::after{content:'';flex:1;height:1px;background:rgba(255,255,255,.08)}
+.dv::before{margin-right:8px}.dv::after{margin-left:8px}
+.btn{padding:10px 16px;border:none;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;transition:transform .1s;text-align:center;color:#fff}
+.btn:active{transform:scale(.97)}
+.bf{width:100%;margin-bottom:6px}
+.bcr{background:linear-gradient(135deg,#e74c3c,#c0392b)}
+.bjo{background:linear-gradient(135deg,#3498db,#2980b9)}
+.bgr{background:linear-gradient(135deg,#27ae60,#1e8449)}
+.bgy{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.1);color:#aaa}
+.bor{background:linear-gradient(135deg,#f39c12,#e67e22)}
+.blv{background:linear-gradient(135deg,#e74c3c,#c0392b)}
 
-/* MENU SCREEN */
-#menuScreen{position:absolute;top:0;left:0;width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;background:linear-gradient(135deg,#0f0c29,#302b63,#24243e);z-index:100;overflow-y:auto;}
-#menuScreen h1{color:#fff;font-size:28px;margin-bottom:4px;text-shadow:0 0 30px rgba(255,200,0,0.3);}
-#menuScreen h1 .ball-icon{display:inline-block;animation:spinBall 2s linear infinite;}
-@keyframes spinBall{0%{transform:rotate(0deg);}100%{transform:rotate(360deg);}}
-#menuScreen .subtitle{color:#888;font-size:13px;margin-bottom:24px;}
-#menuScreen .menu-box{background:rgba(255,255,255,0.06);border-radius:16px;padding:20px;width:300px;max-width:88vw;backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,0.08);}
-#menuScreen input{width:100%;padding:11px 14px;margin-bottom:10px;border:1px solid rgba(255,255,255,0.12);border-radius:10px;background:rgba(255,255,255,0.05);color:#fff;font-size:14px;outline:none;transition:border 0.3s;}
-#menuScreen input:focus{border-color:rgba(255,255,255,0.35);}
-#menuScreen input::placeholder{color:rgba(255,255,255,0.3);}
-.btn{padding:12px 20px;border:none;border-radius:10px;font-size:15px;font-weight:600;cursor:pointer;transition:all 0.2s;letter-spacing:0.3px;text-align:center;}
-.btn:active{transform:scale(0.97);}
-.btn-full{width:100%;margin-bottom:8px;}
-.btn-create{background:linear-gradient(135deg,#e74c3c,#c0392b);color:#fff;}
-.btn-join{background:linear-gradient(135deg,#3498db,#2980b9);color:#fff;}
-.btn-green{background:linear-gradient(135deg,#27ae60,#1e8449);color:#fff;}
-.btn-gray{background:rgba(255,255,255,0.1);color:#ccc;border:1px solid rgba(255,255,255,0.1);}
-.btn-orange{background:linear-gradient(135deg,#f39c12,#e67e22);color:#fff;}
-.btn-leave{background:linear-gradient(135deg,#e74c3c,#c0392b);color:#fff;}
-.divider{display:flex;align-items:center;margin:14px 0;color:rgba(255,255,255,0.25);font-size:12px;}
-.divider::before,.divider::after{content:'';flex:1;height:1px;background:rgba(255,255,255,0.1);}
-.divider::before{margin-right:10px;}
-.divider::after{margin-left:10px;}
+#lobbyScreen{flex-direction:column;align-items:center;background:linear-gradient(135deg,#0f0c29,#302b63,#24243e);z-index:90;overflow-y:auto;padding:12px}
+#lobbyScreen h2{color:#fff;font-size:20px;margin-bottom:2px}
+.rcd{color:#f39c12;font-size:14px;margin-bottom:4px;font-weight:700;background:rgba(243,156,18,.08);padding:4px 14px;border-radius:6px}
+.lmi{color:#888;font-size:11px;margin-bottom:10px}
+.lc{display:flex;gap:8px;width:96%;max-width:900px;flex-wrap:wrap;justify-content:center}
+.tp{background:rgba(255,255,255,.04);border-radius:10px;padding:10px;min-width:160px;flex:1;border:1px solid rgba(255,255,255,.06);min-height:100px}
+.tp h3{text-align:center;margin-bottom:8px;font-size:13px;padding-bottom:5px;border-bottom:1px solid rgba(255,255,255,.06)}
+.tr h3{color:#e74c3c}.tb h3{color:#3498db}.ts h3{color:#777}
+.pi{display:flex;align-items:center;justify-content:space-between;padding:5px 8px;margin-bottom:3px;border-radius:5px;background:rgba(255,255,255,.03);color:#fff;font-size:12px}
+.pi .pn{display:flex;align-items:center;gap:5px;flex:1;min-width:0}
+.pi .pn span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.hb{background:#f39c12;color:#000;font-size:8px;padding:1px 4px;border-radius:3px;font-weight:700;flex-shrink:0}
+.pi .pos-badge{font-size:9px;padding:1px 5px;border-radius:3px;font-weight:600;flex-shrink:0;margin-left:2px}
+.pos-GK{background:rgba(241,196,15,.25);color:#f1c40f}
+.pos-DEF{background:rgba(46,204,113,.25);color:#2ecc71}
+.pos-MID{background:rgba(52,152,219,.25);color:#3498db}
+.pos-FWD{background:rgba(231,76,60,.25);color:#e74c3c}
+.ab{display:flex;gap:2px;flex-shrink:0}
+.ab button{padding:2px 5px;font-size:9px;border:none;border-radius:3px;cursor:pointer;font-weight:600;color:#fff}
+.lb{margin-top:12px;display:flex;gap:6px;flex-wrap:wrap;justify-content:center}
+.lb .btn{padding:8px 18px;font-size:12px}
+.pos-sel{margin-top:8px;padding:8px;background:rgba(255,255,255,.03);border-radius:8px;border:1px solid rgba(255,255,255,.05)}
+.pos-sel label{color:#aaa;font-size:11px;display:block;margin-bottom:4px}
+.pos-sel select{width:100%;padding:7px 10px;border:1px solid rgba(255,255,255,.1);border-radius:6px;background:rgba(255,255,255,.05);color:#fff;font-size:12px;outline:none;-webkit-appearance:none}
+.pos-sel select option{background:#1a1a2e}
 
-/* LOBBY SCREEN */
-#lobbyScreen{position:absolute;top:0;left:0;width:100%;height:100%;display:none;flex-direction:column;align-items:center;background:linear-gradient(135deg,#0f0c29,#302b63,#24243e);z-index:90;overflow-y:auto;padding:16px;}
-#lobbyScreen h2{color:#fff;font-size:22px;margin-bottom:2px;}
-.room-code-display{color:#f39c12;font-size:16px;margin-bottom:16px;font-weight:700;background:rgba(243,156,18,0.1);padding:6px 16px;border-radius:8px;border:1px solid rgba(243,156,18,0.2);}
-.lobby-container{display:flex;gap:12px;width:94%;max-width:850px;flex-wrap:wrap;justify-content:center;}
-.team-panel{background:rgba(255,255,255,0.04);border-radius:12px;padding:12px;min-width:180px;flex:1;border:1px solid rgba(255,255,255,0.06);min-height:120px;}
-.team-panel h3{text-align:center;margin-bottom:10px;font-size:14px;padding-bottom:6px;border-bottom:1px solid rgba(255,255,255,0.08);}
-.team-red h3{color:#e74c3c;}
-.team-blue h3{color:#3498db;}
-.team-spec h3{color:#888;}
-.player-item{display:flex;align-items:center;justify-content:space-between;padding:6px 10px;margin-bottom:4px;border-radius:6px;background:rgba(255,255,255,0.04);color:#fff;font-size:13px;}
-.player-item .pname{display:flex;align-items:center;gap:6px;}
-.host-badge{background:#f39c12;color:#000;font-size:9px;padding:1px 5px;border-radius:3px;font-weight:700;}
-.admin-btns{display:flex;gap:3px;}
-.admin-btns button{padding:3px 6px;font-size:10px;border:none;border-radius:3px;cursor:pointer;font-weight:600;}
-.to-red{background:#e74c3c;color:#fff;}
-.to-blue{background:#3498db;color:#fff;}
-.to-spec{background:#555;color:#fff;}
-.lobby-bottom{margin-top:16px;display:flex;gap:8px;flex-wrap:wrap;justify-content:center;}
-.lobby-bottom .btn{padding:10px 22px;font-size:13px;}
+#gameScreen{z-index:80;background:#1a472a}
+#gameCanvas{display:block;width:100%;height:100%}
+#gameHUD{position:absolute;top:0;left:50%;transform:translateX(-50%);display:flex;z-index:85;pointer-events:none;border-radius:0 0 8px 8px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,.4)}
+.ht{padding:5px 16px;font-size:24px;font-weight:800;color:#fff;min-width:44px;text-align:center;display:flex;align-items:center;justify-content:center}
+.hr{background:rgba(192,57,43,.88)}.hb2{background:rgba(41,128,185,.88)}
+.hm{background:rgba(0,0,0,.72);padding:3px 12px;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.htm{color:#fff;font-size:14px;font-weight:700;font-variant-numeric:tabular-nums}
+.hts{color:#f39c12;font-size:8px;font-weight:600;text-transform:uppercase;margin-top:1px}
+#kickBtn{position:absolute;bottom:20px;right:20px;width:72px;height:72px;border-radius:50%;background:rgba(255,255,255,.08);border:2px solid rgba(255,255,255,.25);z-index:86;display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,.7);font-size:11px;font-weight:700;touch-action:none;pointer-events:auto;transition:transform .08s,background .08s}
+#kickBtn.act{background:rgba(255,255,255,.3);border-color:#fff;transform:scale(1.06)}
+#jZ{position:absolute;bottom:0;left:0;width:42%;height:55%;z-index:86;touch-action:none;pointer-events:auto}
+#jB,#jT{position:absolute;pointer-events:none;display:none;z-index:87}
+#jB{width:100px;height:100px;border-radius:50%;background:rgba(255,255,255,.05);border:2px solid rgba(255,255,255,.08)}
+#jT{width:42px;height:42px;border-radius:50%;background:rgba(255,255,255,.18);border:2px solid rgba(255,255,255,.35)}
+#aP{position:absolute;top:40px;right:6px;z-index:88;display:none;pointer-events:auto}
+#aT{background:rgba(243,156,18,.8);color:#000;border:none;padding:6px 9px;border-radius:6px;font-weight:700;font-size:10px;cursor:pointer}
+#aM{display:none;background:rgba(0,0,0,.9);border-radius:8px;padding:6px;margin-top:3px;min-width:150px;border:1px solid rgba(255,255,255,.06);max-height:70vh;overflow-y:auto}
+#aM button{display:block;width:100%;padding:8px;margin-bottom:3px;border:none;border-radius:4px;font-size:10px;font-weight:600;cursor:pointer;color:#fff}
+#aM button:last-child{margin-bottom:0}
+.ap{background:#f39c12}.ar{background:#e74c3c}.al{background:#3498db}.ag{background:#27ae60}
+#aM .sec-title{color:#aaa;font-size:9px;padding:4px 6px;text-transform:uppercase;letter-spacing:1px}
+#aM select{width:100%;padding:6px 8px;margin-bottom:4px;border:1px solid rgba(255,255,255,.1);border-radius:4px;background:rgba(255,255,255,.05);color:#fff;font-size:11px;outline:none;-webkit-appearance:none}
+#aM select option{background:#111}
+#aM .player-move-row{display:flex;gap:3px;margin-bottom:3px;align-items:center}
+#aM .player-move-row span{color:#ccc;font-size:10px;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+#aM .player-move-row button{padding:3px 6px;font-size:9px;border:none;border-radius:3px;cursor:pointer;font-weight:600;color:#fff;flex-shrink:0}
 
-/* GAME SCREEN */
-#gameScreen{position:absolute;top:0;left:0;width:100%;height:100%;display:none;z-index:80;background:#1a472a;}
-#gameCanvas{display:block;width:100%;height:100%;}
-
-/* HUD */
-#gameHUD{position:absolute;top:0;left:50%;transform:translateX(-50%);display:flex;align-items:stretch;z-index:85;pointer-events:none;border-radius:0 0 10px 10px;overflow:hidden;box-shadow:0 2px 10px rgba(0,0,0,0.4);}
-.hud-team{padding:6px 18px;font-size:26px;font-weight:800;color:#fff;min-width:50px;text-align:center;display:flex;align-items:center;justify-content:center;}
-.hud-red{background:rgba(192,57,43,0.9);}
-.hud-blue{background:rgba(41,128,185,0.9);}
-.hud-mid{background:rgba(0,0,0,0.75);padding:4px 14px;display:flex;flex-direction:column;align-items:center;justify-content:center;}
-.hud-time{color:#fff;font-size:16px;font-weight:700;font-variant-numeric:tabular-nums;}
-.hud-status{color:#f39c12;font-size:9px;font-weight:600;text-transform:uppercase;margin-top:1px;}
-
-/* MOBILE CONTROLS */
-#kickBtn{position:absolute;bottom:24px;right:24px;width:76px;height:76px;border-radius:50%;background:rgba(255,255,255,0.1);border:3px solid rgba(255,255,255,0.3);z-index:86;display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,0.8);font-size:12px;font-weight:700;backdrop-filter:blur(4px);touch-action:none;pointer-events:auto;transition:transform 0.1s,background 0.1s;}
-#kickBtn.active{background:rgba(255,255,255,0.35);border-color:#fff;transform:scale(1.08);}
-#joystickZone{position:absolute;bottom:0;left:0;width:45%;height:60%;z-index:86;touch-action:none;pointer-events:auto;}
-#joyBase{position:absolute;width:110px;height:110px;border-radius:50%;background:rgba(255,255,255,0.06);border:2px solid rgba(255,255,255,0.1);pointer-events:none;display:none;}
-#joyThumb{position:absolute;width:46px;height:46px;border-radius:50%;background:rgba(255,255,255,0.2);border:2px solid rgba(255,255,255,0.4);pointer-events:none;display:none;}
-
-/* ADMIN PANEL */
-#adminPanel{position:absolute;top:44px;right:8px;z-index:88;display:none;pointer-events:auto;}
-#adminToggle{background:rgba(243,156,18,0.85);color:#000;border:none;padding:7px 10px;border-radius:7px;font-weight:700;font-size:11px;cursor:pointer;}
-#adminMenu{display:none;background:rgba(0,0,0,0.88);border-radius:8px;padding:8px;margin-top:4px;min-width:130px;backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,0.08);}
-#adminMenu button{display:block;width:100%;padding:9px;margin-bottom:4px;border:none;border-radius:5px;font-size:11px;font-weight:600;cursor:pointer;color:#fff;}
-#adminMenu button:last-child{margin-bottom:0;}
-.abtn-pause{background:#f39c12;}
-.abtn-reset{background:#e74c3c;}
-.abtn-lobby{background:#3498db;}
-
-/* GOAL OVERLAY */
-#goalOverlay{position:absolute;top:0;left:0;width:100%;height:100%;display:none;align-items:center;justify-content:center;z-index:89;pointer-events:none;background:rgba(0,0,0,0.25);}
-.goal-text{font-size:52px;font-weight:900;color:#fff;text-shadow:0 0 40px rgba(255,255,255,0.4),0 4px 20px rgba(0,0,0,0.5);animation:goalPop 0.4s cubic-bezier(0.175,0.885,0.32,1.275);}
-@keyframes goalPop{0%{transform:scale(0.2);opacity:0;}100%{transform:scale(1);opacity:1;}}
-
-/* MAP SELECT */
-.map-select{margin:10px 0;}
-.map-select label{color:#aaa;font-size:12px;display:block;margin-bottom:4px;}
-.map-select select{width:100%;padding:9px 12px;border:1px solid rgba(255,255,255,0.12);border-radius:8px;background:rgba(255,255,255,0.05);color:#fff;font-size:13px;outline:none;-webkit-appearance:none;}
-
-/* TOAST */
-#toast{position:fixed;bottom:70px;left:50%;transform:translateX(-50%);background:rgba(0,0,0,0.85);color:#fff;padding:8px 18px;border-radius:20px;font-size:12px;z-index:9998;display:none;white-space:nowrap;backdrop-filter:blur(6px);}
-
-/* ROTATE MESSAGE */
-#rotateMsg{position:fixed;top:0;left:0;width:100%;height:100%;background:#0a0a1a;z-index:9999;display:none;align-items:center;justify-content:center;flex-direction:column;color:#fff;gap:12px;}
-@media(max-width:600px) and (orientation:portrait){
-#rotateMsg{display:flex!important;}
-}
-.rotate-icon{width:50px;height:50px;animation:rotAnim 2s ease-in-out infinite;}
-@keyframes rotAnim{0%,100%{transform:rotate(0deg);}50%{transform:rotate(90deg);}}
-
-.hidden{display:none!important;}
+#gO{position:absolute;top:0;left:0;width:100%;height:100%;display:none;align-items:center;justify-content:center;z-index:89;pointer-events:none;background:rgba(0,0,0,.2)}
+.gt{font-size:48px;font-weight:900;color:#fff;text-shadow:0 0 30px rgba(255,255,255,.3);animation:gp .35s cubic-bezier(.175,.885,.32,1.275)}
+@keyframes gp{0%{transform:scale(.2);opacity:0}100%{transform:scale(1);opacity:1}}
+#toast{position:fixed;bottom:60px;left:50%;transform:translateX(-50%);background:rgba(0,0,0,.85);color:#fff;padding:7px 16px;border-radius:16px;font-size:11px;z-index:9998;display:none;white-space:nowrap}
+#rotMsg{position:fixed;top:0;left:0;width:100%;height:100%;background:#0a0a1a;z-index:9999;display:none;align-items:center;justify-content:center;flex-direction:column;color:#fff;gap:10px}
+@media(max-width:600px)and(orientation:portrait){#rotMsg{display:flex!important}}
+.hidden{display:none!important}
 </style>
 </head>
 <body>
+<div id="rotMsg"><p style="font-size:14px">📱 Ekranı yatay çevirin</p></div>
 
-<div id="rotateMsg">
-<svg class="rotate-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="2" width="16" height="20" rx="2"/><circle cx="12" cy="18" r="1"/></svg>
-<p style="font-size:14px;">Lütfen ekranı yatay çevirin</p>
-</div>
-
-<div id="menuScreen">
-<h1><span class="ball-icon">⚽</span> HaxBall Mobile</h1>
-<p class="subtitle">Gerçek Zamanlı Çok Oyunculu Futbol</p>
-<div class="menu-box">
-<input type="text" id="playerName" placeholder="Oyuncu Adın" maxlength="12">
-<div class="divider">YENİ ODA OLUŞTUR</div>
-<div class="map-select">
-<label>Harita Seçimi</label>
-<select id="mapSelect">
+<div id="menuScreen" class="scr" style="display:flex">
+<h1>⚽ HaxBall Mobile</h1>
+<p class="sub">Gerçek Zamanlı Multiplayer</p>
+<div class="mbox">
+<input type="text" id="pName" placeholder="Oyuncu Adın" maxlength="12">
+<div class="dv">YENİ ODA</div>
+<select id="mapSel">
 <option value="classic">Klasik Saha</option>
 <option value="big">Büyük Saha</option>
 <option value="small">Mini Saha</option>
 <option value="hockey">Buz Hokeyi</option>
 <option value="futsal">Futsal</option>
 </select>
-</div>
-<input type="text" id="roomPassword" placeholder="Oda Şifresi (opsiyonel)" maxlength="20">
-<button class="btn btn-full btn-create" id="btnCreate">🏟️ Oda Kur</button>
-<div class="divider">ODAYA KATIL</div>
-<input type="text" id="roomCodeInput" placeholder="Oda Kodu (5 harf)" maxlength="6" style="text-transform:uppercase;">
-<input type="text" id="joinPassword" placeholder="Şifre (varsa)" maxlength="20">
-<button class="btn btn-full btn-join" id="btnJoin">🚀 Katıl</button>
-</div>
-</div>
-
-<div id="lobbyScreen">
-<h2>🏟️ Oyun Lobisi</h2>
-<div class="room-code-display" id="lobbyRoomCode">Oda: ---</div>
-<div id="lobbyMapInfo" style="color:#aaa;font-size:12px;margin-bottom:12px;"></div>
-<div class="lobby-container">
-<div class="team-panel team-red" id="panelRed"><h3>🔴 Kırmızı Takım</h3><div id="listRed"></div></div>
-<div class="team-panel team-spec" id="panelSpec"><h3>👁️ İzleyiciler</h3><div id="listSpec"></div></div>
-<div class="team-panel team-blue" id="panelBlue"><h3>🔵 Mavi Takım</h3><div id="listBlue"></div></div>
-</div>
-<div class="lobby-bottom">
-<button class="btn btn-create" id="btnJoinRed">🔴 Kırmızı</button>
-<button class="btn btn-gray" id="btnJoinSpec">👁️ İzleyici</button>
-<button class="btn btn-join" id="btnJoinBlue">🔵 Mavi</button>
-<button class="btn btn-green hidden" id="btnStartGame">🚀 Maçı Başlat</button>
-<button class="btn btn-leave" id="btnLeave">🚪 Ayrıl</button>
+<input type="text" id="rPwd" placeholder="Şifre (opsiyonel)" maxlength="20">
+<button class="btn bf bcr" id="bCr">🏟️ Oda Kur</button>
+<div class="dv">KATIL</div>
+<input type="text" id="rCode" placeholder="Oda Kodu" maxlength="6" style="text-transform:uppercase">
+<input type="text" id="jPwd" placeholder="Şifre (varsa)" maxlength="20">
+<button class="btn bf bjo" id="bJo">🚀 Katıl</button>
 </div>
 </div>
 
-<div id="gameScreen">
+<div id="lobbyScreen" class="scr">
+<h2>🏟️ Lobi</h2>
+<div class="rcd" id="lRC">Oda: ---</div>
+<div class="lmi" id="lMI"></div>
+<div class="lc">
+<div class="tp tr" id="pR"><h3>🔴 Kırmızı</h3><div id="lR"></div></div>
+<div class="tp ts" id="pS"><h3>👁️ İzleyici</h3><div id="lS"></div></div>
+<div class="tp tb" id="pB"><h3>🔵 Mavi</h3><div id="lB"></div></div>
+</div>
+<div class="pos-sel" id="posSel">
+<label>Mevki Seçimi</label>
+<select id="posSelect">
+<option value="">-- Seç --</option>
+<option value="GK">🧤 Kaleci</option>
+<option value="DEF">🛡️ Defans</option>
+<option value="MID">🎯 Orta Saha</option>
+<option value="FWD">⚡ Forvet</option>
+</select>
+</div>
+<div class="lb">
+<button class="btn bcr" id="bJR">🔴 Kırmızı</button>
+<button class="btn bgy" id="bJS">👁️ İzleyici</button>
+<button class="btn bjo" id="bJB">🔵 Mavi</button>
+<button class="btn bgr hidden" id="bSt">🚀 Başlat</button>
+<button class="btn blv" id="bLv">🚪 Ayrıl</button>
+</div>
+</div>
+
+<div id="gameScreen" class="scr">
 <canvas id="gameCanvas"></canvas>
 <div id="gameHUD">
-<div class="hud-team hud-red" id="hudRedScore">0</div>
-<div class="hud-mid">
-<div class="hud-time" id="hudTime">0:00</div>
-<div class="hud-status" id="hudStatus"></div>
+<div class="ht hr" id="hRS">0</div>
+<div class="hm"><div class="htm" id="hTm">0:00</div><div class="hts" id="hSt"></div></div>
+<div class="ht hb2" id="hBS">0</div>
 </div>
-<div class="hud-team hud-blue" id="hudBlueScore">0</div>
-</div>
-<div id="joystickZone"></div>
-<div id="joyBase"></div>
-<div id="joyThumb"></div>
+<div id="jZ"></div>
+<div id="jB"></div>
+<div id="jT"></div>
 <div id="kickBtn">VURUŞ</div>
-<div id="adminPanel">
-<button id="adminToggle">⚙️ Admin</button>
-<div id="adminMenu">
-<button class="abtn-pause" id="abtnPause">⏸ Duraklat</button>
-<button class="abtn-reset" id="abtnReset">🔄 Skor Sıfırla</button>
-<button class="abtn-lobby" id="abtnLobby">🔙 Lobiye Dön</button>
+<div id="aP">
+<button id="aT">⚙️ Admin</button>
+<div id="aM"></div>
 </div>
-</div>
-<div id="goalOverlay"><div class="goal-text" id="goalText">GOL!</div></div>
+<div id="gO"><div class="gt" id="gTx">GOL!</div></div>
 </div>
 
 <div id="toast"></div>
@@ -190,651 +169,462 @@ html,body{width:100%;height:100%;overflow:hidden;background:#0a0a1a;font-family:
 (function(){
 "use strict";
 
-// =============================================
-// FIREBASE INIT
-// =============================================
-const firebaseConfig = {
-    apiKey: "AIzaSyDXgndR3i2p0ovRXVxqGb24d7lMXdTTX9I",
-    authDomain: "mobilgame1-f03ac.firebaseapp.com",
-    databaseURL: "https://mobilgame1-f03ac-default-rtdb.europe-west1.firebasedatabase.app",
-    projectId: "mobilgame1-f03ac",
-    storageBucket: "mobilgame1-f03ac.firebasestorage.app",
-    messagingSenderId: "188464433527",
-    appId: "1:188464433527:web:baed82070bfed9652df972"
-};
-firebase.initializeApp(firebaseConfig);
-const db = firebase.database();
+firebase.initializeApp({
+    apiKey:"AIzaSyDXgndR3i2p0ovRXVxqGb24d7lMXdTTX9I",
+    authDomain:"mobilgame1-f03ac.firebaseapp.com",
+    databaseURL:"https://mobilgame1-f03ac-default-rtdb.europe-west1.firebasedatabase.app",
+    projectId:"mobilgame1-f03ac",
+    storageBucket:"mobilgame1-f03ac.firebasestorage.app",
+    messagingSenderId:"188464433527",
+    appId:"1:188464433527:web:baed82070bfed9652df972"
+});
+const db=firebase.database();
 
-// =============================================
-// UTILITIES
-// =============================================
-function genId(){ return Math.random().toString(36).substr(2,10); }
-function genRoomCode(){
-    const c='ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
-    let s='';for(let i=0;i<5;i++)s+=c[Math.floor(Math.random()*c.length)];return s;
-}
-function showToast(msg,dur){
-    dur=dur||2200;
-    const t=document.getElementById('toast');
-    t.textContent=msg;t.style.display='block';
-    clearTimeout(t._t);t._t=setTimeout(()=>{t.style.display='none';},dur);
-}
-function lerp(a,b,t){return a+(b-a)*t;}
-function dist(x1,y1,x2,y2){const dx=x2-x1,dy=y2-y1;return Math.sqrt(dx*dx+dy*dy);}
-function clamp(v,mn,mx){return Math.max(mn,Math.min(mx,v));}
-function normalize(x,y){const l=Math.sqrt(x*x+y*y);if(l<0.001)return{x:0,y:0};return{x:x/l,y:y/l};}
-
-// =============================================
-// MAP DEFINITIONS
-// =============================================
-const MAPS = {
-    classic: {
-        name: 'Klasik Saha',
-        fieldW: 1200, fieldH: 600,
-        goalH: 150, goalD: 55,
-        bgColor: '#2d7a2d', lineColor: 'rgba(255,255,255,0.55)',
-        floorColor: '#3a8c3a', floorColor2: '#358535',
-        centerR: 85, penaltyW: 130, penaltyH: 270,
-        friction: 0.985, playerFriction: 0.92
-    },
-    big: {
-        name: 'Büyük Saha',
-        fieldW: 1500, fieldH: 750,
-        goalH: 180, goalD: 60,
-        bgColor: '#1a5c1a', lineColor: 'rgba(255,255,255,0.5)',
-        floorColor: '#2a7a2a', floorColor2: '#257225',
-        centerR: 100, penaltyW: 150, penaltyH: 300,
-        friction: 0.987, playerFriction: 0.93
-    },
-    small: {
-        name: 'Mini Saha',
-        fieldW: 900, fieldH: 450,
-        goalH: 120, goalD: 45,
-        bgColor: '#2d6b2d', lineColor: 'rgba(255,255,255,0.5)',
-        floorColor: '#3a8530', floorColor2: '#358028',
-        centerR: 65, penaltyW: 100, penaltyH: 200,
-        friction: 0.983, playerFriction: 0.91
-    },
-    hockey: {
-        name: 'Buz Hokeyi',
-        fieldW: 1100, fieldH: 500,
-        goalH: 130, goalD: 50,
-        bgColor: '#1a3a5c', lineColor: 'rgba(255,255,255,0.6)',
-        floorColor: '#2a5a8a', floorColor2: '#255580',
-        centerR: 75, penaltyW: 120, penaltyH: 240,
-        friction: 0.994, playerFriction: 0.96
-    },
-    futsal: {
-        name: 'Futsal',
-        fieldW: 1000, fieldH: 520,
-        goalH: 135, goalD: 48,
-        bgColor: '#8B6914', lineColor: 'rgba(255,255,255,0.6)',
-        floorColor: '#A07828', floorColor2: '#957020',
-        centerR: 70, penaltyW: 110, penaltyH: 230,
-        friction: 0.982, playerFriction: 0.90
-    }
-};
-
-// =============================================
-// PHYSICS CONSTANTS
-// =============================================
-const FIELD_MARGIN = 70;
-const PLAYER_RADIUS = 19;
-const BALL_RADIUS = 11;
-const KICK_RADIUS = 36;
-const KICK_FORCE = 5.5;
-const PLAYER_ACCEL = 0.32;
-const PLAYER_MAX_SPEED = 3.2;
-const BALL_MAX_SPEED = 11;
-const BOUNCE_DAMP = 0.65;
-const PLAYER_BOUNCE_DAMP = 0.3;
-const PUSH_FORCE = 0.4;
-const MATCH_TIME = 180;
-const NET_SEND_INTERVAL = 40;
-const GOAL_RESET_DELAY = 1800;
-const POST_RADIUS = 6;
-
-// =============================================
-// GAME STATE VARIABLES
-// =============================================
-let myId = genId();
-let myName = '';
-let roomCode = '';
-let roomRef = null;
-let isHost = false;
-let gameState = 'menu';
-let roomData = null;
-let currentMap = MAPS.classic;
-let currentMapKey = 'classic';
-
-let localPlayers = {};
-let localBall = {x:0,y:0,vx:0,vy:0};
-let matchTime = 0;
-let matchRunning = false;
-let matchPaused = false;
-let goalScored = false;
-let goalResetTimer = 0;
-let lastNetSend = 0;
-let redScore = 0;
-let blueScore = 0;
-
-let myInput = {dx:0,dy:0,kick:false};
-let joyTouchId = null;
-let joyActive = false;
-let joyStartX = 0;
-let joyStartY = 0;
-let kickTouchId = null;
-let keysDown = {};
-
-let canvas, ctx;
-let canvasW = 0, canvasH = 0;
-let scale = 1, offsetX = 0, offsetY = 0;
-let animId = null;
-let lastFrameTime = 0;
-let accumulator = 0;
-const FIXED_DT = 1000/60;
-
-let roomListener = null;
-let inputListener = null;
-let adminMenuOpen = false;
-let hasUserGesture = false;
-
-// DOM
+/* ===== UTILS ===== */
 const $=id=>document.getElementById(id);
-const menuScreen=$('menuScreen');
-const lobbyScreen=$('lobbyScreen');
-const gameScreen=$('gameScreen');
-const playerNameInput=$('playerName');
-const roomPasswordInput=$('roomPassword');
-const roomCodeInputEl=$('roomCodeInput');
-const joinPasswordInput=$('joinPassword');
-const mapSelectEl=$('mapSelect');
-const lobbyRoomCodeEl=$('lobbyRoomCode');
-const lobbyMapInfo=$('lobbyMapInfo');
-const listRed=$('listRed');
-const listBlue=$('listBlue');
-const listSpec=$('listSpec');
-const btnStartGame=$('btnStartGame');
-const hudRedScore=$('hudRedScore');
-const hudBlueScore=$('hudBlueScore');
-const hudTime=$('hudTime');
-const hudStatus=$('hudStatus');
-const kickBtnEl=$('kickBtn');
-const joyZone=$('joystickZone');
-const joyBaseEl=$('joyBase');
-const joyThumbEl=$('joyThumb');
-const adminPanel=$('adminPanel');
-const adminToggleEl=$('adminToggle');
-const adminMenuEl=$('adminMenu');
-const goalOverlay=$('goalOverlay');
-const goalTextEl=$('goalText');
+function gid(){return Math.random().toString(36).substr(2,10)}
+function grc(){const c='ABCDEFGHJKLMNPQRSTUVWXYZ23456789';let s='';for(let i=0;i<5;i++)s+=c[Math.floor(Math.random()*c.length)];return s}
+function toast(m,d){d=d||2e3;const t=$('toast');t.textContent=m;t.style.display='block';clearTimeout(t._t);t._t=setTimeout(()=>t.style.display='none',d)}
+function lerp(a,b,t){return a+(b-a)*t}
+function dist(x1,y1,x2,y2){return Math.hypot(x2-x1,y2-y1)}
+function clamp(v,a,b){return Math.max(a,Math.min(b,v))}
+function norm(x,y){const l=Math.hypot(x,y);return l<.001?{x:0,y:0}:{x:x/l,y:y/l}}
 
-canvas=$('gameCanvas');
-ctx=canvas.getContext('2d');
+/* ===== MAPS ===== */
+const MAPS={
+    classic:{name:'Klasik Saha',fw:1200,fh:600,gh:150,gd:55,bg:'#2d7a2d',fl:'#3a8c3a',fl2:'#358535',lc:'rgba(255,255,255,.5)',cr:85,pw:130,ph:270,fr:.986,pf:.92},
+    big:{name:'Büyük Saha',fw:1500,fh:750,gh:180,gd:60,bg:'#1a5c1a',fl:'#2a7a2a',fl2:'#257225',lc:'rgba(255,255,255,.45)',cr:100,pw:150,ph:300,fr:.988,pf:.93},
+    small:{name:'Mini Saha',fw:900,fh:450,gh:120,gd:45,bg:'#2d6b2d',fl:'#3a8530',fl2:'#358028',lc:'rgba(255,255,255,.5)',cr:65,pw:100,ph:200,fr:.984,pf:.91},
+    hockey:{name:'Buz Hokeyi',fw:1100,fh:500,gh:130,gd:50,bg:'#1a3a5c',fl:'#2a5a8a',fl2:'#255580',lc:'rgba(255,255,255,.55)',cr:75,pw:120,ph:240,fr:.993,pf:.955},
+    futsal:{name:'Futsal',fw:1000,fh:520,gh:135,gd:48,bg:'#8B6914',fl:'#A07828',fl2:'#957020',lc:'rgba(255,255,255,.55)',cr:70,pw:110,ph:230,fr:.983,pf:.90}
+};
 
-// =============================================
-// SCREEN MANAGEMENT
-// =============================================
-function showScreen(s){
-    menuScreen.style.display='none';
-    lobbyScreen.style.display='none';
-    gameScreen.style.display='none';
-    if(s==='menu'){menuScreen.style.display='flex';gameState='menu';stopLoop();}
-    else if(s==='lobby'){lobbyScreen.style.display='flex';gameState='lobby';stopLoop();}
-    else if(s==='game'){gameScreen.style.display='block';gameState='game';resizeCanvas();startLoop();}
+/* ===== POSITION SLOT SYSTEM ===== */
+function getSlotConfig(teamSize){
+    // Returns {GK, DEF, MID, FWD} max counts for this team size
+    if(teamSize<=1)return{GK:1,DEF:0,MID:0,FWD:0};
+    if(teamSize===2)return{GK:1,DEF:0,MID:0,FWD:1};
+    if(teamSize===3)return{GK:1,DEF:1,MID:0,FWD:1};
+    if(teamSize===4)return{GK:1,DEF:1,MID:1,FWD:1};
+    if(teamSize===5)return{GK:1,DEF:2,MID:1,FWD:1};
+    if(teamSize===6)return{GK:1,DEF:2,MID:2,FWD:1};
+    if(teamSize===7)return{GK:1,DEF:2,MID:2,FWD:2};
+    if(teamSize===8)return{GK:1,DEF:3,MID:2,FWD:2};
+    if(teamSize===9)return{GK:1,DEF:3,MID:3,FWD:2};
+    if(teamSize===10)return{GK:1,DEF:3,MID:3,FWD:3};
+    return{GK:1,DEF:4,MID:3,FWD:3}; // 11
 }
 
-// =============================================
-// CANVAS RESIZE
-// =============================================
-function resizeCanvas(){
-    canvasW=window.innerWidth;
-    canvasH=window.innerHeight;
-    canvas.width=canvasW;
-    canvas.height=canvasH;
-    const totalW=currentMap.fieldW+FIELD_MARGIN*2;
-    const totalH=currentMap.fieldH+FIELD_MARGIN*2;
-    const sx=canvasW/totalW;
-    const sy=canvasH/totalH;
-    scale=Math.min(sx,sy);
-    offsetX=(canvasW-totalW*scale)/2;
-    offsetY=(canvasH-totalH*scale)/2;
+function isPosAvailable(pos,team,players,excludeId){
+    const teamPlayers=Object.keys(players).filter(p=>players[p].team===team&&players[p].online!==false&&p!==excludeId);
+    const ts=teamPlayers.length+(excludeId?1:0);
+    const cfg=getSlotConfig(ts);
+    const taken=teamPlayers.filter(p=>players[p].pos===pos).length;
+    return taken<(cfg[pos]||0);
 }
-window.addEventListener('resize',()=>{if(gameState==='game')resizeCanvas();});
 
-function worldToScreen(x,y){return{x:offsetX+(x+FIELD_MARGIN)*scale,y:offsetY+(y+FIELD_MARGIN)*scale};}
+function autoAssignPos(team,players,pid){
+    const teamPlayers=Object.keys(players).filter(p=>players[p].team===team&&players[p].online!==false);
+    const ts=teamPlayers.length;
+    const cfg=getSlotConfig(ts);
+    const order=['GK','DEF','MID','FWD'];
+    for(const pos of order){
+        const taken=teamPlayers.filter(p=>p!==pid&&players[p].pos===pos).length;
+        if(taken<(cfg[pos]||0))return pos;
+    }
+    return 'MID';
+}
 
-// =============================================
-// FULLSCREEN (only on user gesture)
-// =============================================
-function tryFullscreen(){
-    if(!hasUserGesture)return;
+/* ===== SPAWN POSITIONS ===== */
+function spawnPos(team,pos,posIdx,totalInPos,map){
+    const FW=map.fw,FH=map.fh;
+    let baseX;
+    if(team==='red'){
+        if(pos==='GK')baseX=45;
+        else if(pos==='DEF')baseX=FW*0.18;
+        else if(pos==='MID')baseX=FW*0.33;
+        else baseX=FW*0.44;
+    }else{
+        if(pos==='GK')baseX=FW-45;
+        else if(pos==='DEF')baseX=FW*0.82;
+        else if(pos==='MID')baseX=FW*0.67;
+        else baseX=FW*0.56;
+    }
+    const sp=Math.min(70,(FH-80)/Math.max(totalInPos,1));
+    const sy=FH/2-(totalInPos-1)*sp/2;
+    return{x:baseX,y:sy+posIdx*sp};
+}
+
+/* ===== CONSTANTS ===== */
+const FM=70,PR=19,BR=11,KR=34,KF=5.2,PA=0.28,PMS=2.9,BMS=10,BD=.65,PBD=.25,PF=.35;
+const MT=180,NSI=45,GRD=1800,PST=6;
+const FDT=1000/60;
+
+/* ===== STATE ===== */
+let myId=gid(),myName='',roomCode='',roomRef=null,isHost=false,gameState='menu';
+let roomData=null,cMap=MAPS.classic,cMapKey='classic';
+let lp={},lb={x:0,y:0,vx:0,vy:0};
+let mTime=0,mRun=false,mPause=false,gScored=false,gTimer=0;
+let rScore=0,bScore=0,lastNS=0;
+let myIn={dx:0,dy:0,kick:false},kickPressed=false,kickUsed=false;
+let jTid=null,jAct=false,jSX=0,jSY=0,kTid=null;
+let keys={};
+let canvas,ctx,cW=0,cH=0,sc=1,oX=0,oY=0;
+let animId=null,lastFT=0,acc=0;
+let rListen=null,admOpen=false,hasGesture=false;
+
+canvas=$('gameCanvas');ctx=canvas.getContext('2d');
+
+/* ===== SCREEN ===== */
+function showScr(s){
+    $('menuScreen').style.display='none';
+    $('lobbyScreen').style.display='none';
+    $('gameScreen').style.display='none';
+    gameState=s;
+    if(s==='menu'){$('menuScreen').style.display='flex';stopLoop();}
+    else if(s==='lobby'){$('lobbyScreen').style.display='flex';stopLoop();}
+    else if(s==='game'){$('gameScreen').style.display='block';resizeC();startLoop();setTimeout(()=>canvas.focus(),50);}
+}
+
+/* ===== CANVAS ===== */
+function resizeC(){
+    cW=window.innerWidth;cH=window.innerHeight;
+    canvas.width=cW;canvas.height=cH;
+    const tw=cMap.fw+FM*2,th=cMap.fh+FM*2;
+    sc=Math.min(cW/tw,cH/th);
+    oX=(cW-tw*sc)/2;oY=(cH-th*sc)/2;
+}
+window.addEventListener('resize',()=>{if(gameState==='game')resizeC()});
+canvas.setAttribute('tabindex','0');canvas.style.outline='none';
+
+/* ===== FULLSCREEN ===== */
+function tryFS(){
+    if(!hasGesture)return;
     try{
-        const el=document.documentElement;
         if(!document.fullscreenElement&&!document.webkitFullscreenElement){
-            if(el.requestFullscreen)el.requestFullscreen().catch(()=>{});
-            else if(el.webkitRequestFullscreen)el.webkitRequestFullscreen();
+            const e=document.documentElement;
+            if(e.requestFullscreen)e.requestFullscreen().catch(()=>{});
+            else if(e.webkitRequestFullscreen)e.webkitRequestFullscreen();
         }
-        if(screen.orientation&&screen.orientation.lock){
-            screen.orientation.lock('landscape').catch(()=>{});
-        }
+        if(screen.orientation&&screen.orientation.lock)screen.orientation.lock('landscape').catch(()=>{});
     }catch(e){}
 }
-
-function onUserGesture(){
-    hasUserGesture=true;
-    if(gameState==='game')tryFullscreen();
-}
-
-document.addEventListener('click',onUserGesture,{passive:true});
-document.addEventListener('touchstart',onUserGesture,{passive:true,once:false});
+function onGest(){hasGesture=true;if(gameState==='game')tryFS();}
+document.addEventListener('click',onGest,{passive:true});
+document.addEventListener('touchstart',onGest,{passive:true});
 document.addEventListener('contextmenu',e=>e.preventDefault());
+document.addEventListener('gesturestart',e=>e.preventDefault());
 
-// =============================================
-// ROOM CREATION
-// =============================================
-$('btnCreate').addEventListener('click',async()=>{
-    myName=playerNameInput.value.trim()||('P'+myId.substr(0,4));
+/* ===== CREATE ROOM ===== */
+$('bCr').addEventListener('click',async()=>{
+    myName=$('pName').value.trim()||('P'+myId.substr(0,4));
     if(myName.length>12)myName=myName.substr(0,12);
-    const pwd=roomPasswordInput.value.trim();
-    currentMapKey=mapSelectEl.value;
-    currentMap=MAPS[currentMapKey]||MAPS.classic;
-    roomCode=genRoomCode();
-
-    const initData={
-        code:roomCode,
-        password:pwd,
-        hostId:myId,
-        state:'lobby',
-        mapKey:currentMapKey,
-        createdAt:firebase.database.ServerValue.TIMESTAMP,
-        players:{},
+    cMapKey=$('mapSel').value;cMap=MAPS[cMapKey]||MAPS.classic;
+    roomCode=grc();
+    const init={code:roomCode,password:$('rPwd').value.trim(),hostId:myId,state:'lobby',mapKey:cMapKey,
+        createdAt:firebase.database.ServerValue.TIMESTAMP,players:{},
         match:{redScore:0,blueScore:0,time:0,running:false,paused:false,
-            ball:{x:currentMap.fieldW/2,y:currentMap.fieldH/2,vx:0,vy:0}}
-    };
-    initData.players[myId]={
-        name:myName,team:'spectator',
-        x:currentMap.fieldW/2,y:currentMap.fieldH/2,
-        vx:0,vy:0,kick:false,
-        idx:0,idy:0,ik:false,online:true
-    };
-
+            ball:{x:cMap.fw/2,y:cMap.fh/2,vx:0,vy:0}}};
+    init.players[myId]={name:myName,team:'spectator',pos:'',x:cMap.fw/2,y:cMap.fh/2,vx:0,vy:0,kick:false,idx:0,idy:0,ik:false,online:true};
     roomRef=db.ref('rooms/'+roomCode);
     try{
-        await roomRef.set(initData);
-        isHost=true;
-        setupListeners();
-        setupDisconnect();
-        showScreen('lobby');
-        lobbyRoomCodeEl.textContent='Oda: '+roomCode;
-        lobbyMapInfo.textContent='Harita: '+currentMap.name;
-        showToast('Oda kuruldu! Kod: '+roomCode);
-    }catch(e){showToast('Hata: '+e.message);}
+        await roomRef.set(init);isHost=true;
+        setupListen();setupDC();
+        showScr('lobby');$('lRC').textContent='Oda: '+roomCode;$('lMI').textContent='Harita: '+cMap.name;
+        toast('Oda kuruldu! Kod: '+roomCode);
+    }catch(e){toast('Hata: '+e.message)}
 });
 
-// =============================================
-// JOIN ROOM
-// =============================================
-$('btnJoin').addEventListener('click',async()=>{
-    myName=playerNameInput.value.trim()||('P'+myId.substr(0,4));
+/* ===== JOIN ROOM ===== */
+$('bJo').addEventListener('click',async()=>{
+    myName=$('pName').value.trim()||('P'+myId.substr(0,4));
     if(myName.length>12)myName=myName.substr(0,12);
-    const code=roomCodeInputEl.value.trim().toUpperCase();
-    const pwd=joinPasswordInput.value.trim();
-    if(!code||code.length<3){showToast('Oda kodu girin!');return;}
-
+    const code=$('rCode').value.trim().toUpperCase();
+    if(!code||code.length<3){toast('Oda kodu girin!');return}
     const ref=db.ref('rooms/'+code);
     try{
         const snap=await ref.once('value');
-        if(!snap.exists()){showToast('Oda bulunamadı!');return;}
-        const data=snap.val();
-        if(data.password&&data.password!==pwd){showToast('Yanlış şifre!');return;}
-
-        roomCode=code;
-        roomRef=ref;
-        isHost=false;
-        currentMapKey=data.mapKey||'classic';
-        currentMap=MAPS[currentMapKey]||MAPS.classic;
-
-        const pData={
-            name:myName,team:'spectator',
-            x:currentMap.fieldW/2,y:currentMap.fieldH/2,
-            vx:0,vy:0,kick:false,
-            idx:0,idy:0,ik:false,online:true
-        };
-        await roomRef.child('players/'+myId).set(pData);
-        setupListeners();
-        setupDisconnect();
-        showScreen('lobby');
-        lobbyRoomCodeEl.textContent='Oda: '+roomCode;
-        lobbyMapInfo.textContent='Harita: '+currentMap.name;
-        showToast('Odaya katıldın!');
-    }catch(e){showToast('Hata: '+e.message);}
+        if(!snap.exists()){toast('Oda bulunamadı!');return}
+        const d=snap.val();
+        if(d.password&&d.password!==$('jPwd').value.trim()){toast('Yanlış şifre!');return}
+        roomCode=code;roomRef=ref;isHost=false;
+        cMapKey=d.mapKey||'classic';cMap=MAPS[cMapKey]||MAPS.classic;
+        await roomRef.child('players/'+myId).set({name:myName,team:'spectator',pos:'',
+            x:cMap.fw/2,y:cMap.fh/2,vx:0,vy:0,kick:false,idx:0,idy:0,ik:false,online:true});
+        setupListen();setupDC();
+        showScr('lobby');$('lRC').textContent='Oda: '+roomCode;$('lMI').textContent='Harita: '+cMap.name;
+        toast('Katıldın!');
+    }catch(e){toast('Hata: '+e.message)}
 });
 
-// =============================================
-// DISCONNECT HANDLER
-// =============================================
-function setupDisconnect(){
-    if(!roomRef)return;
-    roomRef.child('players/'+myId).onDisconnect().update({online:false});
-}
+/* ===== DC ===== */
+function setupDC(){if(roomRef)roomRef.child('players/'+myId).onDisconnect().update({online:false})}
 
-// =============================================
-// ROOM LISTENERS
-// =============================================
-function setupListeners(){
-    if(roomListener&&roomRef)roomRef.off('value',roomListener);
-
-    roomListener=roomRef.on('value',snap=>{
-        if(!snap.exists()){
-            showToast('Oda kapandı!');
-            cleanup();showScreen('menu');return;
-        }
+/* ===== LISTEN ===== */
+function setupListen(){
+    if(rListen&&roomRef)roomRef.off('value',rListen);
+    rListen=roomRef.on('value',snap=>{
+        if(!snap.exists()){toast('Oda kapandı!');cleanup();showScr('menu');return}
         roomData=snap.val();
-
         // Host migration
         if(roomData.hostId&&roomData.players){
-            const hostP=roomData.players[roomData.hostId];
-            if(!hostP||hostP.online===false){
-                const online=Object.keys(roomData.players).filter(p=>roomData.players[p].online!==false);
-                if(online.length>0&&online[0]===myId){
-                    isHost=true;
-                    roomRef.update({hostId:myId});
-                    showToast('Sen yeni hostsun!');
-                }
+            const hp=roomData.players[roomData.hostId];
+            if(!hp||hp.online===false){
+                const on=Object.keys(roomData.players).filter(p=>roomData.players[p].online!==false);
+                if(on.length>0&&on[0]===myId){isHost=true;roomRef.update({hostId:myId});toast('Sen yeni hostsun!')}
             }
         }
         isHost=(roomData.hostId===myId);
-
-        // Map sync
-        if(roomData.mapKey&&MAPS[roomData.mapKey]){
-            currentMapKey=roomData.mapKey;
-            currentMap=MAPS[currentMapKey];
-        }
-
+        if(roomData.mapKey&&MAPS[roomData.mapKey]){cMapKey=roomData.mapKey;cMap=MAPS[cMapKey]}
         if(gameState==='lobby'){
-            updateLobbyUI();
-            if(roomData.state==='playing'){
-                initGame();showScreen('game');
-            }
+            updateLobby();
+            if(roomData.state==='playing'){initGame();showScr('game')}
         }else if(gameState==='game'){
-            if(roomData.state==='lobby'){
-                stopLoop();showScreen('lobby');return;
+            if(roomData.state==='lobby'){stopLoop();showScr('lobby');return}
+            if(!isHost)syncClient();
+            if(roomData.match){rScore=roomData.match.redScore||0;bScore=roomData.match.blueScore||0}
+            // Map change mid-game
+            if(roomData.mapKey&&MAPS[roomData.mapKey]&&roomData.mapKey!==cMapKey){
+                cMapKey=roomData.mapKey;cMap=MAPS[cMapKey];resizeC();
             }
-            // Client state sync
-            if(!isHost){
-                syncClientState();
-            }
-            // Score sync
-            if(roomData.match){
-                redScore=roomData.match.redScore||0;
-                blueScore=roomData.match.blueScore||0;
-            }
+            $('aP').style.display=isHost?'block':'none';
         }
     });
-
-    // If host, also listen to player inputs specifically
-    if(isHost){
-        setupInputListeners();
-    }
 }
 
-function setupInputListeners(){
-    // Host reads all player inputs in the main listener above
-}
-
-// =============================================
-// LOBBY UI
-// =============================================
-function updateLobbyUI(){
+/* ===== LOBBY UI ===== */
+function updateLobby(){
     if(!roomData||!roomData.players)return;
-    listRed.innerHTML='';listBlue.innerHTML='';listSpec.innerHTML='';
+    const lR=$('lR'),lB=$('lB'),lS=$('lS');
+    lR.innerHTML='';lB.innerHTML='';lS.innerHTML='';
     const ps=roomData.players;
     for(const pid in ps){
-        const p=ps[pid];
-        if(p.online===false)continue;
-        const div=document.createElement('div');
-        div.className='player-item';
-        let badge=pid===roomData.hostId?'<span class="host-badge">HOST</span>':'';
-        let admBtns='';
+        const p=ps[pid];if(p.online===false)continue;
+        const div=document.createElement('div');div.className='pi';
+        let badge=pid===roomData.hostId?'<span class="hb">HOST</span>':'';
+        let posBadge='';
+        if(p.pos&&p.team!=='spectator'){
+            const posLabels={GK:'KAL',DEF:'DEF',MID:'ORS',FWD:'FRV'};
+            posBadge=`<span class="pos-badge pos-${p.pos}">${posLabels[p.pos]||p.pos}</span>`;
+        }
+        let admB='';
         if(isHost&&pid!==myId){
-            admBtns=`<div class="admin-btns">
-                <button class="to-red" data-pid="${pid}" data-team="red">K</button>
-                <button class="to-blue" data-pid="${pid}" data-team="blue">M</button>
-                <button class="to-spec" data-pid="${pid}" data-team="spectator">İ</button>
+            admB=`<div class="ab">
+                <button style="background:#e74c3c" data-pid="${pid}" data-tm="red">K</button>
+                <button style="background:#3498db" data-pid="${pid}" data-tm="blue">M</button>
+                <button style="background:#555" data-pid="${pid}" data-tm="spectator">İ</button>
             </div>`;
         }
-        div.innerHTML=`<span class="pname">${badge} ${p.name||'?'}</span>${admBtns}`;
-        if(p.team==='red')listRed.appendChild(div);
-        else if(p.team==='blue')listBlue.appendChild(div);
-        else listSpec.appendChild(div);
+        div.innerHTML=`<span class="pn">${badge}<span>${p.name||'?'}</span>${posBadge}</span>${admB}`;
+        if(p.team==='red')lR.appendChild(div);
+        else if(p.team==='blue')lB.appendChild(div);
+        else lS.appendChild(div);
     }
-    // Admin move buttons
-    document.querySelectorAll('.admin-btns button').forEach(btn=>{
-        btn.addEventListener('click',()=>{
-            const pid=btn.getAttribute('data-pid');
-            const team=btn.getAttribute('data-team');
-            if(isHost&&roomRef)roomRef.child('players/'+pid).update({team:team});
+    document.querySelectorAll('.ab button').forEach(b=>{
+        b.addEventListener('click',()=>{
+            const pid=b.getAttribute('data-pid'),tm=b.getAttribute('data-tm');
+            if(isHost&&roomRef){
+                const np=tm==='spectator'?'':autoAssignPos(tm,roomData.players,pid);
+                roomRef.child('players/'+pid).update({team:tm,pos:np});
+            }
         });
     });
-    btnStartGame.classList.toggle('hidden',!isHost);
-    lobbyMapInfo.textContent='Harita: '+currentMap.name;
+    $('bSt').classList.toggle('hidden',!isHost);
+    $('lMI').textContent='Harita: '+cMap.name;
+    // Update pos select options
+    updatePosSelect();
 }
 
-// =============================================
-// LOBBY BUTTONS
-// =============================================
-$('btnJoinRed').addEventListener('click',()=>{if(roomRef)roomRef.child('players/'+myId).update({team:'red'});});
-$('btnJoinBlue').addEventListener('click',()=>{if(roomRef)roomRef.child('players/'+myId).update({team:'blue'});});
-$('btnJoinSpec').addEventListener('click',()=>{if(roomRef)roomRef.child('players/'+myId).update({team:'spectator'});});
-$('btnLeave').addEventListener('click',()=>{cleanup();showScreen('menu');});
+function updatePosSelect(){
+    if(!roomData||!roomData.players)return;
+    const me=roomData.players[myId];
+    if(!me||me.team==='spectator'){
+        $('posSel').style.display='none';return;
+    }
+    $('posSel').style.display='block';
+    const sel=$('posSelect');
+    const team=me.team;
+    const teamPs=Object.keys(roomData.players).filter(p=>roomData.players[p].team===team&&roomData.players[p].online!==false);
+    const ts=teamPs.length;
+    const cfg=getSlotConfig(ts);
+    const positions=['GK','DEF','MID','FWD'];
+    const labels={GK:'🧤 Kaleci',DEF:'🛡️ Defans',MID:'🎯 Orta Saha',FWD:'⚡ Forvet'};
+    let html='<option value="">-- Seç --</option>';
+    for(const pos of positions){
+        const taken=teamPs.filter(p=>p!==myId&&roomData.players[p].pos===pos).length;
+        const max=cfg[pos]||0;
+        const avail=taken<max;
+        const isMine=me.pos===pos;
+        html+=`<option value="${pos}" ${isMine?'selected':''} ${!avail&&!isMine?'disabled':''}>${labels[pos]} (${taken}/${max})${!avail&&!isMine?' - Dolu':''}</option>`;
+    }
+    sel.innerHTML=html;
+}
 
-btnStartGame.addEventListener('click',()=>{
+$('posSelect').addEventListener('change',()=>{
+    const val=$('posSelect').value;
+    if(!val||!roomRef||!roomData)return;
+    const me=roomData.players[myId];
+    if(!me||me.team==='spectator')return;
+    if(!isPosAvailable(val,me.team,roomData.players,myId)){
+        toast('Bu mevki dolu!');return;
+    }
+    roomRef.child('players/'+myId).update({pos:val});
+});
+
+/* ===== LOBBY BUTTONS ===== */
+$('bJR').addEventListener('click',()=>{
+    if(!roomRef||!roomData)return;
+    // Check team limit (max 11)
+    const rc=Object.keys(roomData.players).filter(p=>roomData.players[p].team==='red'&&roomData.players[p].online!==false).length;
+    if(rc>=11){toast('Takım dolu! (max 11)');return}
+    const np=autoAssignPos('red',roomData.players,myId);
+    roomRef.child('players/'+myId).update({team:'red',pos:np});
+});
+$('bJB').addEventListener('click',()=>{
+    if(!roomRef||!roomData)return;
+    const bc=Object.keys(roomData.players).filter(p=>roomData.players[p].team==='blue'&&roomData.players[p].online!==false).length;
+    if(bc>=11){toast('Takım dolu! (max 11)');return}
+    const np=autoAssignPos('blue',roomData.players,myId);
+    roomRef.child('players/'+myId).update({team:'blue',pos:np});
+});
+$('bJS').addEventListener('click',()=>{if(roomRef)roomRef.child('players/'+myId).update({team:'spectator',pos:''})});
+$('bLv').addEventListener('click',()=>{cleanup();showScr('menu')});
+
+$('bSt').addEventListener('click',()=>{
     if(!isHost||!roomRef||!roomData)return;
     const ps=roomData.players;
     let rc=0,bc=0;
-    for(const pid in ps){if(ps[pid].online===false)continue;if(ps[pid].team==='red')rc++;if(ps[pid].team==='blue')bc++;}
-    if(rc===0||bc===0){showToast('Her takımda en az 1 oyuncu lazım!');return;}
-
+    for(const pid in ps){if(ps[pid].online===false)continue;if(ps[pid].team==='red')rc++;if(ps[pid].team==='blue')bc++}
+    if(rc<1||bc<1){toast('Her takımda en az 1 oyuncu!');return}
     const ups={};
-    let ri=0,bi=0;
-    for(const pid in ps){
-        if(ps[pid].online===false)continue;
-        if(ps[pid].team==='red'){
-            const pos=startPos('red',ri,rc);
-            ups['players/'+pid+'/x']=pos.x;ups['players/'+pid+'/y']=pos.y;
-            ups['players/'+pid+'/vx']=0;ups['players/'+pid+'/vy']=0;
-            ri++;
-        }else if(ps[pid].team==='blue'){
-            const pos=startPos('blue',bi,bc);
-            ups['players/'+pid+'/x']=pos.x;ups['players/'+pid+'/y']=pos.y;
-            ups['players/'+pid+'/vx']=0;ups['players/'+pid+'/vy']=0;
-            bi++;
-        }
-    }
+    // Assign positions and spawn
+    const redPs=Object.keys(ps).filter(p=>ps[p].team==='red'&&ps[p].online!==false);
+    const bluePs=Object.keys(ps).filter(p=>ps[p].team==='blue'&&ps[p].online!==false);
+    spawnTeam(redPs,'red',ps,ups);
+    spawnTeam(bluePs,'blue',ps,ups);
     ups['state']='playing';
     ups['match/redScore']=0;ups['match/blueScore']=0;
     ups['match/time']=0;ups['match/running']=true;ups['match/paused']=false;
-    ups['match/ball']={x:currentMap.fieldW/2,y:currentMap.fieldH/2,vx:0,vy:0};
+    ups['match/ball']={x:cMap.fw/2,y:cMap.fh/2,vx:0,vy:0};
     roomRef.update(ups);
 });
 
-function startPos(team,idx,total){
-    const FW=currentMap.fieldW,FH=currentMap.fieldH;
-    const cx=team==='red'?FW*0.25:FW*0.75;
-    const sp=Math.min(70,(FH-80)/Math.max(total,1));
-    const sy=FH/2-(total-1)*sp/2;
-    return{x:cx,y:sy+idx*sp};
+function spawnTeam(pids,team,players,ups){
+    // Group by position
+    const groups={GK:[],DEF:[],MID:[],FWD:[]};
+    for(const pid of pids){
+        const pos=players[pid].pos||autoAssignPos(team,players,pid);
+        if(!groups[pos])groups[pos]=[];
+        groups[pos].push(pid);
+        ups['players/'+pid+'/pos']=pos;
+    }
+    for(const pos in groups){
+        const arr=groups[pos];
+        for(let i=0;i<arr.length;i++){
+            const sp=spawnPos(team,pos,i,arr.length,cMap);
+            ups['players/'+arr[i]+'/x']=sp.x;
+            ups['players/'+arr[i]+'/y']=sp.y;
+            ups['players/'+arr[i]+'/vx']=0;
+            ups['players/'+arr[i]+'/vy']=0;
+        }
+    }
 }
 
-// =============================================
-// INIT GAME
-// =============================================
+/* ===== INIT GAME ===== */
 function initGame(){
     if(!roomData)return;
-    localPlayers={};
+    lp={};
     if(roomData.players){
         for(const pid in roomData.players){
-            const p=roomData.players[pid];
-            if(p.online===false)continue;
-            localPlayers[pid]={
-                name:p.name,team:p.team,
-                x:p.x||currentMap.fieldW/2,y:p.y||currentMap.fieldH/2,
-                vx:p.vx||0,vy:p.vy||0,
-                kick:false,kickTimer:0,
-                idx:0,idy:0,ik:false,
-                prevX:p.x||currentMap.fieldW/2,prevY:p.y||currentMap.fieldH/2
-            };
+            const p=roomData.players[pid];if(p.online===false)continue;
+            lp[pid]={name:p.name,team:p.team,pos:p.pos||'',
+                x:p.x||cMap.fw/2,y:p.y||cMap.fh/2,vx:p.vx||0,vy:p.vy||0,
+                kick:false,kTimer:0,idx:0,idy:0,ik:false};
         }
     }
     const b=(roomData.match&&roomData.match.ball)||{};
-    localBall={x:b.x||currentMap.fieldW/2,y:b.y||currentMap.fieldH/2,vx:b.vx||0,vy:b.vy||0};
-    matchTime=(roomData.match&&roomData.match.time)||0;
-    matchRunning=(roomData.match&&roomData.match.running)||false;
-    matchPaused=(roomData.match&&roomData.match.paused)||false;
-    redScore=(roomData.match&&roomData.match.redScore)||0;
-    blueScore=(roomData.match&&roomData.match.blueScore)||0;
-    goalScored=false;goalResetTimer=0;lastNetSend=0;
-    adminPanel.style.display=isHost?'block':'none';
-    adminMenuOpen=false;adminMenuEl.style.display='none';
-    goalOverlay.style.display='none';
+    lb={x:b.x||cMap.fw/2,y:b.y||cMap.fh/2,vx:b.vx||0,vy:b.vy||0};
+    mTime=(roomData.match&&roomData.match.time)||0;
+    mRun=(roomData.match&&roomData.match.running)||false;
+    mPause=(roomData.match&&roomData.match.paused)||false;
+    rScore=(roomData.match&&roomData.match.redScore)||0;
+    bScore=(roomData.match&&roomData.match.blueScore)||0;
+    gScored=false;gTimer=0;lastNS=0;
+    kickPressed=false;kickUsed=false;
+    $('aP').style.display=isHost?'block':'none';
+    admOpen=false;$('aM').style.display='none';
+    $('gO').style.display='none';
+    buildAdminMenu();
 }
 
-// =============================================
-// CLIENT STATE SYNC
-// =============================================
-function syncClientState(){
+/* ===== CLIENT SYNC ===== */
+function syncClient(){
     if(!roomData||!roomData.match)return;
-    matchRunning=roomData.match.running||false;
-    matchPaused=roomData.match.paused||false;
-    matchTime=roomData.match.time||0;
-
-    // Ball interpolation
+    mRun=roomData.match.running||false;
+    mPause=roomData.match.paused||false;
+    mTime=roomData.match.time||0;
     if(roomData.match.ball){
         const tb=roomData.match.ball;
-        localBall.x=lerp(localBall.x,tb.x,0.35);
-        localBall.y=lerp(localBall.y,tb.y,0.35);
-        localBall.vx=lerp(localBall.vx,tb.vx||0,0.4);
-        localBall.vy=lerp(localBall.vy,tb.vy||0,0.4);
+        lb.x=lerp(lb.x,tb.x,.35);lb.y=lerp(lb.y,tb.y,.35);
+        lb.vx=lerp(lb.vx,tb.vx||0,.4);lb.vy=lerp(lb.vy,tb.vy||0,.4);
     }
-
-    // Players interpolation
     if(roomData.players){
         for(const pid in roomData.players){
             const rd=roomData.players[pid];
-            if(rd.online===false){delete localPlayers[pid];continue;}
-            if(!localPlayers[pid]){
-                localPlayers[pid]={
-                    name:rd.name,team:rd.team,
-                    x:rd.x||currentMap.fieldW/2,y:rd.y||currentMap.fieldH/2,
-                    vx:0,vy:0,kick:false,kickTimer:0,
-                    idx:0,idy:0,ik:false,
-                    prevX:rd.x||currentMap.fieldW/2,prevY:rd.y||currentMap.fieldH/2
-                };
-            }
-            const lp=localPlayers[pid];
-            lp.team=rd.team;lp.name=rd.name;
-            lp.kick=rd.kick||false;
-
-            if(pid===myId&&lp.team!=='spectator'){
-                // Local prediction for own player
-                const il=Math.sqrt(myInput.dx*myInput.dx+myInput.dy*myInput.dy);
-                if(il>0.05){
-                    const n=normalize(myInput.dx,myInput.dy);
-                    lp.vx+=n.x*PLAYER_ACCEL*Math.min(il,1);
-                    lp.vy+=n.y*PLAYER_ACCEL*Math.min(il,1);
-                }
-                const sp=Math.sqrt(lp.vx*lp.vx+lp.vy*lp.vy);
-                if(sp>PLAYER_MAX_SPEED){lp.vx=(lp.vx/sp)*PLAYER_MAX_SPEED;lp.vy=(lp.vy/sp)*PLAYER_MAX_SPEED;}
-                lp.vx*=currentMap.playerFriction;lp.vy*=currentMap.playerFriction;
-                lp.x+=lp.vx;lp.y+=lp.vy;
-                // Blend with server
-                if(rd.x!==undefined){
-                    lp.x=lerp(lp.x,rd.x,0.12);
-                    lp.y=lerp(lp.y,rd.y,0.12);
-                }
-                lp.x=clamp(lp.x,PLAYER_RADIUS,currentMap.fieldW-PLAYER_RADIUS);
-                lp.y=clamp(lp.y,PLAYER_RADIUS,currentMap.fieldH-PLAYER_RADIUS);
-                lp.kick=myInput.kick;
+            if(rd.online===false){delete lp[pid];continue}
+            if(!lp[pid])lp[pid]={name:rd.name,team:rd.team,pos:rd.pos||'',
+                x:rd.x||cMap.fw/2,y:rd.y||cMap.fh/2,vx:0,vy:0,kick:false,kTimer:0,idx:0,idy:0,ik:false};
+            const p=lp[pid];p.team=rd.team;p.name=rd.name;p.pos=rd.pos||'';p.kick=rd.kick||false;
+            if(pid===myId&&p.team!=='spectator'){
+                const il=Math.hypot(myIn.dx,myIn.dy);
+                if(il>.05){const n=norm(myIn.dx,myIn.dy);p.vx+=n.x*PA*Math.min(il,1);p.vy+=n.y*PA*Math.min(il,1)}
+                const sp=Math.hypot(p.vx,p.vy);
+                if(sp>PMS){p.vx=(p.vx/sp)*PMS;p.vy=(p.vy/sp)*PMS}
+                p.vx*=cMap.pf;p.vy*=cMap.pf;
+                if(Math.abs(p.vx)<.003)p.vx=0;if(Math.abs(p.vy)<.003)p.vy=0;
+                p.x+=p.vx;p.y+=p.vy;
+                if(rd.x!==undefined){p.x=lerp(p.x,rd.x,.1);p.y=lerp(p.y,rd.y,.1)}
+                p.x=clamp(p.x,PR,cMap.fw-PR);p.y=clamp(p.y,PR,cMap.fh-PR);
+                p.kick=kickPressed&&!kickUsed;
             }else{
-                // Other players - interpolate
-                if(rd.x!==undefined){
-                    lp.x=lerp(lp.x,rd.x,0.25);
-                    lp.y=lerp(lp.y,rd.y,0.25);
-                }
+                if(rd.x!==undefined){p.x=lerp(p.x,rd.x,.25);p.y=lerp(p.y,rd.y,.25)}
             }
         }
-        // Remove gone players
-        for(const pid in localPlayers){
-            if(!roomData.players[pid]||roomData.players[pid].online===false){
-                delete localPlayers[pid];
-            }
-        }
+        for(const pid in lp){if(!roomData.players[pid]||roomData.players[pid].online===false)delete lp[pid]}
     }
 }
 
-// =============================================
-// CLEANUP
-// =============================================
+/* ===== CLEANUP ===== */
 function cleanup(){
-    if(roomRef){
-        if(roomListener)roomRef.off('value',roomListener);
-        roomListener=null;
-        roomRef.child('players/'+myId).remove();
-        roomRef=null;
-    }
-    stopLoop();roomData=null;roomCode='';isHost=false;localPlayers={};
+    if(roomRef){if(rListen)roomRef.off('value',rListen);rListen=null;roomRef.child('players/'+myId).remove();roomRef=null}
+    stopLoop();roomData=null;roomCode='';isHost=false;lp={};
 }
 
-// =============================================
-// GAME LOOP
-// =============================================
-function startLoop(){
-    if(animId)cancelAnimationFrame(animId);
-    lastFrameTime=performance.now();accumulator=0;
-    tick(lastFrameTime);
-}
-function stopLoop(){if(animId){cancelAnimationFrame(animId);animId=null;}}
+/* ===== GAME LOOP ===== */
+function startLoop(){if(animId)cancelAnimationFrame(animId);lastFT=performance.now();acc=0;tick(lastFT)}
+function stopLoop(){if(animId){cancelAnimationFrame(animId);animId=null}}
 
 function tick(now){
     animId=requestAnimationFrame(tick);
-    let dt=now-lastFrameTime;
-    lastFrameTime=now;
-    if(dt>80)dt=80;
-    accumulator+=dt;
-    while(accumulator>=FIXED_DT){
-        fixedUpdate(FIXED_DT/1000);
-        accumulator-=FIXED_DT;
-    }
-    render();
-    netTick(now);
+    let dt=now-lastFT;lastFT=now;if(dt>80)dt=80;
+    acc+=dt;
+    let steps=0;
+    while(acc>=FDT&&steps<3){fixedUp(FDT/1000);acc-=FDT;steps++}
+    render();netTick(now);
 }
 
-// =============================================
-// NETWORK TICK
-// =============================================
+/* ===== NET TICK ===== */
 function netTick(now){
-    if(!roomRef)return;
-    if(now-lastNetSend<NET_SEND_INTERVAL)return;
-    lastNetSend=now;
-
+    if(!roomRef)return;if(now-lastNS<NSI)return;lastNS=now;
     if(isHost){
         const u={};
-        u['match/ball']={
-            x:Math.round(localBall.x*10)/10,
-            y:Math.round(localBall.y*10)/10,
-            vx:Math.round(localBall.vx*100)/100,
-            vy:Math.round(localBall.vy*100)/100
-        };
-        u['match/time']=Math.round(matchTime*10)/10;
-        u['match/running']=matchRunning;
-        u['match/paused']=matchPaused;
-        u['match/redScore']=redScore;
-        u['match/blueScore']=blueScore;
-
-        for(const pid in localPlayers){
-            const p=localPlayers[pid];
-            if(p.team==='spectator')continue;
+        u['match/ball']={x:Math.round(lb.x*10)/10,y:Math.round(lb.y*10)/10,
+            vx:Math.round(lb.vx*100)/100,vy:Math.round(lb.vy*100)/100};
+        u['match/time']=Math.round(mTime*10)/10;
+        u['match/running']=mRun;u['match/paused']=mPause;
+        u['match/redScore']=rScore;u['match/blueScore']=bScore;
+        for(const pid in lp){
+            const p=lp[pid];if(p.team==='spectator')continue;
             u['players/'+pid+'/x']=Math.round(p.x*10)/10;
             u['players/'+pid+'/y']=Math.round(p.y*10)/10;
             u['players/'+pid+'/vx']=Math.round(p.vx*100)/100;
@@ -843,803 +633,489 @@ function netTick(now){
         }
         roomRef.update(u);
     }else{
-        // Client sends only input
         roomRef.child('players/'+myId).update({
-            idx:Math.round(myInput.dx*100)/100,
-            idy:Math.round(myInput.dy*100)/100,
-            ik:myInput.kick
+            idx:Math.round(myIn.dx*100)/100,
+            idy:Math.round(myIn.dy*100)/100,
+            ik:kickPressed&&!kickUsed
         });
     }
 }
 
-// =============================================
-// FIXED UPDATE (PHYSICS) - HOST ONLY DOES REAL PHYSICS
-// =============================================
-function fixedUpdate(dtSec){
-    if(isHost){
-        hostPhysics(dtSec);
-    }
-    // Client updates in syncClientState via Firebase listener
-}
+/* ===== PHYSICS ===== */
+function fixedUp(dt){if(isHost)hostPhys(dt)}
 
-function hostPhysics(dtSec){
-    const FW=currentMap.fieldW,FH=currentMap.fieldH;
-    const GH=currentMap.goalH,GD=currentMap.goalD;
-    const goalTop=FH/2-GH/2;
-    const goalBot=FH/2+GH/2;
+function hostPhys(dt){
+    const FW=cMap.fw,FH=cMap.fh,GH=cMap.gh,GD=cMap.gd;
+    const gT=FH/2-GH/2,gB=FH/2+GH/2;
 
-    // Time
-    if(matchRunning&&!matchPaused&&!goalScored){
-        matchTime+=dtSec;
-        if(matchTime>=MATCH_TIME){
-            matchRunning=false;matchTime=MATCH_TIME;
-            if(roomRef)roomRef.update({'match/running':false});
-        }
-    }
+    if(mRun&&!mPause&&!gScored){mTime+=dt;if(mTime>=MT){mRun=false;mTime=MT;if(roomRef)roomRef.update({'match/running':false})}}
+    if(gScored){gTimer-=dt*1000;if(gTimer<=0){gScored=false;resetPos();$('gO').style.display='none'}return}
+    if(mPause||!mRun)return;
 
-    // Goal reset
-    if(goalScored){
-        goalResetTimer-=dtSec*1000;
-        if(goalResetTimer<=0){
-            goalScored=false;
-            resetPositions();
-            goalOverlay.style.display='none';
-        }
-        return;
-    }
-    if(matchPaused||!matchRunning)return;
-
-    // Read inputs from roomData
+    // Read inputs
     if(roomData&&roomData.players){
-        for(const pid in localPlayers){
-            if(pid===myId){
-                localPlayers[pid].idx=myInput.dx;
-                localPlayers[pid].idy=myInput.dy;
-                localPlayers[pid].ik=myInput.kick;
-            }else{
-                const rd=roomData.players[pid];
-                if(rd){
-                    localPlayers[pid].idx=rd.idx||0;
-                    localPlayers[pid].idy=rd.idy||0;
-                    localPlayers[pid].ik=rd.ik||false;
-                }
-            }
+        for(const pid in lp){
+            if(pid===myId){lp[pid].idx=myIn.dx;lp[pid].idy=myIn.dy;lp[pid].ik=kickPressed&&!kickUsed}
+            else{const rd=roomData.players[pid];if(rd){lp[pid].idx=rd.idx||0;lp[pid].idy=rd.idy||0;lp[pid].ik=rd.ik||false}}
         }
     }
-
-    // Sync new/disconnected players
+    // Sync players
     if(roomData&&roomData.players){
         for(const pid in roomData.players){
-            const rd=roomData.players[pid];
-            if(rd.online===false){delete localPlayers[pid];continue;}
-            if(!localPlayers[pid]){
-                const pos=startPos(rd.team,0,1);
-                localPlayers[pid]={
-                    name:rd.name,team:rd.team,
-                    x:pos.x,y:pos.y,vx:0,vy:0,
-                    kick:false,kickTimer:0,
-                    idx:0,idy:0,ik:false,
-                    prevX:pos.x,prevY:pos.y
-                };
+            const rd=roomData.players[pid];if(rd.online===false){delete lp[pid];continue}
+            if(!lp[pid]){
+                const pos=rd.pos||'MID';
+                const sp2=spawnPos(rd.team,pos,0,1,cMap);
+                lp[pid]={name:rd.name,team:rd.team,pos:rd.pos||'',x:sp2.x,y:sp2.y,vx:0,vy:0,kick:false,kTimer:0,idx:0,idy:0,ik:false};
             }
-            localPlayers[pid].team=rd.team;
-            localPlayers[pid].name=rd.name;
+            lp[pid].team=rd.team;lp[pid].name=rd.name;lp[pid].pos=rd.pos||'';
         }
-        for(const pid in localPlayers){
-            if(!roomData.players[pid]||roomData.players[pid].online===false){
-                delete localPlayers[pid];
-            }
-        }
+        for(const pid in lp){if(!roomData.players[pid]||roomData.players[pid].online===false)delete lp[pid]}
     }
 
-    // ---- PLAYER PHYSICS ----
-    const activePids=Object.keys(localPlayers).filter(p=>localPlayers[p].team!=='spectator');
+    const acts=Object.keys(lp).filter(p=>lp[p].team!=='spectator');
 
-    for(const pid of activePids){
-        const p=localPlayers[pid];
-        // Input
-        const il=Math.sqrt(p.idx*p.idx+p.idy*p.idy);
-        if(il>0.05){
-            const strength=Math.min(il,1);
-            const n=normalize(p.idx,p.idy);
-            p.vx+=n.x*PLAYER_ACCEL*strength;
-            p.vy+=n.y*PLAYER_ACCEL*strength;
-        }
-        // Speed cap
-        const sp=Math.sqrt(p.vx*p.vx+p.vy*p.vy);
-        if(sp>PLAYER_MAX_SPEED){
-            p.vx=(p.vx/sp)*PLAYER_MAX_SPEED;
-            p.vy=(p.vy/sp)*PLAYER_MAX_SPEED;
-        }
-        // Friction
-        p.vx*=currentMap.playerFriction;
-        p.vy*=currentMap.playerFriction;
-        // Tiny velocity kill
-        if(Math.abs(p.vx)<0.005)p.vx=0;
-        if(Math.abs(p.vy)<0.005)p.vy=0;
-        // Move
-        p.x+=p.vx;
-        p.y+=p.vy;
-        // Kick
-        if(p.ik){p.kick=true;p.kickTimer=6;}
-        if(p.kickTimer>0){p.kickTimer--;p.kick=true;}else{p.kick=false;}
-        // Bounds
-        p.x=clamp(p.x,PLAYER_RADIUS,FW-PLAYER_RADIUS);
-        p.y=clamp(p.y,PLAYER_RADIUS,FH-PLAYER_RADIUS);
+    // Player physics
+    for(const pid of acts){
+        const p=lp[pid];
+        const il=Math.hypot(p.idx,p.idy);
+        if(il>.05){const n=norm(p.idx,p.idy);const s=Math.min(il,1);p.vx+=n.x*PA*s;p.vy+=n.y*PA*s}
+        const sp=Math.hypot(p.vx,p.vy);
+        if(sp>PMS){p.vx=(p.vx/sp)*PMS;p.vy=(p.vy/sp)*PMS}
+        p.vx*=cMap.pf;p.vy*=cMap.pf;
+        if(Math.abs(p.vx)<.003)p.vx=0;if(Math.abs(p.vy)<.003)p.vy=0;
+        p.x+=p.vx;p.y+=p.vy;
+        // Single-press kick logic: only trigger once per press
+        if(p.ik&&p.kTimer<=0){p.kick=true;p.kTimer=8}
+        if(p.kTimer>0){p.kTimer--;p.kick=true}else{p.kick=false}
+        p.x=clamp(p.x,PR,FW-PR);p.y=clamp(p.y,PR,FH-PR);
     }
 
-    // ---- PLAYER-PLAYER COLLISION (soft, no strong push) ----
-    for(let i=0;i<activePids.length;i++){
-        for(let j=i+1;j<activePids.length;j++){
-            const a=localPlayers[activePids[i]];
-            const b=localPlayers[activePids[j]];
-            const d=dist(a.x,a.y,b.x,b.y);
-            const minD=PLAYER_RADIUS*2;
-            if(d<minD&&d>0.001){
-                const nx=(b.x-a.x)/d;
-                const ny=(b.y-a.y)/d;
-                const overlap=minD-d;
-                // Separate equally
-                a.x-=nx*overlap*0.5;
-                a.y-=ny*overlap*0.5;
-                b.x+=nx*overlap*0.5;
-                b.y+=ny*overlap*0.5;
-                // Very soft velocity exchange (no strong push)
-                const dvx=a.vx-b.vx;
-                const dvy=a.vy-b.vy;
-                const dvn=dvx*nx+dvy*ny;
-                if(dvn>0){
-                    a.vx-=dvn*nx*PLAYER_BOUNCE_DAMP;
-                    a.vy-=dvn*ny*PLAYER_BOUNCE_DAMP;
-                    b.vx+=dvn*nx*PLAYER_BOUNCE_DAMP;
-                    b.vy+=dvn*ny*PLAYER_BOUNCE_DAMP;
-                }
+    // Player-Player collision (soft, no strong push)
+    for(let i=0;i<acts.length;i++){
+        for(let j=i+1;j<acts.length;j++){
+            const a=lp[acts[i]],b=lp[acts[j]];
+            const d=dist(a.x,a.y,b.x,b.y),mD=PR*2;
+            if(d<mD&&d>.001){
+                const nx=(b.x-a.x)/d,ny=(b.y-a.y)/d,ov=mD-d;
+                a.x-=nx*ov*.5;a.y-=ny*ov*.5;b.x+=nx*ov*.5;b.y+=ny*ov*.5;
+                const dvx=a.vx-b.vx,dvy=a.vy-b.vy,dvn=dvx*nx+dvy*ny;
+                if(dvn>0){a.vx-=dvn*nx*PBD;a.vy-=dvn*ny*PBD;b.vx+=dvn*nx*PBD;b.vy+=dvn*ny*PBD}
             }
         }
     }
 
-    // ---- BALL PHYSICS ----
-    localBall.vx*=currentMap.friction;
-    localBall.vy*=currentMap.friction;
-    if(Math.abs(localBall.vx)<0.005)localBall.vx=0;
-    if(Math.abs(localBall.vy)<0.005)localBall.vy=0;
-    localBall.x+=localBall.vx;
-    localBall.y+=localBall.vy;
+    // Ball
+    lb.vx*=cMap.fr;lb.vy*=cMap.fr;
+    if(Math.abs(lb.vx)<.004)lb.vx=0;if(Math.abs(lb.vy)<.004)lb.vy=0;
+    lb.x+=lb.vx;lb.y+=lb.vy;
+    const bs=Math.hypot(lb.vx,lb.vy);
+    if(bs>BMS){lb.vx=(lb.vx/bs)*BMS;lb.vy=(lb.vy/bs)*BMS}
 
-    // Ball speed cap
-    const bs=Math.sqrt(localBall.vx*localBall.vx+localBall.vy*localBall.vy);
-    if(bs>BALL_MAX_SPEED){
-        localBall.vx=(localBall.vx/bs)*BALL_MAX_SPEED;
-        localBall.vy=(localBall.vy/bs)*BALL_MAX_SPEED;
-    }
-
-    // ---- BALL-PLAYER COLLISION ----
-    for(const pid of activePids){
-        const p=localPlayers[pid];
-        const d=dist(p.x,p.y,localBall.x,localBall.y);
-        const minD=PLAYER_RADIUS+BALL_RADIUS;
-        if(d<minD&&d>0.001){
-            const nx=(localBall.x-p.x)/d;
-            const ny=(localBall.y-p.y)/d;
-            // Separate ball
-            const overlap=minD-d;
-            localBall.x+=nx*overlap*1.0;
-            localBall.y+=ny*overlap*1.0;
-            // Relative vel
-            const dvx=localBall.vx-p.vx;
-            const dvy=localBall.vy-p.vy;
-            const dvn=dvx*nx+dvy*ny;
-            if(dvn<0){
-                localBall.vx-=dvn*nx*0.8;
-                localBall.vy-=dvn*ny*0.8;
-            }
+    // Ball-Player
+    for(const pid of acts){
+        const p=lp[pid];
+        const d=dist(p.x,p.y,lb.x,lb.y),mD=PR+BR;
+        if(d<mD&&d>.001){
+            const nx=(lb.x-p.x)/d,ny=(lb.y-p.y)/d,ov=mD-d;
+            lb.x+=nx*ov;lb.y+=ny*ov;
+            const dvx=lb.vx-p.vx,dvy=lb.vy-p.vy,dvn=dvx*nx+dvy*ny;
+            if(dvn<0){lb.vx-=dvn*nx*.7;lb.vy-=dvn*ny*.7}
             if(p.kick){
-                // Kick: moderate force
-                localBall.vx+=nx*KICK_FORCE;
-                localBall.vy+=ny*KICK_FORCE;
+                lb.vx+=nx*KF;lb.vy+=ny*KF;
+                // Mark kick as used for this player
+                p.kTimer=0;p.kick=false;
+                // For local player, mark kickUsed
+                if(pid===myId)kickUsed=true;
             }else{
-                // Gentle push (dribbling) - very soft
-                localBall.vx+=nx*PUSH_FORCE;
-                localBall.vy+=ny*PUSH_FORCE;
+                lb.vx+=nx*PF;lb.vy+=ny*PF;
             }
         }
     }
 
-    // ---- BALL-WALL + GOAL LOGIC ----
-    // Goal posts as circles
-    const posts=[
-        {x:0,y:goalTop},{x:0,y:goalBot},
-        {x:FW,y:goalTop},{x:FW,y:goalBot}
-    ];
-    for(const post of posts){
-        const pd=dist(localBall.x,localBall.y,post.x,post.y);
-        if(pd<BALL_RADIUS+POST_RADIUS&&pd>0.001){
-            const pnx=(localBall.x-post.x)/pd;
-            const pny=(localBall.y-post.y)/pd;
-            const pOverlap=BALL_RADIUS+POST_RADIUS-pd;
-            localBall.x+=pnx*pOverlap;
-            localBall.y+=pny*pOverlap;
-            // Reflect
-            const dot=localBall.vx*pnx+localBall.vy*pny;
-            if(dot<0){
-                localBall.vx-=2*dot*pnx*BOUNCE_DAMP;
-                localBall.vy-=2*dot*pny*BOUNCE_DAMP;
-            }
+    // Posts
+    const posts=[{x:0,y:gT},{x:0,y:gB},{x:FW,y:gT},{x:FW,y:gB}];
+    for(const po of posts){
+        const pd=dist(lb.x,lb.y,po.x,po.y);
+        if(pd<BR+PST&&pd>.001){
+            const pnx=(lb.x-po.x)/pd,pny=(lb.y-po.y)/pd,pov=BR+PST-pd;
+            lb.x+=pnx*pov;lb.y+=pny*pov;
+            const dot=lb.vx*pnx+lb.vy*pny;
+            if(dot<0){lb.vx-=2*dot*pnx*BD;lb.vy-=2*dot*pny*BD}
         }
     }
 
-    // Top wall
-    if(localBall.y-BALL_RADIUS<0){
-        localBall.y=BALL_RADIUS;
-        localBall.vy=Math.abs(localBall.vy)*BOUNCE_DAMP;
+    // Walls
+    if(lb.y-BR<0){lb.y=BR;lb.vy=Math.abs(lb.vy)*BD}
+    if(lb.y+BR>FH){lb.y=FH-BR;lb.vy=-Math.abs(lb.vy)*BD}
+    // Left
+    if(lb.x-BR<0){
+        if(lb.y>gT&&lb.y<gB){
+            if(lb.x-BR<-GD){doGoal('blue');return}
+            if(lb.x<0){if(lb.y-BR<gT){lb.y=gT+BR;lb.vy=Math.abs(lb.vy)*BD}if(lb.y+BR>gB){lb.y=gB-BR;lb.vy=-Math.abs(lb.vy)*BD}}
+        }else{lb.x=BR;lb.vx=Math.abs(lb.vx)*BD}
     }
-    // Bottom wall
-    if(localBall.y+BALL_RADIUS>FH){
-        localBall.y=FH-BALL_RADIUS;
-        localBall.vy=-Math.abs(localBall.vy)*BOUNCE_DAMP;
+    // Right
+    if(lb.x+BR>FW){
+        if(lb.y>gT&&lb.y<gB){
+            if(lb.x+BR>FW+GD){doGoal('red');return}
+            if(lb.x>FW){if(lb.y-BR<gT){lb.y=gT+BR;lb.vy=Math.abs(lb.vy)*BD}if(lb.y+BR>gB){lb.y=gB-BR;lb.vy=-Math.abs(lb.vy)*BD}}
+        }else{lb.x=FW-BR;lb.vx=-Math.abs(lb.vx)*BD}
     }
-
-    // Left side
-    if(localBall.x-BALL_RADIUS<0){
-        if(localBall.y>goalTop&&localBall.y<goalBot){
-            // In goal mouth
-            // Back wall
-            if(localBall.x-BALL_RADIUS<-GD){
-                // GOL! for blue
-                doGoal('blue');return;
-            }
-            // Goal top/bottom inner walls
-            if(localBall.x<0){
-                if(localBall.y-BALL_RADIUS<goalTop){
-                    localBall.y=goalTop+BALL_RADIUS;
-                    localBall.vy=Math.abs(localBall.vy)*BOUNCE_DAMP;
-                }
-                if(localBall.y+BALL_RADIUS>goalBot){
-                    localBall.y=goalBot-BALL_RADIUS;
-                    localBall.vy=-Math.abs(localBall.vy)*BOUNCE_DAMP;
-                }
-            }
-        }else{
-            // Normal left wall
-            localBall.x=BALL_RADIUS;
-            localBall.vx=Math.abs(localBall.vx)*BOUNCE_DAMP;
-        }
-    }
-
-    // Right side
-    if(localBall.x+BALL_RADIUS>FW){
-        if(localBall.y>goalTop&&localBall.y<goalBot){
-            if(localBall.x+BALL_RADIUS>FW+GD){
-                doGoal('red');return;
-            }
-            if(localBall.x>FW){
-                if(localBall.y-BALL_RADIUS<goalTop){
-                    localBall.y=goalTop+BALL_RADIUS;
-                    localBall.vy=Math.abs(localBall.vy)*BOUNCE_DAMP;
-                }
-                if(localBall.y+BALL_RADIUS>goalBot){
-                    localBall.y=goalBot-BALL_RADIUS;
-                    localBall.vy=-Math.abs(localBall.vy)*BOUNCE_DAMP;
-                }
-            }
-        }else{
-            localBall.x=FW-BALL_RADIUS;
-            localBall.vx=-Math.abs(localBall.vx)*BOUNCE_DAMP;
-        }
-    }
-
-    // Goal back walls (if ball inside goal area)
-    if(localBall.x<0&&localBall.y>goalTop&&localBall.y<goalBot){
-        if(localBall.x-BALL_RADIUS<-GD){
-            localBall.x=-GD+BALL_RADIUS;
-            localBall.vx=Math.abs(localBall.vx)*BOUNCE_DAMP;
-        }
-    }
-    if(localBall.x>FW&&localBall.y>goalTop&&localBall.y<goalBot){
-        if(localBall.x+BALL_RADIUS>FW+GD){
-            localBall.x=FW+GD-BALL_RADIUS;
-            localBall.vx=-Math.abs(localBall.vx)*BOUNCE_DAMP;
-        }
-    }
+    // Goal back walls
+    if(lb.x<0&&lb.y>gT&&lb.y<gB&&lb.x-BR<-GD){lb.x=-GD+BR;lb.vx=Math.abs(lb.vx)*BD}
+    if(lb.x>FW&&lb.y>gT&&lb.y<gB&&lb.x+BR>FW+GD){lb.x=FW+GD-BR;lb.vx=-Math.abs(lb.vx)*BD}
 }
 
 function doGoal(team){
-    goalScored=true;
-    goalResetTimer=GOAL_RESET_DELAY;
-    if(team==='red'){
-        redScore++;
-        goalTextEl.textContent='🔴 GOL!';
-        goalTextEl.style.color='#e74c3c';
-    }else{
-        blueScore++;
-        goalTextEl.textContent='🔵 GOL!';
-        goalTextEl.style.color='#3498db';
-    }
-    goalOverlay.style.display='flex';
-    localBall.vx=0;localBall.vy=0;
-    // Freeze players
-    for(const pid in localPlayers){
-        localPlayers[pid].vx=0;localPlayers[pid].vy=0;
-    }
-    if(roomRef){
-        roomRef.update({'match/redScore':redScore,'match/blueScore':blueScore});
-    }
+    gScored=true;gTimer=GRD;
+    if(team==='red'){rScore++;$('gTx').textContent='🔴 GOL!';$('gTx').style.color='#e74c3c'}
+    else{bScore++;$('gTx').textContent='🔵 GOL!';$('gTx').style.color='#3498db'}
+    $('gO').style.display='flex';
+    lb.vx=0;lb.vy=0;
+    for(const pid in lp){lp[pid].vx=0;lp[pid].vy=0}
+    if(roomRef)roomRef.update({'match/redScore':rScore,'match/blueScore':bScore});
 }
 
-function resetPositions(){
-    const FW=currentMap.fieldW,FH=currentMap.fieldH;
-    localBall.x=FW/2;localBall.y=FH/2;localBall.vx=0;localBall.vy=0;
-    let ri=0,bi=0,rc=0,bc=0;
-    for(const pid in localPlayers){
-        if(localPlayers[pid].team==='red')rc++;
-        if(localPlayers[pid].team==='blue')bc++;
-    }
-    for(const pid in localPlayers){
-        const p=localPlayers[pid];
-        if(p.team==='red'){
-            const pos=startPos('red',ri,rc);
-            p.x=pos.x;p.y=pos.y;p.vx=0;p.vy=0;ri++;
-        }else if(p.team==='blue'){
-            const pos=startPos('blue',bi,bc);
-            p.x=pos.x;p.y=pos.y;p.vx=0;p.vy=0;bi++;
+function resetPos(){
+    lb.x=cMap.fw/2;lb.y=cMap.fh/2;lb.vx=0;lb.vy=0;
+    const redPs=Object.keys(lp).filter(p=>lp[p].team==='red');
+    const bluePs=Object.keys(lp).filter(p=>lp[p].team==='blue');
+    spawnGroup(redPs,'red');spawnGroup(bluePs,'blue');
+}
+
+function spawnGroup(pids,team){
+    const groups={GK:[],DEF:[],MID:[],FWD:[]};
+    for(const pid of pids){const pos=lp[pid].pos||'MID';if(!groups[pos])groups[pos]=[];groups[pos].push(pid)}
+    for(const pos in groups){
+        const arr=groups[pos];
+        for(let i=0;i<arr.length;i++){
+            const sp=spawnPos(team,pos,i,arr.length,cMap);
+            lp[arr[i]].x=sp.x;lp[arr[i]].y=sp.y;lp[arr[i]].vx=0;lp[arr[i]].vy=0;
         }
     }
 }
 
-// =============================================
-// RENDER
-// =============================================
+/* ===== RENDER ===== */
 function render(){
-    ctx.clearRect(0,0,canvasW,canvasH);
-
-    // BG
-    ctx.fillStyle=currentMap.bgColor;
-    ctx.fillRect(0,0,canvasW,canvasH);
-
-    ctx.save();
-    ctx.translate(offsetX,offsetY);
-    ctx.scale(scale,scale);
-    ctx.translate(FIELD_MARGIN,FIELD_MARGIN);
-
-    drawField();
-    drawBall();
-    drawPlayers();
-
-    ctx.restore();
-    drawHUD();
+    ctx.clearRect(0,0,cW,cH);
+    ctx.fillStyle=cMap.bg;ctx.fillRect(0,0,cW,cH);
+    ctx.save();ctx.translate(oX,oY);ctx.scale(sc,sc);ctx.translate(FM,FM);
+    drawField();drawBall();drawPlayers();
+    ctx.restore();drawHUD();
 }
 
 function drawField(){
-    const FW=currentMap.fieldW,FH=currentMap.fieldH;
-    const GH=currentMap.goalH,GD=currentMap.goalD;
-    const goalTop=FH/2-GH/2,goalBot=FH/2+GH/2;
-    const lc=currentMap.lineColor;
-
-    // Floor
-    ctx.fillStyle=currentMap.floorColor;
-    ctx.fillRect(0,0,FW,FH);
-
-    // Striped pattern
-    ctx.fillStyle=currentMap.floorColor2;
-    const stripeW=FW/12;
-    for(let i=0;i<12;i+=2){
-        ctx.fillRect(i*stripeW,0,stripeW,FH);
-    }
-
-    // Field border
-    ctx.strokeStyle=lc;ctx.lineWidth=3;
-    ctx.strokeRect(0,0,FW,FH);
-
-    // Center line
+    const FW=cMap.fw,FH=cMap.fh,GH=cMap.gh,GD=cMap.gd;
+    const gT=FH/2-GH/2,gB=FH/2+GH/2,lc=cMap.lc;
+    ctx.fillStyle=cMap.fl;ctx.fillRect(0,0,FW,FH);
+    ctx.fillStyle=cMap.fl2;const sw=FW/12;
+    for(let i=0;i<12;i+=2)ctx.fillRect(i*sw,0,sw,FH);
+    ctx.strokeStyle=lc;ctx.lineWidth=3;ctx.strokeRect(0,0,FW,FH);
     ctx.beginPath();ctx.moveTo(FW/2,0);ctx.lineTo(FW/2,FH);ctx.stroke();
-
-    // Center circle
-    ctx.beginPath();ctx.arc(FW/2,FH/2,currentMap.centerR,0,Math.PI*2);ctx.stroke();
-
-    // Center dot
+    ctx.beginPath();ctx.arc(FW/2,FH/2,cMap.cr,0,Math.PI*2);ctx.stroke();
+    ctx.fillStyle=lc;ctx.beginPath();ctx.arc(FW/2,FH/2,4,0,Math.PI*2);ctx.fill();
+    ctx.lineWidth=2;
+    ctx.strokeRect(0,FH/2-cMap.ph/2,cMap.pw,cMap.ph);
+    ctx.strokeRect(FW-cMap.pw,FH/2-cMap.ph/2,cMap.pw,cMap.ph);
     ctx.fillStyle=lc;
-    ctx.beginPath();ctx.arc(FW/2,FH/2,5,0,Math.PI*2);ctx.fill();
-
-    // Penalty areas
-    ctx.lineWidth=2;ctx.strokeStyle=lc;
-    ctx.strokeRect(0,FH/2-currentMap.penaltyH/2,currentMap.penaltyW,currentMap.penaltyH);
-    ctx.strokeRect(FW-currentMap.penaltyW,FH/2-currentMap.penaltyH/2,currentMap.penaltyW,currentMap.penaltyH);
-
-    // Penalty dots
-    ctx.fillStyle=lc;
-    ctx.beginPath();ctx.arc(currentMap.penaltyW*0.75,FH/2,4,0,Math.PI*2);ctx.fill();
-    ctx.beginPath();ctx.arc(FW-currentMap.penaltyW*0.75,FH/2,4,0,Math.PI*2);ctx.fill();
-
-    // Corner arcs
-    ctx.lineWidth=2;ctx.strokeStyle=lc;
-    const cr=25;
-    ctx.beginPath();ctx.arc(0,0,cr,0,Math.PI/2);ctx.stroke();
-    ctx.beginPath();ctx.arc(FW,0,cr,Math.PI/2,Math.PI);ctx.stroke();
-    ctx.beginPath();ctx.arc(0,FH,cr,-Math.PI/2,0);ctx.stroke();
-    ctx.beginPath();ctx.arc(FW,FH,cr,Math.PI,Math.PI*1.5);ctx.stroke();
-
-    // ---- LEFT GOAL ----
-    // Goal background
-    ctx.fillStyle='rgba(231,76,60,0.1)';
-    ctx.fillRect(-GD,goalTop,GD,GH);
-
-    // Goal net pattern
-    ctx.strokeStyle='rgba(231,76,60,0.15)';ctx.lineWidth=1;
-    for(let y=goalTop;y<=goalBot;y+=12){
-        ctx.beginPath();ctx.moveTo(-GD,y);ctx.lineTo(0,y);ctx.stroke();
-    }
-    for(let x=-GD;x<=0;x+=12){
-        ctx.beginPath();ctx.moveTo(x,goalTop);ctx.lineTo(x,goalBot);ctx.stroke();
-    }
-
-    // Goal frame
-    ctx.strokeStyle='rgba(231,76,60,0.8)';ctx.lineWidth=4;
-    ctx.beginPath();
-    ctx.moveTo(0,goalTop);ctx.lineTo(-GD,goalTop);ctx.lineTo(-GD,goalBot);ctx.lineTo(0,goalBot);
-    ctx.stroke();
-
-    // ---- RIGHT GOAL ----
-    ctx.fillStyle='rgba(52,152,219,0.1)';
-    ctx.fillRect(FW,goalTop,GD,GH);
-
-    ctx.strokeStyle='rgba(52,152,219,0.15)';ctx.lineWidth=1;
-    for(let y=goalTop;y<=goalBot;y+=12){
-        ctx.beginPath();ctx.moveTo(FW,y);ctx.lineTo(FW+GD,y);ctx.stroke();
-    }
-    for(let x=FW;x<=FW+GD;x+=12){
-        ctx.beginPath();ctx.moveTo(x,goalTop);ctx.lineTo(x,goalBot);ctx.stroke();
-    }
-
-    ctx.strokeStyle='rgba(52,152,219,0.8)';ctx.lineWidth=4;
-    ctx.beginPath();
-    ctx.moveTo(FW,goalTop);ctx.lineTo(FW+GD,goalTop);ctx.lineTo(FW+GD,goalBot);ctx.lineTo(FW,goalBot);
-    ctx.stroke();
-
-    // Goal posts (circles)
-    const postColor='#ddd';
-    ctx.fillStyle=postColor;ctx.strokeStyle='#999';ctx.lineWidth=1.5;
-    // Left top
-    ctx.beginPath();ctx.arc(0,goalTop,POST_RADIUS,0,Math.PI*2);ctx.fill();ctx.stroke();
-    // Left bottom
-    ctx.beginPath();ctx.arc(0,goalBot,POST_RADIUS,0,Math.PI*2);ctx.fill();ctx.stroke();
-    // Right top
-    ctx.beginPath();ctx.arc(FW,goalTop,POST_RADIUS,0,Math.PI*2);ctx.fill();ctx.stroke();
-    // Right bottom
-    ctx.beginPath();ctx.arc(FW,goalBot,POST_RADIUS,0,Math.PI*2);ctx.fill();ctx.stroke();
-
-    // Half circle decorations (penalty arcs)
-    ctx.strokeStyle=lc;ctx.lineWidth=2;
-    ctx.beginPath();
-    ctx.arc(currentMap.penaltyW,FH/2,currentMap.penaltyH*0.3,Math.PI*1.5,Math.PI*0.5);
-    ctx.stroke();
-    ctx.beginPath();
-    ctx.arc(FW-currentMap.penaltyW,FH/2,currentMap.penaltyH*0.3,Math.PI*0.5,Math.PI*1.5);
-    ctx.stroke();
+    ctx.beginPath();ctx.arc(cMap.pw*.75,FH/2,3,0,Math.PI*2);ctx.fill();
+    ctx.beginPath();ctx.arc(FW-cMap.pw*.75,FH/2,3,0,Math.PI*2);ctx.fill();
+    const cr2=22;
+    ctx.beginPath();ctx.arc(0,0,cr2,0,Math.PI/2);ctx.stroke();
+    ctx.beginPath();ctx.arc(FW,0,cr2,Math.PI/2,Math.PI);ctx.stroke();
+    ctx.beginPath();ctx.arc(0,FH,cr2,-Math.PI/2,0);ctx.stroke();
+    ctx.beginPath();ctx.arc(FW,FH,cr2,Math.PI,Math.PI*1.5);ctx.stroke();
+    // Penalty arcs
+    ctx.beginPath();ctx.arc(cMap.pw,FH/2,cMap.ph*.28,Math.PI*1.5,Math.PI*.5);ctx.stroke();
+    ctx.beginPath();ctx.arc(FW-cMap.pw,FH/2,cMap.ph*.28,Math.PI*.5,Math.PI*1.5);ctx.stroke();
+    // Goals
+    ctx.fillStyle='rgba(231,76,60,.08)';ctx.fillRect(-GD,gT,GD,GH);
+    ctx.strokeStyle='rgba(231,76,60,.12)';ctx.lineWidth=1;
+    for(let y=gT;y<=gB;y+=10){ctx.beginPath();ctx.moveTo(-GD,y);ctx.lineTo(0,y);ctx.stroke()}
+    for(let x=-GD;x<=0;x+=10){ctx.beginPath();ctx.moveTo(x,gT);ctx.lineTo(x,gB);ctx.stroke()}
+    ctx.strokeStyle='rgba(231,76,60,.75)';ctx.lineWidth=3.5;
+    ctx.beginPath();ctx.moveTo(0,gT);ctx.lineTo(-GD,gT);ctx.lineTo(-GD,gB);ctx.lineTo(0,gB);ctx.stroke();
+    ctx.fillStyle='rgba(52,152,219,.08)';ctx.fillRect(FW,gT,GD,GH);
+    ctx.strokeStyle='rgba(52,152,219,.12)';ctx.lineWidth=1;
+    for(let y=gT;y<=gB;y+=10){ctx.beginPath();ctx.moveTo(FW,y);ctx.lineTo(FW+GD,y);ctx.stroke()}
+    for(let x=FW;x<=FW+GD;x+=10){ctx.beginPath();ctx.moveTo(x,gT);ctx.lineTo(x,gB);ctx.stroke()}
+    ctx.strokeStyle='rgba(52,152,219,.75)';ctx.lineWidth=3.5;
+    ctx.beginPath();ctx.moveTo(FW,gT);ctx.lineTo(FW+GD,gT);ctx.lineTo(FW+GD,gB);ctx.lineTo(FW,gB);ctx.stroke();
+    // Posts
+    ctx.fillStyle='#ddd';ctx.strokeStyle='#999';ctx.lineWidth=1.5;
+    ctx.beginPath();ctx.arc(0,gT,PST,0,Math.PI*2);ctx.fill();ctx.stroke();
+    ctx.beginPath();ctx.arc(0,gB,PST,0,Math.PI*2);ctx.fill();ctx.stroke();
+    ctx.beginPath();ctx.arc(FW,gT,PST,0,Math.PI*2);ctx.fill();ctx.stroke();
+    ctx.beginPath();ctx.arc(FW,gB,PST,0,Math.PI*2);ctx.fill();ctx.stroke();
+    // Position markers (subtle lines)
+    ctx.strokeStyle='rgba(255,255,255,.06)';ctx.lineWidth=1;ctx.setLineDash([5,10]);
+    ctx.beginPath();ctx.moveTo(FW*.25,0);ctx.lineTo(FW*.25,FH);ctx.stroke();
+    ctx.beginPath();ctx.moveTo(FW*.75,0);ctx.lineTo(FW*.75,FH);ctx.stroke();
+    ctx.setLineDash([]);
 }
 
 function drawBall(){
-    // Shadow
-    ctx.fillStyle='rgba(0,0,0,0.18)';
-    ctx.beginPath();ctx.arc(localBall.x+2,localBall.y+3,BALL_RADIUS,0,Math.PI*2);ctx.fill();
-
-    // Ball body
-    const g=ctx.createRadialGradient(localBall.x-2,localBall.y-2,1,localBall.x,localBall.y,BALL_RADIUS);
-    g.addColorStop(0,'#ffffff');g.addColorStop(1,'#dddddd');
-    ctx.fillStyle=g;
-    ctx.beginPath();ctx.arc(localBall.x,localBall.y,BALL_RADIUS,0,Math.PI*2);ctx.fill();
-
-    // Ball outline
-    ctx.strokeStyle='#aaa';ctx.lineWidth=1.2;
-    ctx.beginPath();ctx.arc(localBall.x,localBall.y,BALL_RADIUS,0,Math.PI*2);ctx.stroke();
-
-    // Pentagon pattern
-    ctx.fillStyle='rgba(0,0,0,0.08)';
-    for(let i=0;i<5;i++){
-        const a=(i/5)*Math.PI*2-Math.PI/2;
-        const px=localBall.x+Math.cos(a)*BALL_RADIUS*0.55;
-        const py=localBall.y+Math.sin(a)*BALL_RADIUS*0.55;
-        ctx.beginPath();ctx.arc(px,py,BALL_RADIUS*0.22,0,Math.PI*2);ctx.fill();
-    }
-
-    // Speed trail
-    const bSpeed=Math.sqrt(localBall.vx*localBall.vx+localBall.vy*localBall.vy);
-    if(bSpeed>3){
-        const alpha=Math.min((bSpeed-3)/10,0.3);
-        ctx.strokeStyle=`rgba(255,255,255,${alpha})`;
-        ctx.lineWidth=2;
-        ctx.beginPath();
-        ctx.moveTo(localBall.x,localBall.y);
-        ctx.lineTo(localBall.x-localBall.vx*3,localBall.y-localBall.vy*3);
-        ctx.stroke();
-    }
+    ctx.fillStyle='rgba(0,0,0,.15)';ctx.beginPath();ctx.arc(lb.x+1.5,lb.y+2,BR,0,Math.PI*2);ctx.fill();
+    const g=ctx.createRadialGradient(lb.x-2,lb.y-2,1,lb.x,lb.y,BR);
+    g.addColorStop(0,'#fff');g.addColorStop(1,'#ddd');
+    ctx.fillStyle=g;ctx.beginPath();ctx.arc(lb.x,lb.y,BR,0,Math.PI*2);ctx.fill();
+    ctx.strokeStyle='#aaa';ctx.lineWidth=1;ctx.beginPath();ctx.arc(lb.x,lb.y,BR,0,Math.PI*2);ctx.stroke();
+    ctx.fillStyle='rgba(0,0,0,.06)';
+    for(let i=0;i<5;i++){const a=(i/5)*Math.PI*2-Math.PI/2;
+        ctx.beginPath();ctx.arc(lb.x+Math.cos(a)*BR*.5,lb.y+Math.sin(a)*BR*.5,BR*.2,0,Math.PI*2);ctx.fill()}
+    const bsp=Math.hypot(lb.vx,lb.vy);
+    if(bsp>3){ctx.strokeStyle=`rgba(255,255,255,${Math.min((bsp-3)/8,.25)})`;ctx.lineWidth=1.5;
+        ctx.beginPath();ctx.moveTo(lb.x,lb.y);ctx.lineTo(lb.x-lb.vx*2.5,lb.y-lb.vy*2.5);ctx.stroke()}
 }
 
 function drawPlayers(){
-    for(const pid in localPlayers){
-        const p=localPlayers[pid];
-        if(p.team==='spectator')continue;
-
+    const posLabels={GK:'GK',DEF:'DF',MID:'MF',FWD:'FW'};
+    for(const pid in lp){
+        const p=lp[pid];if(p.team==='spectator')continue;
         const isMe=pid===myId;
-
-        // Kick halo
         if(p.kick){
-            ctx.save();
-            const haloG=ctx.createRadialGradient(p.x,p.y,PLAYER_RADIUS,p.x,p.y,KICK_RADIUS);
-            haloG.addColorStop(0,'rgba(255,255,255,0.15)');
-            haloG.addColorStop(1,'rgba(255,255,255,0)');
-            ctx.fillStyle=haloG;
-            ctx.beginPath();ctx.arc(p.x,p.y,KICK_RADIUS,0,Math.PI*2);ctx.fill();
-
-            ctx.strokeStyle='rgba(255,255,255,0.5)';ctx.lineWidth=2.5;
-            ctx.setLineDash([4,4]);
-            ctx.beginPath();ctx.arc(p.x,p.y,KICK_RADIUS,0,Math.PI*2);ctx.stroke();
-            ctx.setLineDash([]);
-            ctx.restore();
+            const hg=ctx.createRadialGradient(p.x,p.y,PR,p.x,p.y,KR);
+            hg.addColorStop(0,'rgba(255,255,255,.12)');hg.addColorStop(1,'rgba(255,255,255,0)');
+            ctx.fillStyle=hg;ctx.beginPath();ctx.arc(p.x,p.y,KR,0,Math.PI*2);ctx.fill();
+            ctx.strokeStyle='rgba(255,255,255,.4)';ctx.lineWidth=2;ctx.setLineDash([3,3]);
+            ctx.beginPath();ctx.arc(p.x,p.y,KR,0,Math.PI*2);ctx.stroke();ctx.setLineDash([]);
         }
-
-        // Shadow
-        ctx.fillStyle='rgba(0,0,0,0.15)';
-        ctx.beginPath();ctx.arc(p.x+2,p.y+3,PLAYER_RADIUS,0,Math.PI*2);ctx.fill();
-
-        // Body
-        let grad;
-        if(p.team==='red'){
-            grad=ctx.createRadialGradient(p.x-4,p.y-4,2,p.x,p.y,PLAYER_RADIUS);
-            grad.addColorStop(0,'#ff7675');grad.addColorStop(1,'#c0392b');
-        }else{
-            grad=ctx.createRadialGradient(p.x-4,p.y-4,2,p.x,p.y,PLAYER_RADIUS);
-            grad.addColorStop(0,'#74b9ff');grad.addColorStop(1,'#2980b9');
+        ctx.fillStyle='rgba(0,0,0,.12)';ctx.beginPath();ctx.arc(p.x+1.5,p.y+2,PR,0,Math.PI*2);ctx.fill();
+        let gr;
+        if(p.team==='red'){gr=ctx.createRadialGradient(p.x-3,p.y-3,1,p.x,p.y,PR);gr.addColorStop(0,'#ff7675');gr.addColorStop(1,'#c0392b')}
+        else{gr=ctx.createRadialGradient(p.x-3,p.y-3,1,p.x,p.y,PR);gr.addColorStop(0,'#74b9ff');gr.addColorStop(1,'#2980b9')}
+        ctx.fillStyle=gr;ctx.beginPath();ctx.arc(p.x,p.y,PR,0,Math.PI*2);ctx.fill();
+        ctx.strokeStyle=isMe?'#fff':'rgba(255,255,255,.3)';ctx.lineWidth=isMe?2.5:1.2;
+        ctx.beginPath();ctx.arc(p.x,p.y,PR,0,Math.PI*2);ctx.stroke();
+        // Position badge on player
+        if(p.pos){
+            ctx.fillStyle='rgba(0,0,0,.3)';ctx.font='bold 8px Arial';ctx.textAlign='center';ctx.textBaseline='middle';
+            ctx.fillText(posLabels[p.pos]||'',p.x,p.y);
+            ctx.fillStyle='rgba(255,255,255,.7)';ctx.fillText(posLabels[p.pos]||'',p.x-.5,p.y-.5);
         }
-        ctx.fillStyle=grad;
-        ctx.beginPath();ctx.arc(p.x,p.y,PLAYER_RADIUS,0,Math.PI*2);ctx.fill();
-
-        // Border
-        ctx.strokeStyle=isMe?'#fff':'rgba(255,255,255,0.35)';
-        ctx.lineWidth=isMe?2.5:1.5;
-        ctx.beginPath();ctx.arc(p.x,p.y,PLAYER_RADIUS,0,Math.PI*2);ctx.stroke();
-
-        // Direction dot
-        const sp=Math.sqrt(p.vx*p.vx+p.vy*p.vy);
-        if(sp>0.3){
-            const dn=normalize(p.vx,p.vy);
-            ctx.fillStyle='rgba(255,255,255,0.55)';
-            ctx.beginPath();
-            ctx.arc(p.x+dn.x*PLAYER_RADIUS*0.6,p.y+dn.y*PLAYER_RADIUS*0.6,3,0,Math.PI*2);
-            ctx.fill();
-        }
-
-        // Shirt number (inner circle)
-        ctx.fillStyle='rgba(0,0,0,0.15)';
-        ctx.beginPath();ctx.arc(p.x,p.y,PLAYER_RADIUS*0.5,0,Math.PI*2);ctx.fill();
-
+        // Direction
+        const sp=Math.hypot(p.vx,p.vy);
+        if(sp>.3){const dn=norm(p.vx,p.vy);ctx.fillStyle='rgba(255,255,255,.45)';
+            ctx.beginPath();ctx.arc(p.x+dn.x*PR*.65,p.y+dn.y*PR*.65,2.5,0,Math.PI*2);ctx.fill()}
         // Name
-        ctx.fillStyle='#fff';
-        ctx.font='bold 10px Arial';
-        ctx.textAlign='center';ctx.textBaseline='bottom';
-        ctx.strokeStyle='rgba(0,0,0,0.6)';ctx.lineWidth=2.5;
-        ctx.strokeText(p.name||'?',p.x,p.y-PLAYER_RADIUS-4);
-        ctx.fillText(p.name||'?',p.x,p.y-PLAYER_RADIUS-4);
-
-        // "You" arrow
-        if(isMe){
-            ctx.fillStyle='rgba(255,255,255,0.6)';
-            ctx.font='9px Arial';
-            ctx.fillText('▼',p.x,p.y-PLAYER_RADIUS-14);
-        }
+        ctx.fillStyle='#fff';ctx.font='bold 9px Arial';ctx.textAlign='center';ctx.textBaseline='bottom';
+        ctx.strokeStyle='rgba(0,0,0,.5)';ctx.lineWidth=2;
+        ctx.strokeText(p.name||'?',p.x,p.y-PR-3);ctx.fillText(p.name||'?',p.x,p.y-PR-3);
+        if(isMe){ctx.fillStyle='rgba(255,255,255,.5)';ctx.font='8px Arial';ctx.fillText('▼',p.x,p.y-PR-12)}
     }
 }
 
 function drawHUD(){
-    hudRedScore.textContent=redScore;
-    hudBlueScore.textContent=blueScore;
-    const mins=Math.floor(matchTime/60);
-    const secs=Math.floor(matchTime%60);
-    hudTime.textContent=mins+':'+(secs<10?'0':'')+secs;
-
-    if(matchPaused)hudStatus.textContent='DURAKLATILDI';
-    else if(!matchRunning&&matchTime>=MATCH_TIME)hudStatus.textContent='MAÇ BİTTİ';
-    else if(goalScored)hudStatus.textContent='GOL!';
-    else hudStatus.textContent='';
+    $('hRS').textContent=rScore;$('hBS').textContent=bScore;
+    const m=Math.floor(mTime/60),s=Math.floor(mTime%60);
+    $('hTm').textContent=m+':'+(s<10?'0':'')+s;
+    if(mPause)$('hSt').textContent='DURAKLATILDI';
+    else if(!mRun&&mTime>=MT)$('hSt').textContent='MAÇ BİTTİ';
+    else if(gScored)$('hSt').textContent='GOL!';
+    else $('hSt').textContent='';
 }
 
-// =============================================
-// TOUCH CONTROLS
-// =============================================
-joyZone.addEventListener('touchstart',e=>{
-    e.preventDefault();e.stopPropagation();
-    if(joyTouchId!==null)return;
-    const t=e.changedTouches[0];
-    joyTouchId=t.identifier;joyActive=true;
-    joyStartX=t.clientX;joyStartY=t.clientY;
-    showJoy(t.clientX,t.clientY,t.clientX,t.clientY);
-},{passive:false});
-
-joyZone.addEventListener('touchmove',e=>{
-    e.preventDefault();e.stopPropagation();
-    for(let i=0;i<e.changedTouches.length;i++){
-        const t=e.changedTouches[i];
-        if(t.identifier!==joyTouchId)continue;
-        const dx=t.clientX-joyStartX;
-        const dy=t.clientY-joyStartY;
-        const maxD=50;
-        const d=Math.sqrt(dx*dx+dy*dy);
-        const cd=Math.min(d,maxD);
-        const ang=Math.atan2(dy,dx);
-        const cx=Math.cos(ang)*cd;
-        const cy=Math.sin(ang)*cd;
-        myInput.dx=cx/maxD;
-        myInput.dy=cy/maxD;
-        showJoy(joyStartX,joyStartY,joyStartX+cx,joyStartY+cy);
-    }
-},{passive:false});
-
-joyZone.addEventListener('touchend',e=>{
-    e.preventDefault();e.stopPropagation();
-    for(let i=0;i<e.changedTouches.length;i++){
-        if(e.changedTouches[i].identifier===joyTouchId){
-            joyTouchId=null;joyActive=false;
-            myInput.dx=0;myInput.dy=0;
-            hideJoy();
-        }
-    }
-},{passive:false});
-
-joyZone.addEventListener('touchcancel',e=>{
-    for(let i=0;i<e.changedTouches.length;i++){
-        if(e.changedTouches[i].identifier===joyTouchId){
-            joyTouchId=null;joyActive=false;
-            myInput.dx=0;myInput.dy=0;
-            hideJoy();
-        }
-    }
-},{passive:false});
-
-function showJoy(bx,by,tx,ty){
-    joyBaseEl.style.display='block';
-    joyBaseEl.style.left=(bx-55)+'px';joyBaseEl.style.top=(by-55)+'px';
-    joyThumbEl.style.display='block';
-    joyThumbEl.style.left=(tx-23)+'px';joyThumbEl.style.top=(ty-23)+'px';
-}
-function hideJoy(){
-    joyBaseEl.style.display='none';
-    joyThumbEl.style.display='none';
+/* ===== ADMIN MENU ===== */
+function buildAdminMenu(){
+    if(!isHost)return;
+    const m=$('aM');
+    m.innerHTML=`
+        <div class="sec-title">⚙️ KONTROL</div>
+        <button class="ap" id="amPause">⏸ Duraklat</button>
+        <button class="ar" id="amReset">🔄 Skor Sıfırla</button>
+        <button class="al" id="amLobby">🔙 Lobiye Dön</button>
+        <div class="sec-title">🗺️ HARİTA DEĞİŞTİR</div>
+        <select id="amMap">
+            <option value="classic" ${cMapKey==='classic'?'selected':''}>Klasik</option>
+            <option value="big" ${cMapKey==='big'?'selected':''}>Büyük</option>
+            <option value="small" ${cMapKey==='small'?'selected':''}>Mini</option>
+            <option value="hockey" ${cMapKey==='hockey'?'selected':''}>Hokey</option>
+            <option value="futsal" ${cMapKey==='futsal'?'selected':''}>Futsal</option>
+        </select>
+        <button class="ag" id="amMapGo">Harita Uygula</button>
+        <div class="sec-title">👥 TAKIM / MEVKİ</div>
+        <div id="amPlayers"></div>
+    `;
+    buildAdminPlayers();
+    // Events
+    $('amPause').addEventListener('click',()=>{
+        mPause=!mPause;roomRef.update({'match/paused':mPause});
+        $('amPause').textContent=mPause?'▶ Devam':'⏸ Duraklat';
+        toast(mPause?'Duraklatıldı':'Devam');
+    });
+    $('amReset').addEventListener('click',()=>{
+        rScore=0;bScore=0;mTime=0;
+        roomRef.update({'match/redScore':0,'match/blueScore':0,'match/time':0});
+        resetPos();toast('Skor sıfırlandı');
+    });
+    $('amLobby').addEventListener('click',()=>{
+        mRun=false;mPause=false;gScored=false;
+        roomRef.update({state:'lobby','match/running':false,'match/paused':false});
+        stopLoop();showScr('lobby');toast('Lobiye dönüldü');
+    });
+    $('amMapGo').addEventListener('click',()=>{
+        const nk=$('amMap').value;
+        if(nk===cMapKey){toast('Zaten bu harita');return}
+        cMapKey=nk;cMap=MAPS[cMapKey];
+        // Keep score, reset positions for new map
+        roomRef.update({mapKey:cMapKey,'match/ball':{x:cMap.fw/2,y:cMap.fh/2,vx:0,vy:0}});
+        // Reposition all players
+        lb.x=cMap.fw/2;lb.y=cMap.fh/2;lb.vx=0;lb.vy=0;
+        resetPos();resizeC();
+        toast('Harita: '+cMap.name);
+    });
 }
 
-// Kick button
-kickBtnEl.addEventListener('touchstart',e=>{
-    e.preventDefault();e.stopPropagation();
-    kickTouchId=e.changedTouches[0].identifier;
-    myInput.kick=true;
-    kickBtnEl.classList.add('active');
+function buildAdminPlayers(){
+    const div=$('amPlayers');if(!div)return;
+    div.innerHTML='';
+    if(!roomData||!roomData.players)return;
+    const posOpts=['GK','DEF','MID','FWD'];
+    const posLabels={GK:'KAL',DEF:'DEF',MID:'ORS',FWD:'FRV'};
+    for(const pid in roomData.players){
+        const p=roomData.players[pid];if(p.online===false)continue;
+        const row=document.createElement('div');row.className='player-move-row';
+        const tColor=p.team==='red'?'#e74c3c':p.team==='blue'?'#3498db':'#888';
+        let posHtml='<select data-pid="'+pid+'" data-type="pos" style="padding:2px 4px;font-size:9px;border:1px solid rgba(255,255,255,.1);border-radius:3px;background:rgba(255,255,255,.05);color:#fff;width:50px;-webkit-appearance:none">';
+        posHtml+='<option value="">-</option>';
+        for(const po of posOpts){posHtml+='<option value="'+po+'"'+(p.pos===po?' selected':'')+'>'+posLabels[po]+'</option>'}
+        posHtml+='</select>';
+        row.innerHTML=`<span style="color:${tColor}">${p.name||'?'}</span>
+            <button style="background:#e74c3c" data-pid="${pid}" data-act="red">K</button>
+            <button style="background:#3498db" data-pid="${pid}" data-act="blue">M</button>
+            <button style="background:#555" data-pid="${pid}" data-act="spectator">İ</button>
+            ${posHtml}`;
+        div.appendChild(row);
+    }
+    // Events
+    div.querySelectorAll('button[data-act]').forEach(b=>{
+        b.addEventListener('click',()=>{
+            const pid=b.getAttribute('data-pid'),act=b.getAttribute('data-act');
+            if(act==='spectator'){
+                roomRef.child('players/'+pid).update({team:'spectator',pos:''});
+            }else{
+                const np=autoAssignPos(act,roomData.players,pid);
+                roomRef.child('players/'+pid).update({team:act,pos:np});
+                // Respawn this player
+                setTimeout(()=>{
+                    if(lp[pid]){
+                        const sp2=spawnPos(act,np,0,1,cMap);
+                        lp[pid].x=sp2.x;lp[pid].y=sp2.y;lp[pid].vx=0;lp[pid].vy=0;
+                    }
+                },200);
+            }
+            setTimeout(buildAdminPlayers,500);
+        });
+    });
+    div.querySelectorAll('select[data-type="pos"]').forEach(sel=>{
+        sel.addEventListener('change',()=>{
+            const pid=sel.getAttribute('data-pid'),val=sel.value;
+            roomRef.child('players/'+pid).update({pos:val});
+            if(lp[pid]&&val){
+                const sp2=spawnPos(lp[pid].team,val,0,1,cMap);
+                lp[pid].x=sp2.x;lp[pid].y=sp2.y;lp[pid].vx=0;lp[pid].vy=0;
+            }
+        });
+    });
+}
+
+$('aT').addEventListener('click',e=>{
+    e.stopPropagation();admOpen=!admOpen;$('aM').style.display=admOpen?'block':'none';
+    if(admOpen)buildAdminPlayers();
+});
+
+$('aP').addEventListener('touchstart',e=>e.stopPropagation(),{passive:false});
+$('aP').addEventListener('touchmove',e=>e.stopPropagation(),{passive:false});
+$('aP').addEventListener('touchend',e=>e.stopPropagation(),{passive:false});
+$('aP').addEventListener('click',e=>e.stopPropagation());
+
+/* ===== TOUCH CONTROLS ===== */
+$('jZ').addEventListener('touchstart',e=>{
+    e.preventDefault();if(jTid!==null)return;
+    const t=e.changedTouches[0];jTid=t.identifier;jAct=true;
+    jSX=t.clientX;jSY=t.clientY;sJ(t.clientX,t.clientY,t.clientX,t.clientY);
 },{passive:false});
 
-kickBtnEl.addEventListener('touchend',e=>{
-    e.preventDefault();e.stopPropagation();
+$('jZ').addEventListener('touchmove',e=>{
+    e.preventDefault();
     for(let i=0;i<e.changedTouches.length;i++){
-        if(e.changedTouches[i].identifier===kickTouchId){
-            kickTouchId=null;myInput.kick=false;
-            kickBtnEl.classList.remove('active');
-        }
+        const t=e.changedTouches[i];if(t.identifier!==jTid)continue;
+        const dx=t.clientX-jSX,dy=t.clientY-jSY,mx=50;
+        const d=Math.hypot(dx,dy),cd=Math.min(d,mx),a=Math.atan2(dy,dx);
+        const cx=Math.cos(a)*cd,cy=Math.sin(a)*cd;
+        myIn.dx=cx/mx;myIn.dy=cy/mx;
+        sJ(jSX,jSY,jSX+cx,jSY+cy);
     }
 },{passive:false});
 
-kickBtnEl.addEventListener('touchcancel',e=>{
-    kickTouchId=null;myInput.kick=false;
-    kickBtnEl.classList.remove('active');
+$('jZ').addEventListener('touchend',e=>{
+    e.preventDefault();
+    for(let i=0;i<e.changedTouches.length;i++){
+        if(e.changedTouches[i].identifier===jTid){jTid=null;jAct=false;myIn.dx=0;myIn.dy=0;hJ()}}
 },{passive:false});
 
-// =============================================
-// KEYBOARD CONTROLS (DESKTOP)
-// =============================================
+$('jZ').addEventListener('touchcancel',e=>{
+    for(let i=0;i<e.changedTouches.length;i++){
+        if(e.changedTouches[i].identifier===jTid){jTid=null;jAct=false;myIn.dx=0;myIn.dy=0;hJ()}}
+},{passive:false});
+
+function sJ(bx,by,tx,ty){
+    $('jB').style.display='block';$('jB').style.left=(bx-50)+'px';$('jB').style.top=(by-50)+'px';
+    $('jT').style.display='block';$('jT').style.left=(tx-21)+'px';$('jT').style.top=(ty-21)+'px';
+}
+function hJ(){$('jB').style.display='none';$('jT').style.display='none'}
+
+/* ===== KICK BUTTON (single press, not hold) ===== */
+$('kickBtn').addEventListener('touchstart',e=>{
+    e.preventDefault();e.stopPropagation();
+    if(!kickPressed){
+        kickPressed=true;kickUsed=false;
+        myIn.kick=true;
+        $('kickBtn').classList.add('act');
+    }
+},{passive:false});
+
+$('kickBtn').addEventListener('touchend',e=>{
+    e.preventDefault();e.stopPropagation();
+    kickPressed=false;kickUsed=false;
+    myIn.kick=false;
+    $('kickBtn').classList.remove('act');
+},{passive:false});
+
+$('kickBtn').addEventListener('touchcancel',()=>{
+    kickPressed=false;kickUsed=false;myIn.kick=false;$('kickBtn').classList.remove('act');
+},{passive:false});
+
+/* ===== KEYBOARD ===== */
 document.addEventListener('keydown',e=>{
     if(gameState!=='game')return;
-    keysDown[e.key.toLowerCase()]=true;
-    if(e.key===' '||e.key==='x'||e.key==='X')myInput.kick=true;
-    updateKeys();
+    keys[e.key.toLowerCase()]=true;
+    if((e.key===' '||e.key==='x')&&!kickPressed){kickPressed=true;kickUsed=false;myIn.kick=true}
+    updK();
 });
 document.addEventListener('keyup',e=>{
-    keysDown[e.key.toLowerCase()]=false;
-    if(e.key===' '||e.key==='x'||e.key==='X')myInput.kick=false;
-    updateKeys();
+    keys[e.key.toLowerCase()]=false;
+    if(e.key===' '||e.key==='x'){kickPressed=false;kickUsed=false;myIn.kick=false}
+    updK();
 });
-
-function updateKeys(){
-    if(joyActive)return;
+function updK(){
+    if(jAct)return;
     let dx=0,dy=0;
-    if(keysDown['w']||keysDown['arrowup'])dy=-1;
-    if(keysDown['s']||keysDown['arrowdown'])dy=1;
-    if(keysDown['a']||keysDown['arrowleft'])dx=-1;
-    if(keysDown['d']||keysDown['arrowright'])dx=1;
-    myInput.dx=dx;myInput.dy=dy;
+    if(keys['w']||keys['arrowup'])dy=-1;if(keys['s']||keys['arrowdown'])dy=1;
+    if(keys['a']||keys['arrowleft'])dx=-1;if(keys['d']||keys['arrowright'])dx=1;
+    myIn.dx=dx;myIn.dy=dy;
 }
 
-// Ensure focus on canvas/document for keyboard (fix: non-host keyboard issue)
-document.addEventListener('click',()=>{
-    if(gameState==='game'){
-        canvas.focus();
-    }
-});
+// Focus fix for keyboard
+document.addEventListener('click',()=>{if(gameState==='game')canvas.focus()});
 
-// Make canvas focusable
-canvas.setAttribute('tabindex','0');
-canvas.style.outline='none';
+/* ===== UNLOAD ===== */
+window.addEventListener('beforeunload',()=>{if(roomRef)roomRef.child('players/'+myId).update({online:false})});
 
-// When game screen shows, focus canvas
-const origShowScreen=showScreen;
-showScreen=function(s){
-    menuScreen.style.display='none';
-    lobbyScreen.style.display='none';
-    gameScreen.style.display='none';
-    if(s==='menu'){menuScreen.style.display='flex';gameState='menu';stopLoop();}
-    else if(s==='lobby'){lobbyScreen.style.display='flex';gameState='lobby';stopLoop();}
-    else if(s==='game'){
-        gameScreen.style.display='block';gameState='game';resizeCanvas();startLoop();
-        setTimeout(()=>{canvas.focus();},100);
-    }
-};
-
-// =============================================
-// ADMIN PANEL
-// =============================================
-adminToggleEl.addEventListener('click',e=>{
-    e.stopPropagation();
-    adminMenuOpen=!adminMenuOpen;
-    adminMenuEl.style.display=adminMenuOpen?'block':'none';
-});
-adminToggleEl.addEventListener('touchstart',e=>e.stopPropagation(),{passive:false});
-
-$('abtnPause').addEventListener('click',()=>{
-    if(!isHost||!roomRef)return;
-    matchPaused=!matchPaused;
-    roomRef.update({'match/paused':matchPaused});
-    $('abtnPause').textContent=matchPaused?'▶ Devam':'⏸ Duraklat';
-    showToast(matchPaused?'Duraklatıldı':'Devam ediyor');
-});
-
-$('abtnReset').addEventListener('click',()=>{
-    if(!isHost||!roomRef)return;
-    redScore=0;blueScore=0;matchTime=0;
-    roomRef.update({'match/redScore':0,'match/blueScore':0,'match/time':0});
-    resetPositions();
-    showToast('Skor sıfırlandı');
-});
-
-$('abtnLobby').addEventListener('click',()=>{
-    if(!isHost||!roomRef)return;
-    matchRunning=false;matchPaused=false;goalScored=false;
-    roomRef.update({state:'lobby','match/running':false,'match/paused':false});
-    stopLoop();showScreen('lobby');
-    showToast('Lobiye dönüldü');
-});
-
-adminPanel.addEventListener('touchstart',e=>e.stopPropagation(),{passive:false});
-adminPanel.addEventListener('touchmove',e=>e.stopPropagation(),{passive:false});
-adminPanel.addEventListener('touchend',e=>e.stopPropagation(),{passive:false});
-
-// =============================================
-// PREVENT DEFAULT BEHAVIORS
-// =============================================
-document.addEventListener('gesturestart',e=>e.preventDefault());
-document.addEventListener('gesturechange',e=>e.preventDefault());
-document.addEventListener('gestureend',e=>e.preventDefault());
-
-// =============================================
-// WINDOW UNLOAD
-// =============================================
-window.addEventListener('beforeunload',()=>{
-    if(roomRef)roomRef.child('players/'+myId).update({online:false});
-});
-
-// =============================================
-// DEFAULT NAME
-// =============================================
-playerNameInput.value='Oyuncu'+Math.floor(Math.random()*900+100);
-
-// =============================================
-// INIT
-// =============================================
-showScreen('menu');
-hideJoy();
+/* ===== INIT ===== */
+$('pName').value='Oyuncu'+Math.floor(Math.random()*900+100);
+showScr('menu');hJ();
 
 })();
 </script>
