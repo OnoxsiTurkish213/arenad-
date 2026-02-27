@@ -2,343 +2,2212 @@
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, orientation=landscape">
-    <meta name="screen-orientation" content="landscape">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>HaxBall Mobile</title>
+    <title>HaxBall Online</title>
     <style>
-        *{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',sans-serif;-webkit-tap-highlight-color:transparent;touch-action:none;}
-        html,body{width:100%;height:100%;overflow:hidden;background:#1a1a2e;color:#fff;position:fixed;top:0;left:0;}
-        .screen{display:none;width:100%;height:100%;position:absolute;top:0;left:0;}
-        .screen.active{display:flex;}
-
-        /* MENU */
-        #menuScreen{flex-direction:column;align-items:center;justify-content:center;background:linear-gradient(135deg,#1a1a2e,#16213e,#0f3460);padding:20px;}
-        .game-title{font-size:clamp(36px,8vw,72px);font-weight:900;background:linear-gradient(45deg,#e94560,#f5a623,#e94560);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:5px;letter-spacing:4px;}
-        .game-subtitle{font-size:clamp(12px,2.5vw,18px);color:#888;margin-bottom:30px;}
-        .menu-container{display:flex;flex-direction:column;gap:12px;width:min(90%,350px);}
-        .menu-input{padding:14px 18px;border:2px solid #333;border-radius:12px;background:rgba(255,255,255,0.06);color:#fff;font-size:16px;outline:none;transition:all .3s;}
-        .menu-input:focus{border-color:#e94560;background:rgba(233,69,96,0.1);}
-        .menu-btn{padding:14px 24px;border:none;border-radius:12px;font-size:16px;font-weight:700;cursor:pointer;transition:all .3s;text-transform:uppercase;letter-spacing:2px;}
-        .btn-create{background:linear-gradient(135deg,#e94560,#c0392b);color:#fff;}
-        .btn-join{background:linear-gradient(135deg,#0984e3,#6c5ce7);color:#fff;}
-        .menu-divider{text-align:center;color:#555;font-size:13px;margin:3px 0;}
-        .join-section{display:flex;gap:8px;}
-        .join-section .menu-input{flex:1;text-align:center;font-size:22px;letter-spacing:8px;font-weight:700;}
-        .error-msg{color:#e94560;font-size:13px;text-align:center;margin-top:5px;min-height:18px;}
-
-        /* LOBBY */
-        #lobbyScreen{flex-direction:column;background:linear-gradient(135deg,#1a1a2e,#16213e);}
-        .lobby-header{display:flex;justify-content:space-between;align-items:center;padding:8px 15px;background:rgba(0,0,0,0.3);border-bottom:2px solid #333;flex-shrink:0;}
-        .lobby-title{font-size:18px;font-weight:700;}
-        .room-code-display{display:flex;align-items:center;gap:8px;background:rgba(233,69,96,0.2);padding:6px 14px;border-radius:8px;border:1px solid #e94560;}
-        .room-code-display span{font-size:22px;font-weight:900;letter-spacing:5px;color:#e94560;}
-        .copy-btn{background:#e94560;color:#fff;border:none;padding:4px 10px;border-radius:5px;cursor:pointer;font-size:11px;}
-        .lobby-content{display:flex;flex:1;overflow:hidden;flex-direction:row;}
-        .teams-container{display:flex;flex:1;gap:0;}
-        .team-panel{flex:1;display:flex;flex-direction:column;padding:10px;}
-        .team-red{background:rgba(233,69,96,0.08);border-right:1px solid #333;}
-        .team-blue{background:rgba(9,132,227,0.08);}
-        .spectator-panel{background:rgba(255,255,255,0.03);border-left:2px solid #333;width:140px;padding:10px;overflow-y:auto;}
-        .team-title{font-size:14px;font-weight:700;text-align:center;padding:6px;border-radius:6px;margin-bottom:8px;}
-        .team-red .team-title{background:rgba(233,69,96,0.2);color:#e94560;}
-        .team-blue .team-title{background:rgba(9,132,227,0.2);color:#0984e3;}
-        .spectator-panel .team-title{background:rgba(255,255,255,0.1);color:#888;font-size:12px;}
-        .player-list{flex:1;overflow-y:auto;}
-        .player-item{display:flex;align-items:center;justify-content:space-between;padding:6px 8px;margin:3px 0;border-radius:6px;background:rgba(255,255,255,0.05);font-size:12px;}
-        .player-name{font-weight:600;font-size:13px;}
-        .player-admin{font-size:9px;background:#f5a623;color:#000;padding:1px 5px;border-radius:3px;font-weight:700;}
-        .admin-move-btn{padding:2px 6px;border:none;border-radius:3px;cursor:pointer;font-size:10px;font-weight:600;margin:0 1px;}
-        .move-red{background:#e94560;color:#fff;}
-        .move-blue{background:#0984e3;color:#fff;}
-        .move-spec{background:#555;color:#fff;}
-        .kick-btn{background:#c0392b;color:#fff;}
-        .team-join-btn{margin-top:6px;padding:8px;border:none;border-radius:8px;font-weight:700;font-size:13px;cursor:pointer;color:#fff;}
-        .join-red-btn{background:linear-gradient(135deg,#e94560,#c0392b);}
-        .join-blue-btn{background:linear-gradient(135deg,#0984e3,#6c5ce7);}
-        .lobby-footer{display:flex;justify-content:space-between;align-items:center;padding:8px 15px;background:rgba(0,0,0,0.3);border-top:2px solid #333;flex-shrink:0;flex-wrap:wrap;gap:6px;}
-        .lobby-footer select{padding:6px 10px;border-radius:6px;border:1px solid #444;background:#2a2a4a;color:#fff;font-size:13px;outline:none;}
-        .lobby-footer label{font-size:12px;color:#888;}
-        .start-btn{padding:10px 30px;background:linear-gradient(135deg,#00b894,#00cec9);color:#fff;border:none;border-radius:8px;font-size:16px;font-weight:700;cursor:pointer;text-transform:uppercase;letter-spacing:2px;}
-        .start-btn:disabled{opacity:0.4;cursor:not-allowed;}
-        .leave-btn{padding:8px 16px;background:#c0392b;color:#fff;border:none;border-radius:6px;cursor:pointer;font-weight:600;font-size:13px;}
-        .player-count-badge{background:rgba(255,255,255,0.15);padding:1px 6px;border-radius:8px;font-size:11px;color:#aaa;}
-
-        /* GAME */
-        #gameScreen{flex-direction:column;align-items:center;justify-content:center;background:#111;position:relative;}
-        .game-hud{display:flex;justify-content:center;align-items:center;gap:15px;padding:5px 10px;width:100%;background:rgba(0,0,0,0.6);position:absolute;top:0;z-index:10;pointer-events:none;}
-        .hud-score{font-size:clamp(28px,5vw,42px);font-weight:900;}
-        .hud-red{color:#e94560;}
-        .hud-blue{color:#0984e3;}
-        .hud-vs{color:#555;font-size:16px;}
-        .hud-time{color:#888;font-size:16px;}
-        .admin-game-controls{position:absolute;top:5px;right:10px;z-index:15;display:flex;gap:5px;}
-        .admin-game-controls button{padding:6px 12px;border:none;border-radius:5px;cursor:pointer;font-weight:600;font-size:12px;}
-        .pause-btn{background:#f5a623;color:#000;}
-        .stop-btn{background:#c0392b;color:#fff;}
-        .resume-btn{background:#00b894;color:#fff;}
-        #gameCanvas{display:block;}
-        .game-paused-overlay,.goal-overlay,.game-over-overlay{position:absolute;top:0;left:0;width:100%;height:100%;display:none;align-items:center;justify-content:center;z-index:20;pointer-events:none;flex-direction:column;gap:15px;}
-        .game-paused-overlay.active,.goal-overlay.active,.game-over-overlay.active{display:flex;}
-        .game-paused-overlay{background:rgba(0,0,0,0.7);z-index:22;}
-        .game-over-overlay{background:rgba(0,0,0,0.85);z-index:30;pointer-events:auto;}
-        .paused-text{font-size:clamp(28px,6vw,48px);font-weight:900;color:#f5a623;}
-        .goal-text{font-size:clamp(40px,10vw,80px);font-weight:900;animation:goalAnim 1.5s ease-out forwards;}
-        @keyframes goalAnim{0%{transform:scale(0);opacity:0;}30%{transform:scale(1.3);opacity:1;}100%{transform:scale(1);opacity:0;}}
-        .game-over-text{font-size:clamp(24px,5vw,48px);font-weight:900;}
-        .back-lobby-btn{padding:12px 24px;background:linear-gradient(135deg,#e94560,#c0392b);color:#fff;border:none;border-radius:8px;font-size:16px;font-weight:700;cursor:pointer;pointer-events:auto;}
-
-        /* JOYSTICK */
-        .joystick-zone{position:absolute;bottom:10px;left:10px;z-index:50;width:140px;height:140px;pointer-events:auto;}
-        .joystick-base{width:120px;height:120px;border-radius:50%;background:rgba(255,255,255,0.08);border:3px solid rgba(255,255,255,0.15);position:absolute;bottom:10px;left:10px;display:flex;align-items:center;justify-content:center;}
-        .joystick-stick{width:50px;height:50px;border-radius:50%;background:rgba(255,255,255,0.3);border:2px solid rgba(255,255,255,0.4);position:absolute;transition:none;pointer-events:none;}
-
-        /* KICK BUTTON */
-        .kick-zone{position:absolute;bottom:15px;right:15px;z-index:50;pointer-events:auto;}
-        .kick-button{width:80px;height:80px;border-radius:50%;background:rgba(233,69,96,0.5);border:3px solid rgba(233,69,96,0.8);display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:900;color:#fff;user-select:none;-webkit-user-select:none;}
-        .kick-button.pressed{background:rgba(233,69,96,0.9);transform:scale(0.92);}
-
-        /* CHAT TOGGLE */
-        .chat-toggle-btn{position:absolute;top:5px;left:10px;z-index:15;background:rgba(255,255,255,0.1);border:1px solid #444;color:#fff;padding:5px 10px;border-radius:6px;font-size:12px;cursor:pointer;pointer-events:auto;}
-        .mobile-chat{position:absolute;bottom:60px;left:0;width:100%;z-index:40;display:none;flex-direction:column;padding:5px 10px;pointer-events:auto;}
-        .mobile-chat.active{display:flex;}
-        .chat-messages{max-height:80px;overflow-y:auto;margin-bottom:4px;padding:3px;}
-        .chat-msg{font-size:11px;padding:1px 4px;color:#ccc;text-shadow:1px 1px 2px #000;}
-        .chat-msg .sender{font-weight:700;}
-        .chat-input-row{display:flex;gap:4px;}
-        .chat-input-row input{flex:1;padding:6px 8px;border:1px solid #444;border-radius:6px;background:rgba(0,0,0,0.6);color:#fff;font-size:13px;outline:none;}
-        .chat-input-row button{padding:6px 12px;background:#e94560;color:#fff;border:none;border-radius:6px;font-size:12px;}
-
-        ::-webkit-scrollbar{width:4px;}
-        ::-webkit-scrollbar-track{background:transparent;}
-        ::-webkit-scrollbar-thumb{background:#444;border-radius:2px;}
-
-        @media (orientation:portrait){
-            .rotate-msg{display:flex !important;}
+        /* ============================================
+           RESET & BASE
+           ============================================ */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', 'Roboto', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            user-select: none;
         }
-        .rotate-msg{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:#1a1a2e;z-index:9999;align-items:center;justify-content:center;flex-direction:column;gap:15px;}
-        .rotate-msg .icon{font-size:60px;animation:rotatePhone 2s infinite;}
-        .rotate-msg p{font-size:18px;color:#aaa;}
-        @keyframes rotatePhone{0%,100%{transform:rotate(0deg);}50%{transform:rotate(90deg);}}
+
+        html, body {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background: #0a0a1a;
+            color: #fff;
+            position: fixed;
+            top: 0;
+            left: 0;
+            touch-action: none;
+        }
+
+        /* ============================================
+           SCREEN SYSTEM
+           ============================================ */
+        .screen {
+            display: none;
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 1;
+        }
+
+        .screen.active {
+            display: flex;
+        }
+
+        /* ============================================
+           ROTATE WARNING
+           ============================================ */
+        #rotateWarning {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #0a0a1a;
+            z-index: 99999;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        #rotateWarning .rotate-icon {
+            font-size: 80px;
+            animation: rotateSpin 2.5s ease-in-out infinite;
+        }
+
+        #rotateWarning p {
+            font-size: 20px;
+            color: #aaa;
+            text-align: center;
+            padding: 0 30px;
+        }
+
+        @keyframes rotateSpin {
+            0%, 100% { transform: rotate(0deg); }
+            25% { transform: rotate(90deg); }
+            75% { transform: rotate(90deg); }
+        }
+
+        /* ============================================
+           MAIN MENU SCREEN
+           ============================================ */
+        #menuScreen {
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #0a0a1a 0%, #1a1a3e 40%, #0f2847 70%, #0a0a1a 100%);
+            padding: 15px;
+        }
+
+        .menu-logo {
+            margin-bottom: 5px;
+        }
+
+        .menu-logo .title {
+            font-size: clamp(40px, 10vw, 80px);
+            font-weight: 900;
+            letter-spacing: 6px;
+            background: linear-gradient(135deg, #ff4757, #ff6b81, #ffa502, #ff4757);
+            background-size: 300% 300%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: gradientShift 4s ease infinite;
+        }
+
+        @keyframes gradientShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        .menu-logo .subtitle {
+            font-size: clamp(11px, 2.5vw, 16px);
+            color: #666;
+            text-align: center;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        .menu-form {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            width: min(92%, 380px);
+            margin-top: 25px;
+        }
+
+        .menu-input {
+            width: 100%;
+            padding: 14px 18px;
+            border: 2px solid #2a2a4a;
+            border-radius: 14px;
+            background: rgba(255, 255, 255, 0.04);
+            color: #fff;
+            font-size: 16px;
+            outline: none;
+            transition: border-color 0.3s, background 0.3s;
+        }
+
+        .menu-input:focus {
+            border-color: #ff4757;
+            background: rgba(255, 71, 87, 0.08);
+        }
+
+        .menu-input::placeholder {
+            color: #555;
+        }
+
+        .menu-btn {
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: 14px;
+            font-size: 17px;
+            font-weight: 800;
+            cursor: pointer;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            transition: transform 0.15s, box-shadow 0.3s;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .menu-btn:active {
+            transform: scale(0.97);
+        }
+
+        .btn-create {
+            background: linear-gradient(135deg, #ff4757, #c0392b);
+            color: #fff;
+            box-shadow: 0 4px 15px rgba(255, 71, 87, 0.3);
+        }
+
+        .btn-join-action {
+            background: linear-gradient(135deg, #3742fa, #6c5ce7);
+            color: #fff;
+            box-shadow: 0 4px 15px rgba(55, 66, 250, 0.3);
+            padding: 15px 20px;
+            flex-shrink: 0;
+            width: auto;
+            font-size: 15px;
+        }
+
+        .menu-separator {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: #444;
+            font-size: 13px;
+            margin: 5px 0;
+        }
+
+        .menu-separator::before,
+        .menu-separator::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: #333;
+        }
+
+        .join-row {
+            display: flex;
+            gap: 10px;
+            align-items: stretch;
+        }
+
+        .join-row .menu-input {
+            flex: 1;
+            text-align: center;
+            font-size: 26px;
+            letter-spacing: 10px;
+            font-weight: 800;
+            padding: 14px 10px;
+        }
+
+        .menu-error {
+            color: #ff4757;
+            font-size: 13px;
+            text-align: center;
+            min-height: 20px;
+            margin-top: 5px;
+        }
+
+        /* ============================================
+           LOBBY SCREEN
+           ============================================ */
+        #lobbyScreen {
+            flex-direction: column;
+            background: linear-gradient(180deg, #0a0a1a 0%, #111133 100%);
+        }
+
+        .lobby-top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 12px;
+            background: rgba(0, 0, 0, 0.5);
+            border-bottom: 1px solid #2a2a4a;
+            flex-shrink: 0;
+            min-height: 44px;
+        }
+
+        .lobby-top-bar .lobby-label {
+            font-size: 16px;
+            font-weight: 700;
+            color: #ccc;
+        }
+
+        .room-code-box {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(255, 71, 87, 0.12);
+            border: 1px solid rgba(255, 71, 87, 0.4);
+            padding: 5px 12px;
+            border-radius: 10px;
+        }
+
+        .room-code-box .code-label {
+            font-size: 12px;
+            color: #999;
+        }
+
+        .room-code-box .code-value {
+            font-size: 24px;
+            font-weight: 900;
+            letter-spacing: 5px;
+            color: #ff4757;
+        }
+
+        .room-code-box .copy-btn {
+            background: #ff4757;
+            color: #fff;
+            border: none;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 11px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .lobby-body {
+            flex: 1;
+            display: flex;
+            overflow: hidden;
+        }
+
+        .lobby-teams-area {
+            flex: 1;
+            display: flex;
+        }
+
+        .lobby-team-col {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            padding: 8px;
+            overflow: hidden;
+        }
+
+        .lobby-team-col.red-col {
+            background: rgba(255, 71, 87, 0.05);
+            border-right: 1px solid #222;
+        }
+
+        .lobby-team-col.blue-col {
+            background: rgba(55, 66, 250, 0.05);
+        }
+
+        .lobby-spec-col {
+            width: 130px;
+            background: rgba(255, 255, 255, 0.02);
+            border-left: 1px solid #222;
+            display: flex;
+            flex-direction: column;
+            padding: 8px;
+            overflow: hidden;
+        }
+
+        .team-header {
+            text-align: center;
+            padding: 6px;
+            border-radius: 8px;
+            margin-bottom: 6px;
+            font-weight: 700;
+            font-size: 13px;
+            flex-shrink: 0;
+        }
+
+        .red-col .team-header {
+            background: rgba(255, 71, 87, 0.15);
+            color: #ff4757;
+        }
+
+        .blue-col .team-header {
+            background: rgba(55, 66, 250, 0.15);
+            color: #3742fa;
+        }
+
+        .lobby-spec-col .team-header {
+            background: rgba(255, 255, 255, 0.08);
+            color: #888;
+            font-size: 11px;
+        }
+
+        .team-count {
+            background: rgba(255, 255, 255, 0.12);
+            padding: 1px 7px;
+            border-radius: 8px;
+            font-size: 11px;
+            margin-left: 4px;
+            color: #bbb;
+        }
+
+        .player-list-container {
+            flex: 1;
+            overflow-y: auto;
+            margin-bottom: 6px;
+        }
+
+        .lobby-player-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 5px 8px;
+            margin: 3px 0;
+            border-radius: 6px;
+            background: rgba(255, 255, 255, 0.04);
+            font-size: 12px;
+        }
+
+        .lobby-player-item:hover {
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .lp-name {
+            font-weight: 600;
+            font-size: 13px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 80px;
+        }
+
+        .lp-controls {
+            display: flex;
+            align-items: center;
+            gap: 3px;
+            flex-shrink: 0;
+        }
+
+        .lp-badge-admin {
+            font-size: 9px;
+            background: #ffa502;
+            color: #000;
+            padding: 1px 5px;
+            border-radius: 4px;
+            font-weight: 700;
+        }
+
+        .lp-badge-me {
+            color: #2ed573;
+            font-size: 10px;
+        }
+
+        .lp-move-btn {
+            padding: 2px 6px;
+            border: none;
+            border-radius: 4px;
+            font-size: 10px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .lp-to-red { background: #ff4757; color: #fff; }
+        .lp-to-blue { background: #3742fa; color: #fff; }
+        .lp-to-spec { background: #555; color: #fff; }
+        .lp-kick { background: #8b0000; color: #fff; }
+
+        .team-join-button {
+            flex-shrink: 0;
+            padding: 8px;
+            border: none;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 700;
+            cursor: pointer;
+            color: #fff;
+        }
+
+        .join-red-button {
+            background: linear-gradient(135deg, #ff4757, #c0392b);
+        }
+
+        .join-blue-button {
+            background: linear-gradient(135deg, #3742fa, #6c5ce7);
+        }
+
+        .lobby-bottom-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 8px 12px;
+            background: rgba(0, 0, 0, 0.5);
+            border-top: 1px solid #2a2a4a;
+            flex-shrink: 0;
+            flex-wrap: wrap;
+            gap: 6px;
+            min-height: 44px;
+        }
+
+        .lobby-bottom-bar .leave-button {
+            padding: 8px 14px;
+            background: #8b0000;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .lobby-option {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .lobby-option label {
+            font-size: 12px;
+            color: #888;
+        }
+
+        .lobby-option select {
+            padding: 6px 10px;
+            border-radius: 8px;
+            border: 1px solid #333;
+            background: #1a1a3e;
+            color: #fff;
+            font-size: 13px;
+            outline: none;
+            -webkit-appearance: none;
+        }
+
+        .start-match-btn {
+            padding: 10px 28px;
+            background: linear-gradient(135deg, #2ed573, #009432);
+            color: #fff;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 800;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            box-shadow: 0 3px 12px rgba(46, 213, 115, 0.3);
+        }
+
+        .start-match-btn:disabled {
+            opacity: 0.35;
+            cursor: not-allowed;
+            box-shadow: none;
+        }
+
+        .start-match-btn:active:not(:disabled) {
+            transform: scale(0.96);
+        }
+
+        /* ============================================
+           GAME SCREEN
+           ============================================ */
+        #gameScreen {
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: #0a0f0a;
+            position: relative;
+        }
+
+        /* HUD */
+        .game-top-hud {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 12px;
+            padding: 4px 10px;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 10;
+            pointer-events: none;
+            min-height: 36px;
+        }
+
+        .hud-score-red {
+            font-size: clamp(24px, 5vw, 40px);
+            font-weight: 900;
+            color: #ff4757;
+        }
+
+        .hud-divider {
+            font-size: 16px;
+            color: #444;
+            font-weight: 700;
+        }
+
+        .hud-score-blue {
+            font-size: clamp(24px, 5vw, 40px);
+            font-weight: 900;
+            color: #3742fa;
+        }
+
+        .hud-timer {
+            font-size: 15px;
+            color: #777;
+            font-weight: 600;
+            margin-left: 10px;
+        }
+
+        /* Admin game controls */
+        .game-admin-bar {
+            position: absolute;
+            top: 4px;
+            right: 8px;
+            z-index: 15;
+            display: flex;
+            gap: 5px;
+        }
+
+        .game-admin-bar button {
+            padding: 5px 12px;
+            border: none;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .admin-pause-btn { background: #ffa502; color: #000; }
+        .admin-resume-btn { background: #2ed573; color: #fff; }
+        .admin-stop-btn { background: #8b0000; color: #fff; }
+
+        /* Canvas */
+        #gameCanvas {
+            display: block;
+            z-index: 5;
+        }
+
+        /* Overlays */
+        .overlay-paused,
+        .overlay-goal,
+        .overlay-gameover {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            gap: 15px;
+            pointer-events: none;
+        }
+
+        .overlay-paused {
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 25;
+        }
+
+        .overlay-goal {
+            z-index: 28;
+        }
+
+        .overlay-gameover {
+            background: rgba(0, 0, 0, 0.85);
+            z-index: 30;
+            pointer-events: auto;
+        }
+
+        .overlay-paused.visible,
+        .overlay-goal.visible,
+        .overlay-gameover.visible {
+            display: flex;
+        }
+
+        .paused-label {
+            font-size: clamp(30px, 7vw, 56px);
+            font-weight: 900;
+            color: #ffa502;
+            text-shadow: 0 0 20px rgba(255, 165, 2, 0.5);
+        }
+
+        .goal-label {
+            font-size: clamp(48px, 12vw, 90px);
+            font-weight: 900;
+            animation: goalBounce 1.5s ease-out forwards;
+        }
+
+        @keyframes goalBounce {
+            0% { transform: scale(0); opacity: 0; }
+            30% { transform: scale(1.4); opacity: 1; }
+            50% { transform: scale(0.9); }
+            70% { transform: scale(1.1); }
+            100% { transform: scale(1); opacity: 0; }
+        }
+
+        .gameover-label {
+            font-size: clamp(22px, 5vw, 46px);
+            font-weight: 900;
+            text-align: center;
+        }
+
+        .gameover-back-btn {
+            padding: 12px 28px;
+            background: linear-gradient(135deg, #ff4757, #c0392b);
+            color: #fff;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            pointer-events: auto;
+        }
+
+        /* ============================================
+           JOYSTICK
+           ============================================ */
+        .joystick-area {
+            position: absolute;
+            bottom: 8px;
+            left: 8px;
+            z-index: 50;
+            width: 150px;
+            height: 150px;
+            pointer-events: auto;
+        }
+
+        .joystick-base-ring {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 130px;
+            height: 130px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.05);
+            border: 3px solid rgba(255, 255, 255, 0.12);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .joystick-knob {
+            width: 52px;
+            height: 52px;
+            border-radius: 50%;
+            background: radial-gradient(circle at 35% 35%, rgba(255,255,255,0.35), rgba(255,255,255,0.12));
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            position: absolute;
+            pointer-events: none;
+            will-change: transform;
+        }
+
+        /* ============================================
+           KICK BUTTON
+           ============================================ */
+        .kick-btn-area {
+            position: absolute;
+            bottom: 12px;
+            right: 12px;
+            z-index: 50;
+            pointer-events: auto;
+        }
+
+        .kick-btn-circle {
+            width: 85px;
+            height: 85px;
+            border-radius: 50%;
+            background: radial-gradient(circle at 40% 40%, rgba(255, 71, 87, 0.6), rgba(255, 71, 87, 0.25));
+            border: 3px solid rgba(255, 71, 87, 0.7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: 900;
+            color: #fff;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: transform 0.1s, background 0.1s;
+        }
+
+        .kick-btn-circle.active {
+            background: radial-gradient(circle at 40% 40%, rgba(255, 71, 87, 0.95), rgba(255, 71, 87, 0.6));
+            transform: scale(0.9);
+            border-color: #fff;
+        }
+
+        /* ============================================
+           MOBILE CHAT
+           ============================================ */
+        .chat-toggle {
+            position: absolute;
+            top: 40px;
+            left: 8px;
+            z-index: 15;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid #333;
+            color: #aaa;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            cursor: pointer;
+            pointer-events: auto;
+        }
+
+        .chat-panel {
+            position: absolute;
+            bottom: 55px;
+            left: 0;
+            width: 280px;
+            z-index: 45;
+            display: none;
+            flex-direction: column;
+            padding: 6px 8px;
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 0 8px 8px 0;
+            pointer-events: auto;
+        }
+
+        .chat-panel.open {
+            display: flex;
+        }
+
+        .chat-msg-list {
+            max-height: 90px;
+            overflow-y: auto;
+            margin-bottom: 4px;
+        }
+
+        .chat-msg-item {
+            font-size: 11px;
+            padding: 1px 3px;
+            color: #bbb;
+            word-break: break-word;
+        }
+
+        .chat-msg-item .msg-sender {
+            font-weight: 700;
+        }
+
+        .chat-input-bar {
+            display: flex;
+            gap: 4px;
+        }
+
+        .chat-input-bar input {
+            flex: 1;
+            padding: 6px 8px;
+            border: 1px solid #333;
+            border-radius: 6px;
+            background: rgba(0, 0, 0, 0.6);
+            color: #fff;
+            font-size: 13px;
+            outline: none;
+        }
+
+        .chat-input-bar button {
+            padding: 6px 10px;
+            background: #ff4757;
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        /* ============================================
+           SCROLLBAR
+           ============================================ */
+        ::-webkit-scrollbar { width: 4px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #333; border-radius: 2px; }
     </style>
 </head>
 <body>
 
-<div class="rotate-msg" id="rotateMsg">
-    <div class="icon">📱</div>
-    <p>Lütfen ekranı yatay çevir</p>
-</div>
-
-<!-- MENU -->
-<div id="menuScreen" class="screen active">
-    <div class="game-title">HAXBALL</div>
-    <div class="game-subtitle">Online Multiplayer Football</div>
-    <div class="menu-container">
-        <input type="text" class="menu-input" id="playerName" placeholder="Oyuncu Adın..." maxlength="12" autocomplete="off">
-        <button class="menu-btn btn-create" id="createRoomBtn">Oda Oluştur</button>
-        <div class="menu-divider">─── veya ───</div>
-        <div class="join-section">
-            <input type="text" class="menu-input" id="roomCodeInput" placeholder="Kod" maxlength="4" inputmode="numeric" autocomplete="off">
-            <button class="menu-btn btn-join" id="joinRoomBtn" style="flex-shrink:0;padding:14px 20px;font-size:14px;">Katıl</button>
-        </div>
-        <div class="error-msg" id="menuError"></div>
+    <!-- ROTATE WARNING -->
+    <div id="rotateWarning">
+        <div class="rotate-icon">📱</div>
+        <p>Lütfen telefonunu yatay konuma çevir</p>
     </div>
-</div>
 
-<!-- LOBBY -->
-<div id="lobbyScreen" class="screen">
-    <div class="lobby-header">
-        <div class="lobby-title">Lobi</div>
-        <div class="room-code-display">
-            Kod: <span id="displayRoomCode"></span>
-            <button class="copy-btn" id="copyCodeBtn">Kopyala</button>
+    <!-- ===================== MENU SCREEN ===================== -->
+    <div id="menuScreen" class="screen active">
+        <div class="menu-logo">
+            <div class="title">HAXBALL</div>
+            <div class="subtitle">Online Multiplayer Football</div>
         </div>
-    </div>
-    <div class="lobby-content">
-        <div class="teams-container">
-            <div class="team-panel team-red">
-                <div class="team-title">🔴 KIRMIZI <span class="player-count-badge" id="redCount">0</span></div>
-                <div class="player-list" id="redTeamList"></div>
-                <button class="team-join-btn join-red-btn" id="joinRedBtn">Kırmızıya Geç</button>
+        <div class="menu-form">
+            <input type="text" class="menu-input" id="inputName" placeholder="Oyuncu adın..." maxlength="12" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+            <button class="menu-btn btn-create" id="btnCreateRoom">ODA OLUŞTUR</button>
+            <div class="menu-separator">veya odaya katıl</div>
+            <div class="join-row">
+                <input type="text" class="menu-input" id="inputCode" placeholder="----" maxlength="4" inputmode="numeric" autocomplete="off">
+                <button class="menu-btn btn-join-action" id="btnJoinRoom">KATIL</button>
             </div>
-            <div class="team-panel team-blue">
-                <div class="team-title">🔵 MAVİ <span class="player-count-badge" id="blueCount">0</span></div>
-                <div class="player-list" id="blueTeamList"></div>
-                <button class="team-join-btn join-blue-btn" id="joinBlueBtn">Maviye Geç</button>
+            <div class="menu-error" id="menuErrorMsg"></div>
+        </div>
+    </div>
+
+    <!-- ===================== LOBBY SCREEN ===================== -->
+    <div id="lobbyScreen" class="screen">
+        <div class="lobby-top-bar">
+            <span class="lobby-label">⚽ Lobi</span>
+            <div class="room-code-box">
+                <span class="code-label">Oda:</span>
+                <span class="code-value" id="lobbyCodeDisplay"></span>
+                <button class="copy-btn" id="btnCopyCode">Kopyala</button>
             </div>
         </div>
-        <div class="spectator-panel">
-            <div class="team-title">👁 İzleyici <span class="player-count-badge" id="specCount">0</span></div>
-            <div class="player-list" id="specList"></div>
-        </div>
-    </div>
-    <div class="lobby-footer">
-        <button class="leave-btn" id="leaveBtn">Ayrıl</button>
-        <div style="display:flex;align-items:center;gap:6px;">
-            <label>Harita:</label>
-            <select id="mapSelect">
-                <option value="classic">Klasik</option>
-                <option value="big">Büyük</option>
-                <option value="small">Küçük</option>
-                <option value="hockey">Hokey</option>
-                <option value="futsal">Futsal</option>
-            </select>
-        </div>
-        <div style="display:flex;align-items:center;gap:6px;">
-            <label>Gol:</label>
-            <select id="scoreLimitSelect">
-                <option value="3">3</option>
-                <option value="5">5</option>
-                <option value="7">7</option>
-                <option value="10">10</option>
-                <option value="0">∞</option>
-            </select>
-        </div>
-        <button class="start-btn" id="startGameBtn" disabled>BAŞLAT</button>
-    </div>
-</div>
 
-<!-- GAME -->
-<div id="gameScreen" class="screen">
-    <div class="game-hud">
-        <span class="hud-score hud-red" id="hudRedScore">0</span>
-        <span class="hud-vs">-</span>
-        <span class="hud-score hud-blue" id="hudBlueScore">0</span>
-        <span class="hud-time" id="hudTime">0:00</span>
-    </div>
-    <div class="admin-game-controls" id="adminControls" style="display:none;">
-        <button class="pause-btn" id="pauseBtn">⏸</button>
-        <button class="resume-btn" id="resumeBtn" style="display:none;">▶</button>
-        <button class="stop-btn" id="stopBtn">⏹</button>
-    </div>
-    <canvas id="gameCanvas"></canvas>
+        <div class="lobby-body">
+            <div class="lobby-teams-area">
+                <div class="lobby-team-col red-col">
+                    <div class="team-header">🔴 KIRMIZI <span class="team-count" id="cntRed">0</span></div>
+                    <div class="player-list-container" id="listRed"></div>
+                    <button class="team-join-button join-red-button" id="btnJoinRed">Kırmızıya Geç</button>
+                </div>
+                <div class="lobby-team-col blue-col">
+                    <div class="team-header">🔵 MAVİ <span class="team-count" id="cntBlue">0</span></div>
+                    <div class="player-list-container" id="listBlue"></div>
+                    <button class="team-join-button join-blue-button" id="btnJoinBlue">Maviye Geç</button>
+                </div>
+            </div>
+            <div class="lobby-spec-col">
+                <div class="team-header">👁 İzleyici <span class="team-count" id="cntSpec">0</span></div>
+                <div class="player-list-container" id="listSpec"></div>
+            </div>
+        </div>
 
-    <div class="game-paused-overlay" id="pausedOverlay"><div class="paused-text">DURAKLATILDI</div></div>
-    <div class="goal-overlay" id="goalOverlay"><div class="goal-text" id="goalText">GOL!</div></div>
-    <div class="game-over-overlay" id="gameOverOverlay">
-        <div class="game-over-text" id="gameOverText"></div>
-        <button class="back-lobby-btn" id="backToLobbyBtn">Lobiye Dön</button>
-    </div>
-
-    <!-- JOYSTICK -->
-    <div class="joystick-zone" id="joystickZone">
-        <div class="joystick-base" id="joystickBase">
-            <div class="joystick-stick" id="joystickStick"></div>
+        <div class="lobby-bottom-bar">
+            <button class="leave-button" id="btnLeave">Ayrıl</button>
+            <div class="lobby-option" id="optMap">
+                <label>Harita:</label>
+                <select id="selMap">
+                    <option value="classic">Klasik</option>
+                    <option value="big">Büyük</option>
+                    <option value="small">Küçük</option>
+                    <option value="hockey">Hokey</option>
+                    <option value="futsal">Futsal</option>
+                </select>
+            </div>
+            <div class="lobby-option" id="optScore">
+                <label>Gol Limiti:</label>
+                <select id="selScore">
+                    <option value="3">3</option>
+                    <option value="5">5</option>
+                    <option value="7">7</option>
+                    <option value="10">10</option>
+                    <option value="0">Sınırsız</option>
+                </select>
+            </div>
+            <button class="start-match-btn" id="btnStart" disabled>BAŞLAT</button>
         </div>
     </div>
 
-    <!-- KICK -->
-    <div class="kick-zone">
-        <div class="kick-button" id="kickButton">ŞUTTT</div>
-    </div>
+    <!-- ===================== GAME SCREEN ===================== -->
+    <div id="gameScreen" class="screen">
+        <!-- HUD -->
+        <div class="game-top-hud">
+            <span class="hud-score-red" id="hudRed">0</span>
+            <span class="hud-divider">—</span>
+            <span class="hud-score-blue" id="hudBlue">0</span>
+            <span class="hud-timer" id="hudTimer">0:00</span>
+        </div>
 
-    <!-- CHAT -->
-    <button class="chat-toggle-btn" id="chatToggle">💬</button>
-    <div class="mobile-chat" id="mobileChat">
-        <div class="chat-messages" id="chatMessages"></div>
-        <div class="chat-input-row">
-            <input type="text" id="chatInput" placeholder="Mesaj..." maxlength="80" autocomplete="off">
-            <button id="chatSendBtn">Gönder</button>
+        <!-- Admin controls -->
+        <div class="game-admin-bar" id="gameAdminBar" style="display:none;">
+            <button class="admin-pause-btn" id="btnPause">⏸</button>
+            <button class="admin-resume-btn" id="btnResume" style="display:none;">▶</button>
+            <button class="admin-stop-btn" id="btnStop">⏹</button>
+        </div>
+
+        <!-- Canvas -->
+        <canvas id="gameCanvas"></canvas>
+
+        <!-- Overlays -->
+        <div class="overlay-paused" id="overlayPaused">
+            <div class="paused-label">DURAKLATILDI</div>
+        </div>
+        <div class="overlay-goal" id="overlayGoal">
+            <div class="goal-label" id="goalLabel">GOL!</div>
+        </div>
+        <div class="overlay-gameover" id="overlayGameover">
+            <div class="gameover-label" id="gameoverLabel"></div>
+            <button class="gameover-back-btn" id="btnBackLobby">Lobiye Dön</button>
+        </div>
+
+        <!-- Joystick -->
+        <div class="joystick-area" id="joystickArea">
+            <div class="joystick-base-ring" id="joystickBase">
+                <div class="joystick-knob" id="joystickKnob"></div>
+            </div>
+        </div>
+
+        <!-- Kick Button -->
+        <div class="kick-btn-area" id="kickArea">
+            <div class="kick-btn-circle" id="kickBtn">ŞUT</div>
+        </div>
+
+        <!-- Chat -->
+        <div class="chat-toggle" id="chatToggleBtn">💬</div>
+        <div class="chat-panel" id="chatPanel">
+            <div class="chat-msg-list" id="chatMsgList"></div>
+            <div class="chat-input-bar">
+                <input type="text" id="chatInputField" placeholder="Mesaj..." maxlength="80" autocomplete="off">
+                <button id="chatSendButton">Gönder</button>
+            </div>
         </div>
     </div>
-</div>
 
-<!-- FIREBASE -->
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+    <!-- ===================== FIREBASE SDK ===================== -->
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
 
-<script>
-// ====================== FIREBASE CONFIG ======================
-const firebaseConfig = {
-    apiKey: "AIzaSyDXgndR3i2p0ovRXVxqGb24d7lMXdTTX9I",
-    authDomain: "mobilgame1-f03ac.firebaseapp.com",
-    databaseURL: "https://mobilgame1-f03ac-default-rtdb.europe-west1.firebasedatabase.app",
-    projectId: "mobilgame1-f03ac",
-    storageBucket: "mobilgame1-f03ac.firebasestorage.app",
-    messagingSenderId: "123456",
-    appId: "1:188464433527:web:baed82070bfed9652df972"
-};
-firebase.initializeApp(firebaseConfig);
-const db = firebase.database();
+    <script>
+    // ===========================================================
+    //  FIREBASE INIT
+    // ===========================================================
+    firebase.initializeApp({
+        apiKey: "AIzaSyDXgndR3i2p0ovRXVxqGb24d7lMXdTTX9I",
+        authDomain: "mobilgame1-f03ac.firebaseapp.com",
+        databaseURL: "https://mobilgame1-f03ac-default-rtdb.europe-west1.firebasedatabase.app",
+        projectId: "mobilgame1-f03ac",
+        storageBucket: "mobilgame1-f03ac.firebasestorage.app",
+        messagingSenderId: "188464433527",
+        appId: "1:188464433527:web:baed82070bfed9652df972",
+        measurementId: "G-0G2FXDPVKM"
+    });
 
-// ====================== STATE ======================
-let myId = genId();
-let myName = '';
-let currentRoom = null;
-let isAdmin = false;
-let roomRef = null;
-let listeners = [];
-let canvas, ctx;
-let gameLoop = null;
-let renderLoop = null;
-let nonAdminInterval = null;
-let localState = null;
+    const db = firebase.database();
 
-// Joystick
-let joystickInput = { dx: 0, dy: 0 };
-let kicking = false;
-let joystickActive = false;
-let joystickTouchId = null;
+    // ===========================================================
+    //  GLOBALS
+    // ===========================================================
+    const myId = uid();
+    let myName = '';
+    let roomCode = null;
+    let roomRef = null;
+    let amAdmin = false;
+    let fbListeners = [];
+    let localRoom = null;
 
-// Maps
-const MAPS = {
-    classic: { w: 840, h: 400, gs: 90, name: "Klasik" },
-    big: { w: 1000, h: 500, gs: 110, name: "Büyük" },
-    small: { w: 640, h: 320, gs: 80, name: "Küçük" },
-    hockey: { w: 840, h: 400, gs: 100, name: "Hokey" },
-    futsal: { w: 700, h: 360, gs: 85, name: "Futsal" }
-};
+    // Canvas
+    let cvs = null;
+    let ctx = null;
+    let renderRAF = null;
+    let physicsRAF = null;
+    let inputInterval = null;
 
-const BR = 8;     // ball radius
-const PR = 15;    // player radius
-const BF = 0.985; // ball friction
-const PF = 0.92;  // player friction
-const PS = 3.5;   // player speed
-const KF = 12;    // kick force
-const GD = 30;    // goal depth
+    // Controls
+    let joyDX = 0, joyDY = 0;
+    let isKicking = false;
+    let joyTouchId = null;
+    let kickTouchId = null;
 
-// ====================== UTIL ======================
-function genId(){ return Math.random().toString(36).substr(2,9)+Date.now().toString(36); }
-function genCode(){ return Math.floor(1000+Math.random()*9000).toString(); }
-function showScreen(id){ document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active')); document.getElementById(id).classList.add('active'); }
-function showErr(m){ const e=document.getElementById('menuError'); e.textContent=m; setTimeout(()=>e.textContent='',3000); }
-function dist(a,b){ return Math.sqrt((a.x-b.x)**2+(a.y-b.y)**2); }
+    // Keyboard (for PC testing)
+    let keysDown = {};
 
-// ====================== ORIENTATION CHECK ======================
-function checkOrientation(){
-    const rm = document.getElementById('rotateMsg');
-    if(window.innerHeight > window.innerWidth){ rm.style.display='flex'; }
-    else { rm.style.display='none'; }
-}
-window.addEventListener('resize', checkOrientation);
-window.addEventListener('orientationchange', ()=> setTimeout(checkOrientation,200));
-checkOrientation();
+    // ===========================================================
+    //  CONSTANTS
+    // ===========================================================
+    const MAPS = {
+        classic: { w: 840, h: 400, gs: 90, name: 'Klasik' },
+        big:     { w: 1000, h: 500, gs: 110, name: 'Büyük' },
+        small:   { w: 640, h: 320, gs: 80, name: 'Küçük' },
+        hockey:  { w: 840, h: 400, gs: 100, name: 'Hokey' },
+        futsal:  { w: 700, h: 360, gs: 85, name: 'Futsal' }
+    };
 
-// ====================== MENU ======================
-document.getElementById('createRoomBtn').addEventListener('click', createRoom);
-document.getElementById('joinRoomBtn').addEventListener('click', joinRoom);
-document.getElementById('roomCodeInput').addEventListener('input', function(){ this.value=this.value.replace(/[^0-9]/g,''); });
+    const BALL_R = 8;
+    const PLR_R  = 15;
+    const BALL_FRIC = 0.985;
+    const PLR_FRIC  = 0.92;
+    const PLR_SPEED = 3.5;
+    const KICK_PWR  = 12;
+    const GOAL_D    = 30;
+    const PUSH_PWR  = 2.5;
+    const POST_R    = 5;
 
-async function createRoom(){
-    myName = document.getElementById('playerName').value.trim();
-    if(!myName){ showErr('İsim gir!'); return; }
-    if(myName.length<2){ showErr('İsim en az 2 harf!'); return; }
-    let code = genCode();
-    let snap = await db.ref('rooms/'+code).once('value');
-    while(snap.exists()){ code=genCode(); snap=await db.ref('rooms/'+code).once('value'); }
-    const room = { code, admin:myId, state:'lobby', map:'classic', scoreLimit:3, redScore:0, blueScore:0, gameTime:0, created:firebase.database.ServerValue.TIMESTAMP, players:{}, ball:null, chat:{} };
-    room.players[myId] = { id:myId, name:myName, team:'spectator', x:0, y:0, vx:0, vy:0, online:true };
-    await db.ref('rooms/'+code).set(room);
-    currentRoom=code; isAdmin=true;
-    enterLobby();
-}
+    // ===========================================================
+    //  UTILITIES
+    // ===========================================================
+    function uid() {
+        return 'u' + Math.random().toString(36).substr(2, 8) + Date.now().toString(36);
+    }
 
-async function joinRoom(){
-    myName = document.getElementById('playerName').value.trim();
-    if(!myName){ showErr('İsim gir!'); return; }
-    const code = document.getElementById('roomCodeInput').value.trim();
-    if(code.length!==4){ showErr('4 haneli kod gir!'); return; }
-    const snap = await db.ref('rooms/'+code).once('value');
-    if(!snap.exi
+    function makeCode() {
+        return String(Math.floor(1000 + Math.random() * 9000));
+    }
+
+    function dist(ax, ay, bx, by) {
+        const dx = ax - bx, dy = ay - by;
+        return Math.sqrt(dx * dx + dy * dy);
+    }
+
+    function clamp(v, lo, hi) { return Math.max(lo, Math.min(hi, v)); }
+
+    function showScreen(id) {
+        document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+        document.getElementById(id).classList.add('active');
+    }
+
+    function menuError(msg) {
+        const el = document.getElementById('menuErrorMsg');
+        el.textContent = msg;
+        setTimeout(() => { if (el.textContent === msg) el.textContent = ''; }, 4000);
+    }
+
+    // ===========================================================
+    //  ORIENTATION CHECK
+    // ===========================================================
+    function checkOrientation() {
+        const warn = document.getElementById('rotateWarning');
+        if (window.innerHeight > window.innerWidth && window.innerWidth < 600) {
+            warn.style.display = 'flex';
+        } else {
+            warn.style.display = 'none';
+        }
+    }
+    window.addEventListener('resize', checkOrientation);
+    window.addEventListener('orientationchange', () => setTimeout(checkOrientation, 300));
+    checkOrientation();
+
+    // ===========================================================
+    //  MENU EVENTS
+    // ===========================================================
+    document.getElementById('inputCode').addEventListener('input', function () {
+        this.value = this.value.replace(/\D/g, '');
+    });
+
+    document.getElementById('btnCreateRoom').addEventListener('click', doCreateRoom);
+    document.getElementById('btnJoinRoom').addEventListener('click', doJoinRoom);
+
+    // Create room
+    async function doCreateRoom() {
+        myName = document.getElementById('inputName').value.trim();
+        if (!myName || myName.length < 2) { menuError('En az 2 harfli bir isim gir.'); return; }
+
+        let code = makeCode();
+        let snap = await db.ref('rooms/' + code).once('value');
+        let tries = 0;
+        while (snap.exists() && tries < 20) {
+            code = makeCode();
+            snap = await db.ref('rooms/' + code).once('value');
+            tries++;
+        }
+        if (snap.exists()) { menuError('Oda oluşturulamadı, tekrar dene.'); return; }
+
+        const data = {
+            code: code,
+            admin: myId,
+            state: 'lobby',
+            map: 'classic',
+            scoreLimit: 3,
+            redScore: 0,
+            blueScore: 0,
+            gameTime: 0,
+            players: {},
+            ball: null
+        };
+        data.players[myId] = makePlayer('spectator');
+
+        try {
+            await db.ref('rooms/' + code).set(data);
+        } catch (e) {
+            menuError('Firebase hatası: ' + e.message);
+            return;
+        }
+
+        roomCode = code;
+        amAdmin = true;
+        openLobby();
+    }
+
+    // Join room
+    async function doJoinRoom() {
+        myName = document.getElementById('inputName').value.trim();
+        if (!myName || myName.length < 2) { menuError('En az 2 harfli bir isim gir.'); return; }
+
+        const code = document.getElementById('inputCode').value.trim();
+        if (code.length !== 4) { menuError('4 haneli oda kodu gir.'); return; }
+
+        let snap;
+        try {
+            snap = await db.ref('rooms/' + code).once('value');
+        } catch (e) {
+            menuError('Bağlantı hatası: ' + e.message);
+            return;
+        }
+
+        if (!snap.exists()) { menuError('Bu kodla oda bulunamadı!'); return; }
+
+        const room = snap.val();
+        const onlinePlayers = room.players
+            ? Object.values(room.players).filter(p => p.online)
+            : [];
+
+        if (onlinePlayers.length >= 10) { menuError('Oda dolu! (Maks 10 kişi)'); return; }
+
+        // Aynı isim kontrolü
+        for (const p of onlinePlayers) {
+            if (p.name === myName) { menuError('Bu isim zaten kullanılıyor!'); return; }
+        }
+
+        try {
+            await db.ref('rooms/' + code + '/players/' + myId).set(makePlayer('spectator'));
+        } catch (e) {
+            menuError('Katılma hatası: ' + e.message);
+            return;
+        }
+
+        roomCode = code;
+        amAdmin = (room.admin === myId);
+        openLobby();
+    }
+
+    function makePlayer(team) {
+        return {
+            id: myId,
+            name: myName,
+            team: team,
+            x: 0, y: 0,
+            vx: 0, vy: 0,
+            online: true
+        };
+    }
+
+    // ===========================================================
+    //  LOBBY
+    // ===========================================================
+    function openLobby() {
+        showScreen('lobbyScreen');
+        document.getElementById('lobbyCodeDisplay').textContent = roomCode;
+        roomRef = db.ref('rooms/' + roomCode);
+
+        // On disconnect
+        roomRef.child('players/' + myId + '/online').onDisconnect().set(false);
+
+        // Listen room
+        const cb = roomRef.on('value', snap => {
+            if (!snap.exists()) {
+                alert('Oda silindi veya bulunamadı.');
+                cleanupAll();
+                return;
+            }
+            const room = snap.val();
+            localRoom = room;
+            amAdmin = (room.admin === myId);
+            refreshLobbyUI(room);
+
+            // Auto switch to game
+            if ((room.state === 'playing' || room.state === 'paused') &&
+                document.getElementById('lobbyScreen').classList.contains('active')) {
+                openGame(room);
+            }
+
+            // Auto switch back to lobby
+            if (room.state === 'lobby' &&
+                document.getElementById('gameScreen').classList.contains('active')) {
+                showScreen('lobbyScreen');
+                teardownGame();
+            }
+        });
+        fbListeners.push({ ref: roomRef, ev: 'value', cb });
+
+        // Buttons
+        document.getElementById('btnCopyCode').onclick = () => {
+            try { navigator.clipboard.writeText(roomCode); } catch (e) {}
+            document.getElementById('btnCopyCode').textContent = '✓ Kopyalandı';
+            setTimeout(() => document.getElementById('btnCopyCode').textContent = 'Kopyala', 1500);
+        };
+        document.getElementById('btnJoinRed').onclick = () => setMyTeam('red');
+        document.getElementById('btnJoinBlue').onclick = () => setMyTeam('blue');
+        document.getElementById('btnLeave').onclick = leaveRoom;
+        document.getElementById('selMap').onchange = function () {
+            if (amAdmin) roomRef.child('map').set(this.value);
+        };
+        document.getElementById('selScore').onchange = function () {
+            if (amAdmin) roomRef.child('scoreLimit').set(parseInt(this.value));
+        };
+        document.getElementById('btnStart').onclick = beginMatch;
+    }
+
+    function refreshLobbyUI(room) {
+        const allPlayers = room.players ? Object.values(room.players).filter(p => p.online) : [];
+        const reds = allPlayers.filter(p => p.team === 'red');
+        const blues = allPlayers.filter(p => p.team === 'blue');
+        const specs = allPlayers.filter(p => p.team === 'spectator');
+
+        document.getElementById('cntRed').textContent = reds.length;
+        document.getElementById('cntBlue').textContent = blues.length;
+        document.getElementById('cntSpec').textContent = specs.length;
+
+        fillPlayerList('listRed', reds, room);
+        fillPlayerList('listBlue', blues, room);
+        fillPlayerList('listSpec', specs, room);
+
+        document.getElementById('selMap').value = room.map || 'classic';
+        document.getElementById('selMap').disabled = !amAdmin;
+        document.getElementById('selScore').value = String(room.scoreLimit ?? 3);
+        document.getElementById('selScore').disabled = !amAdmin;
+
+        const startBtn = document.getElementById('btnStart');
+        if (amAdmin) {
+            startBtn.style.display = '';
+            startBtn.disabled = !(reds.length > 0 && blues.length > 0);
+        } else {
+            startBtn.style.display = 'none';
+        }
+    }
+
+    function fillPlayerList(containerId, players, room) {
+        const el = document.getElementById(containerId);
+        el.innerHTML = '';
+        players.forEach(p => {
+            const item = document.createElement('div');
+            item.className = 'lobby-player-item';
+
+            let left = `<span class="lp-name">${escHtml(p.name)}</span>`;
+            let right = '';
+
+            if (p.id === room.admin) right += `<span class="lp-badge-admin">ADMİN</span> `;
+            if (p.id === myId) right += `<span class="lp-badge-me">● Sen</span> `;
+
+            if (amAdmin && p.id !== myId) {
+                if (p.team !== 'red')
+                    right += `<button class="lp-move-btn lp-to-red" data-pid="${p.id}" data-to="red">K</button>`;
+                if (p.team !== 'blue')
+                    right += `<button class="lp-move-btn lp-to-blue" data-pid="${p.id}" data-to="blue">M</button>`;
+                if (p.team !== 'spectator')
+                    right += `<button class="lp-move-btn lp-to-spec" data-pid="${p.id}" data-to="spectator">İ</button>`;
+                right += `<button class="lp-move-btn lp-kick" data-pid="${p.id}" data-action="kick">✕</button>`;
+            }
+
+            item.innerHTML = left + `<span class="lp-controls">${right}</span>`;
+            el.appendChild(item);
+        });
+
+        // Attach events
+        el.querySelectorAll('.lp-move-btn').forEach(btn => {
+            btn.addEventListener('click', function () {
+                const pid = this.dataset.pid;
+                if (this.dataset.action === 'kick') {
+                    roomRef.child('players/' + pid + '/online').set(false);
+                } else {
+                    roomRef.child('players/' + pid + '/team').set(this.dataset.to);
+                }
+            });
+        });
+    }
+
+    function escHtml(s) {
+        const d = document.createElement('div');
+        d.textContent = s;
+        return d.innerHTML;
+    }
+
+    function setMyTeam(team) {
+        if (roomRef) roomRef.child('players/' + myId + '/team').set(team);
+    }
+
+    function leaveRoom() {
+        if (roomRef) roomRef.child('players/' + myId + '/online').set(false);
+        cleanupAll();
+    }
+
+    function cleanupAll() {
+        fbListeners.forEach(l => l.ref.off(l.ev, l.cb));
+        fbListeners = [];
+        teardownGame();
+        roomCode = null;
+        roomRef = null;
+        amAdmin = false;
+        localRoom = null;
+        showScreen('menuScreen');
+    }
+
+    // ===========================================================
+    //  BEGIN MATCH (admin only)
+    // ===========================================================
+    async function beginMatch() {
+        if (!amAdmin || !roomRef) return;
+        const snap = await roomRef.once('value');
+        const room = snap.val();
+        if (!room) return;
+        const map = MAPS[room.map || 'classic'];
+        const ps = room.players || {};
+        const reds = Object.values(ps).filter(p => p.online && p.team === 'red');
+        const blues = Object.values(ps).filter(p => p.online && p.team === 'blue');
+        if (reds.length === 0 || blues.length === 0) return;
+
+        const upd = {};
+
+        reds.forEach((p, i) => {
+            const gap = map.h / (reds.length + 1);
+            upd['players/' + p.id + '/x'] = map.w * 0.25;
+            upd['players/' + p.id + '/y'] = gap * (i + 1);
+            upd['players/' + p.id + '/vx'] = 0;
+            upd['players/' + p.id + '/vy'] = 0;
+        });
+
+        blues.forEach((p, i) => {
+            const gap = map.h / (blues.length + 1);
+            upd['players/' + p.id + '/x'] = map.w * 0.75;
+            upd['players/' + p.id + '/y'] = gap * (i + 1);
+            upd['players/' + p.id + '/vx'] = 0;
+            upd['players/' + p.id + '/vy'] = 0;
+        });
+
+        upd['ball'] = { x: map.w / 2, y: map.h / 2, vx: 0, vy: 0 };
+        upd['redScore'] = 0;
+        upd['blueScore'] = 0;
+        upd['gameTime'] = 0;
+        upd['state'] = 'playing';
+
+        await roomRef.update(upd);
+    }
+
+    // ===========================================================
+    //  GAME SCREEN INIT
+    // ===========================================================
+    function openGame(room) {
+        showScreen('gameScreen');
+        cvs = document.getElementById('gameCanvas');
+        ctx = cvs.getContext('2d');
+        fitCanvas(room);
+
+        window.addEventListener('resize', onGameResize);
+
+        hideOverlays();
+
+        if (amAdmin) {
+            document.getElementById('gameAdminBar').style.display = 'flex';
+        } else {
+            document.getElementById('gameAdminBar').style.display = 'none';
+        }
+
+        initJoystick();
+        initKickButton();
+        initGameChat();
+        initGameAdminButtons();
+
+        if (amAdmin) {
+            startPhysicsLoop();
+        }
+        if (!amAdmin) {
+            inputInterval = setInterval(sendMyInput, 1000 / 30);
+        }
+        startRenderLoop();
+
+        // Room listener for HUD
+        const cb = roomRef.on('value', snap => {
+            if (!snap.exists()) return;
+            const r = snap.val();
+            localRoom = r;
+            amAdmin = (r.admin === myId);
+
+            document.getElementById('hudRed').textContent = r.redScore || 0;
+            document.getElementById('hudBlue').textContent = r.blueScore || 0;
+            const m = Math.floor((r.gameTime || 0) / 60);
+            const s = Math.floor((r.gameTime || 0) % 60);
+            document.getElementById('hudTimer').textContent = m + ':' + String(s).padStart(2, '0');
+
+            if (r.state === 'paused') {
+                document.getElementById('overlayPaused').classList.add('visible');
+                if (amAdmin) {
+                    document.getElementById('btnPause').style.display = 'none';
+                    document.getElementById('btnResume').style.display = '';
+                }
+            } else {
+                document.getElementById('overlayPaused').classList.remove('visible');
+                if (amAdmin) {
+                    document.getElementById('btnPause').style.display = '';
+                    document.getElementById('btnResume').style.display = 'none';
+                }
+            }
+        });
+        fbListeners.push({ ref: roomRef, ev: 'value', cb });
+    }
+
+    function fitCanvas(room) {
+        const map = MAPS[(room || localRoom || {}).map || 'classic'];
+        const totalW = map.w + GOAL_D * 2 + 60;
+        const totalH = map.h + 60;
+        const maxW = window.innerWidth;
+        const maxH = window.innerHeight - 40;
+        const scale = Math.min(maxW / totalW, maxH / totalH, 1.5);
+
+        cvs.width = Math.floor(totalW * scale);
+        cvs.height = Math.floor(totalH * scale);
+        cvs.dataset.scale = scale;
+        cvs.dataset.mapKey = (room || localRoom || {}).map || 'classic';
+    }
+
+    function onGameResize() {
+        if (localRoom) fitCanvas(localRoom);
+        checkOrientation();
+    }
+
+    function hideOverlays() {
+        document.getElementById('overlayPaused').classList.remove('visible');
+        document.getElementById('overlayGoal').classList.remove('visible');
+        document.getElementById('overlayGameover').classList.remove('visible');
+    }
+
+    function teardownGame() {
+        if (physicsRAF) cancelAnimationFrame(physicsRAF);
+        if (renderRAF) cancelAnimationFrame(renderRAF);
+        if (inputInterval) clearInterval(inputInterval);
+        physicsRAF = null;
+        renderRAF = null;
+        inputInterval = null;
+        joyDX = 0; joyDY = 0;
+        isKicking = false;
+        joyTouchId = null;
+        kickTouchId = null;
+        window.removeEventListener('resize', onGameResize);
+    }
+
+    // ===========================================================
+    //  JOYSTICK
+    // ===========================================================
+    function initJoystick() {
+        const area = document.getElementById('joystickArea');
+        const base = document.getElementById('joystickBase');
+        const knob = document.getElementById('joystickKnob');
+        const maxR = 38;
+
+        function getCenter() {
+            const r = base.getBoundingClientRect();
+            return { cx: r.left + r.width / 2, cy: r.top + r.height / 2 };
+        }
+
+        function processTouch(tx, ty) {
+            const { cx, cy } = getCenter();
+            let dx = tx - cx;
+            let dy = ty - cy;
+            const d = Math.sqrt(dx * dx + dy * dy);
+            if (d > maxR) {
+                dx = (dx / d) * maxR;
+                dy = (dy / d) * maxR;
+            }
+            knob.style.transform = `translate(${dx}px, ${dy}px)`;
+            joyDX = dx / maxR;
+            joyDY = dy / maxR;
+        }
+
+        function resetJoy() {
+            knob.style.transform = 'translate(0,0)';
+            joyDX = 0;
+            joyDY = 0;
+            joyTouchId = null;
+        }
+
+        area.addEventListener('touchstart', e => {
+            e.preventDefault();
+            if (joyTouchId !== null) return;
+            const t = e.changedTouches[0];
+            joyTouchId = t.identifier;
+            processTouch(t.clientX, t.clientY);
+        }, { passive: false });
+
+        area.addEventListener('touchmove', e => {
+            e.preventDefault();
+            for (const t of e.changedTouches) {
+                if (t.identifier === joyTouchId) {
+                    processTouch(t.clientX, t.clientY);
+                    break;
+                }
+            }
+        }, { passive: false });
+
+        const endJoy = e => {
+            for (const t of e.changedTouches) {
+                if (t.identifier === joyTouchId) {
+                    resetJoy();
+                    break;
+                }
+            }
+        };
+        area.addEventListener('touchend', endJoy);
+        area.addEventListener('touchcancel', endJoy);
+    }
+
+    // ===========================================================
+    //  KICK BUTTON
+    // ===========================================================
+    function initKickButton() {
+        const btn = document.getElementById('kickBtn');
+
+        btn.addEventListener('touchstart', e => {
+            e.preventDefault();
+            isKicking = true;
+            kickTouchId = e.changedTouches[0].identifier;
+            btn.classList.add('active');
+        }, { passive: false });
+
+        const endKick = e => {
+            for (const t of e.changedTouches) {
+                if (t.identifier === kickTouchId) {
+                    isKicking = false;
+                    kickTouchId = null;
+                    btn.classList.remove('active');
+                    break;
+                }
+            }
+        };
+        btn.addEventListener('touchend', endKick);
+        btn.addEventListener('touchcancel', endKick);
+    }
+
+    // ===========================================================
+    //  ADMIN GAME BUTTONS
+    // ===========================================================
+    function initGameAdminButtons() {
+        document.getElementById('btnPause').onclick = () => {
+            if (amAdmin && roomRef) roomRef.child('state').set('paused');
+        };
+        document.getElementById('btnResume').onclick = () => {
+            if (amAdmin && roomRef) roomRef.child('state').set('playing');
+        };
+        document.getElementById('btnStop').onclick = () => {
+            if (amAdmin && roomRef) roomRef.update({
+                state: 'lobby', ball: null, redScore: 0, blueScore: 0, gameTime: 0
+            });
+        };
+        document.getElementById('btnBackLobby').onclick = () => {
+            if (amAdmin && roomRef) roomRef.update({
+                state: 'lobby', ball: null, redScore: 0, blueScore: 0, gameTime: 0
+            });
+        };
+    }
+
+    // ===========================================================
+    //  CHAT
+    // ===========================================================
+    function initGameChat() {
+        document.getElementById('chatToggleBtn').onclick = () => {
+            document.getElementById('chatPanel').classList.toggle('open');
+        };
+
+        document.getElementById('chatSendButton').onclick = doSendChat;
+        document.getElementById('chatInputField').addEventListener('keydown', e => {
+            e.stopPropagation();
+            if (e.key === 'Enter') doSendChat();
+        });
+        document.getElementById('chatInputField').addEventListener('keyup', e => e.stopPropagation());
+
+        const chatRef = roomRef.child('chat');
+        const cb = chatRef.orderByChild('t').limitToLast(25).on('child_added', snap => {
+            const msg = snap.val();
+            if (!msg) return;
+            const el = document.createElement('div');
+            el.className = 'chat-msg-item';
+            let col = '#bbb';
+            if (msg.team === 'red') col = '#ff4757';
+            if (msg.team === 'blue') col = '#3742fa';
+            el.innerHTML = `<span class="msg-sender" style="color:${col}">${escHtml(msg.who)}:</span> ${escHtml(msg.txt)}`;
+            document.getElementById('chatMsgList').appendChild(el);
+            document.getElementById('chatMsgList').scrollTop = 999999;
+        });
+        fbListeners.push({ ref: chatRef.orderByChild('t').limitToLast(25), ev: 'child_added', cb });
+    }
+
+    function doSendChat() {
+        const inp = document.getElementById('chatInputField');
+        const txt = inp.value.trim();
+        if (!txt || !roomRef) return;
+        let team = 'spectator';
+        if (localRoom && localRoom.players && localRoom.players[myId]) {
+            team = localRoom.players[myId].team;
+        }
+        roomRef.child('chat').push({
+            who: myName,
+            txt: txt,
+            team: team,
+            t: firebase.database.ServerValue.TIMESTAMP
+        });
+        inp.value = '';
+        inp.blur();
+    }
+
+    // ===========================================================
+    //  GET MY INPUT
+    // ===========================================================
+    function getInput() {
+        let dx = joyDX, dy = joyDY;
+        let kick = isKicking;
+
+        // Keyboard fallback
+        if (keysDown['ArrowUp'] || keysDown['w'] || keysDown['W']) dy = -1;
+        if (keysDown['ArrowDown'] || keysDown['s'] || keysDown['S']) dy = 1;
+        if (keysDown['ArrowLeft'] || keysDown['a'] || keysDown['A']) dx = -1;
+        if (keysDown['ArrowRight'] || keysDown['d'] || keysDown['D']) dx = 1;
+        if (keysDown['x'] || keysDown['X'] || keysDown[' ']) kick = true;
+
+        // Normalize
+        const mag = Math.sqrt(dx * dx + dy * dy);
+        if (mag > 1) { dx /= mag; dy /= mag; }
+
+        return { dx, dy, kick };
+    }
+
+    // ===========================================================
+    //  PHYSICS LOOP (Admin only)
+    // ===========================================================
+    function startPhysicsLoop() {
+        if (physicsRAF) cancelAnimationFrame(physicsRAF);
+        let lastT = Date.now();
+        let acc = 0;
+        const step = 1 / 30;
+
+        function tick() {
+            physicsRAF = requestAnimationFrame(tick);
+            if (!localRoom || localRoom.state !== 'playing') { lastT = Date.now(); return; }
+
+            const now = Date.now();
+            const dt = (now - lastT) / 1000;
+            lastT = now;
+            acc += dt;
+            if (acc < step) return;
+            acc = 0;
+
+            const rm = localRoom;
+            const map = MAPS[rm.map || 'classic'];
+            const ps = rm.players || {};
+            const ball = rm.ball;
+            if (!ball) return;
+
+            const upd = {};
+
+            // Process players
+            const activePlayers = Object.values(ps).filter(p => p.online && p.team !== 'spectator');
+
+            activePlayers.forEach(p => {
+                let px = p.x || 0, py = p.y || 0;
+                let pvx = p.vx || 0, pvy = p.vy || 0;
+
+                // Admin's own input
+                if (p.id === myId) {
+                    const inp = getInput();
+                    pvx += inp.dx * PLR_SPEED;
+                    pvy += inp.dy * PLR_SPEED;
+                }
+
+                pvx *= PLR_FRIC;
+                pvy *= PLR_FRIC;
+                px += pvx;
+                py += pvy;
+
+                // Boundaries
+                px = clamp(px, PLR_R, map.w - PLR_R);
+                py = clamp(py, PLR_R, map.h - PLR_R);
+
+                upd['players/' + p.id + '/x'] = px;
+                upd['players/' + p.id + '/y'] = py;
+                upd['players/' + p.id + '/vx'] = pvx;
+                upd['players/' + p.id + '/vy'] = pvy;
+
+                // Player-Ball
+                const d = dist(px, py, ball.x, ball.y);
+                if (d < PLR_R + BALL_R) {
+                    const ang = Math.atan2(ball.y - py, ball.x - px);
+                    const overlap = (PLR_R + BALL_R) - d;
+                    ball.x += Math.cos(ang) * overlap;
+                    ball.y += Math.sin(ang) * overlap;
+                    ball.vx += Math.cos(ang) * PUSH_PWR;
+                    ball.vy += Math.sin(ang) * PUSH_PWR;
+
+                    // Kick
+                    if (p.id === myId && isKicking) {
+                        ball.vx = Math.cos(ang) * KICK_PWR;
+                        ball.vy = Math.sin(ang) * KICK_PWR;
+                    }
+                }
+            });
+
+            // Player-Player collisions
+            for (let i = 0; i < activePlayers.length; i++) {
+                for (let j = i + 1; j < activePlayers.length; j++) {
+                    const a = activePlayers[i], b = activePlayers[j];
+                    const ax = upd['players/' + a.id + '/x'] ?? a.x;
+                    const ay = upd['players/' + a.id + '/y'] ?? a.y;
+                    const bx = upd['players/' + b.id + '/x'] ?? b.x;
+                    const by = upd['players/' + b.id + '/y'] ?? b.y;
+                    const d = dist(ax, ay, bx, by);
+                    if (d < PLR_R * 2 && d > 0) {
+                        const ang = Math.atan2(by - ay, bx - ax);
+                        const ov = (PLR_R * 2 - d) / 2;
+                        upd['players/' + a.id + '/x'] = ax - Math.cos(ang) * ov;
+                        upd['players/' + a.id + '/y'] = ay - Math.sin(ang) * ov;
+                        upd['players/' + b.id + '/x'] = bx + Math.cos(ang) * ov;
+                        upd['players/' + b.id + '/y'] = by + Math.sin(ang) * ov;
+                    }
+                }
+            }
+
+            // Ball physics
+            ball.vx *= BALL_FRIC;
+            ball.vy *= BALL_FRIC;
+            ball.x += ball.vx;
+            ball.y += ball.vy;
+
+            const gTop = map.h / 2 - map.gs / 2;
+            const gBot = map.h / 2 + map.gs / 2;
+
+            // Top/bottom walls
+            if (ball.y - BALL_R <= 0) { ball.y = BALL_R; ball.vy = -ball.vy * 0.7; }
+            if (ball.y + BALL_R >= map.h) { ball.y = map.h - BALL_R; ball.vy = -ball.vy * 0.7; }
+
+            // Left wall
+            if (ball.x - BALL_R <= 0) {
+                if (ball.y >= gTop && ball.y <= gBot) {
+                    // In goal zone
+                    if (ball.x < -GOAL_D * 0.6) {
+                        // GOAL - Blue scores
+                        const ns = (rm.blueScore || 0) + 1;
+                        upd['blueScore'] = ns;
+                        resetBallData(ball, map);
+                        resetPlayerPositions(upd, ps, map);
+                        triggerGoalFX('blue');
+                        const lim = rm.scoreLimit || 3;
+                        if (lim > 0 && ns >= lim) {
+                            upd['state'] = 'lobby';
+                            triggerGameOverFX('MAVİ TAKIM KAZANDI! 🔵', '#3742fa');
+                        }
+                    }
+                } else {
+                    ball.x = BALL_R;
+                    ball.vx = -ball.vx * 0.7;
+                }
+            }
+
+            // Right wall
+            if (ball.x + BALL_R >= map.w) {
+                if (ball.y >= gTop && ball.y <= gBot) {
+                    if (ball.x > map.w + GOAL_D * 0.6) {
+                        // GOAL - Red scores
+                        const ns = (rm.redScore || 0) + 1;
+                        upd['redScore'] = ns;
+                        resetBallData(ball, map);
+                        resetPlayerPositions(upd, ps, map);
+                        triggerGoalFX('red');
+                        const lim = rm.scoreLimit || 3;
+                        if (lim > 0 && ns >= lim) {
+                            upd['state'] = 'lobby';
+                            triggerGameOverFX('KIRMIZI TAKIM KAZANDI! 🔴', '#ff4757');
+                        }
+                    }
+                } else {
+                    ball.x = map.w - BALL_R;
+                    ball.vx = -ball.vx * 0.7;
+                }
+            }
+
+            // Goal posts
+            const posts = [
+                { x: 0, y: gTop }, { x: 0, y: gBot },
+                { x: map.w, y: gTop }, { x: map.w, y: gBot }
+            ];
+            posts.forEach(post => {
+                const d = dist(ball.x, ball.y, post.x, post.y);
+                if (d < BALL_R + POST_R && d > 0) {
+                    const ang = Math.atan2(ball.y - post.y, ball.x - post.x);
+                    const spd = Math.sqrt(ball.vx ** 2 + ball.vy ** 2) * 0.7;
+                    ball.vx = Math.cos(ang) * spd;
+                    ball.vy = Math.sin(ang) * spd;
+                    ball.x = post.x + Math.cos(ang) * (BALL_R + POST_R);
+                    ball.y = post.y + Math.sin(ang) * (BALL_R + POST_R);
+                }
+            });
+
+            upd['ball'] = { x: ball.x, y: ball.y, vx: ball.vx, vy: ball.vy };
+            upd['gameTime'] = (rm.gameTime || 0) + step;
+
+            roomRef.update(upd);
+        }
+
+        tick();
+    }
+
+    // ===========================================================
+    //  NON-ADMIN INPUT SENDER
+    // ===========================================================
+    function sendMyInput() {
+        if (!roomRef || amAdmin || !localRoom || localRoom.state !== 'playing') return;
+        const me = localRoom.players?.[myId];
+        if (!me || me.team === 'spectator' || !me.online) return;
+
+        const inp = getInput();
+        const map = MAPS[localRoom.map || 'classic'];
+
+        let px = me.x || 0, py = me.y || 0;
+        let pvx = me.vx || 0, pvy = me.vy || 0;
+
+        pvx += inp.dx * PLR_SPEED;
+        pvy += inp.dy * PLR_SPEED;
+        pvx *= PLR_FRIC;
+        pvy *= PLR_FRIC;
+        px += pvx;
+        py += pvy;
+        px = clamp(px, PLR_R, map.w - PLR_R);
+        py = clamp(py, PLR_R, map.h - PLR_R);
+
+        const upd = {};
+        upd['players/' + myId + '/x'] = px;
+        upd['players/' + myId + '/y'] = py;
+        upd['players/' + myId + '/vx'] = pvx;
+        upd['players/' + myId + '/vy'] = pvy;
+
+        // Ball interaction
+        if (localRoom.ball) {
+            const ball = localRoom.ball;
+            const d = dist(px, py, ball.x, ball.y);
+            if (d < PLR_R + BALL_R + 4) {
+                const ang = Math.atan2(ball.y - py, ball.x - px);
+                if (inp.kick) {
+                    upd['ball/vx'] = Math.cos(ang) * KICK_PWR;
+                    upd['ball/vy'] = Math.sin(ang) * KICK_PWR;
+                } else {
+                    upd['ball/vx'] = (ball.vx || 0) + Math.cos(ang) * PUSH_PWR;
+                    upd['ball/vy'] = (ball.vy || 0) + Math.sin(ang) * PUSH_PWR;
+                }
+                const ov = (PLR_R + BALL_R) - d;
+                if (ov > 0) {
+                    upd['ball/x'] = ball.x + Math.cos(ang) * ov;
+                    upd['ball/y'] = ball.y + Math.sin(ang) * ov;
+                }
+            }
+        }
+
+        roomRef.update(upd);
+    }
+
+    // ===========================================================
+    //  HELPERS
+    // ===========================================================
+    function resetBallData(ball, map) {
+        ball.x = map.w / 2;
+        ball.y = map.h / 2;
+        ball.vx = 0;
+        ball.vy = 0;
+    }
+
+    function resetPlayerPositions(upd, ps, map) {
+        const reds = Object.values(ps).filter(p => p.online && p.team === 'red');
+        const blues = Object.values(ps).filter(p => p.online && p.team === 'blue');
+
+        reds.forEach((p, i) => {
+            const gap = map.h / (reds.length + 1);
+            upd['players/' + p.id + '/x'] = map.w * 0.25;
+            upd['players/' + p.id + '/y'] = gap * (i + 1);
+            upd['players/' + p.id + '/vx'] = 0;
+            upd['players/' + p.id + '/vy'] = 0;
+        });
+
+        blues.forEach((p, i) => {
+            const gap = map.h / (blues.length + 1);
+            upd['players/' + p.id + '/x'] = map.w * 0.75;
+            upd['players/' + p.id + '/y'] = gap * (i + 1);
+            upd['players/' + p.id + '/vx'] = 0;
+            upd['players/' + p.id + '/vy'] = 0;
+        });
+    }
+
+    function triggerGoalFX(team) {
+        const el = document.getElementById('overlayGoal');
+        const lbl = document.getElementById('goalLabel');
+        lbl.textContent = 'GOL!';
+        lbl.style.color = team === 'red' ? '#ff4757' : '#3742fa';
+        el.classList.remove('visible');
+        void el.offsetWidth; // reflow
+        el.classList.add('visible');
+        setTimeout(() => el.classList.remove('visible'), 1600);
+    }
+
+    function triggerGameOverFX(msg, color) {
+        setTimeout(() => {
+            document.getElementById('gameoverLabel').textContent = msg;
+            document.getElementById('gameoverLabel').style.color = color;
+            document.getElementById('overlayGameover').classList.add('visible');
+            document.getElementById('btnBackLobby').style.display = amAdmin ? 'block' : 'none';
+        }, 1200);
+    }
+
+    // ===========================================================
+    //  RENDER LOOP
+    // ===========================================================
+    function startRenderLoop() {
+        if (renderRAF) cancelAnimationFrame(renderRAF);
+
+        function draw() {
+            renderRAF = requestAnimationFrame(draw);
+            if (!localRoom || !cvs || !ctx) return;
+
+            const rm = localRoom;
+            const mapKey = rm.map || 'classic';
+            const map = MAPS[mapKey];
+            const sc = parseFloat(cvs.dataset.scale) || 1;
+            const oX = (GOAL_D + 30) * sc;
+            const oY = 30 * sc;
+
+            ctx.clearRect(0, 0, cvs.width, cvs.height);
+
+            // ---- FIELD ----
+            // Grass
+            ctx.fillStyle = '#2d5a2e';
+            ctx.fillRect(oX, oY, map.w * sc, map.h * sc);
+
+            // Darker grass stripes
+            const stripeW = (map.w / 10) * sc;
+            for (let i = 0; i < 10; i++) {
+                if (i % 2 === 0) {
+                    ctx.fillStyle = 'rgba(0,0,0,0.04)';
+                    ctx.fillRect(oX + i * stripeW, oY, stripeW, map.h * sc);
+                }
+            }
+
+            // Border
+            ctx.strokeStyle = 'rgba(255,255,255,0.35)';
+            ctx.lineWidth = 2 * sc;
+            ctx.strokeRect(oX, oY, map.w * sc, map.h * sc);
+
+            // Center line
+            ctx.beginPath();
+            ctx.moveTo(oX + (map.w / 2) * sc, oY);
+            ctx.lineTo(oX + (map.w / 2) * sc, oY + map.h * sc);
+            ctx.stroke();
+
+            // Center circle
+            ctx.beginPath();
+            ctx.arc(oX + (map.w / 2) * sc, oY + (map.h / 2) * sc, 55 * sc, 0, Math.PI * 2);
+            ctx.stroke();
+
+            // Center dot
+            ctx.fillStyle = 'rgba(255,255,255,0.5)';
+            ctx.beginPath();
+            ctx.arc(oX + (map.w / 2) * sc, oY + (map.h / 2) * sc, 4 * sc, 0, Math.PI * 2);
+            ctx.fill();
+
+            // Penalty areas
+            ctx.strokeStyle = 'rgba(255,255,255,0.18)';
+            const penW = 70 * sc, penH = 180 * sc;
+            ctx.strokeRect(oX, oY + (map.h / 2) * sc - penH / 2, penW, penH);
+            ctx.strokeRect(oX + map.w * sc - penW, oY + (map.h / 2) * sc - penH / 2, penW, penH);
+
+            // ---- GOALS ----
+            const gTop = (map.h / 2 - map.gs / 2) * sc;
+            const gH = map.gs * sc;
+            const gW = GOAL_D * sc;
+
+            // Left goal
+            ctx.fillStyle = 'rgba(255,71,87,0.12)';
+            ctx.fillRect(oX - gW, oY + gTop, gW, gH);
+            ctx.strokeStyle = '#ff4757';
+            ctx.lineWidth = 3 * sc;
+            ctx.strokeRect(oX - gW, oY + gTop, gW, gH);
+
+            // Goal net lines left
+            ctx.strokeStyle = 'rgba(255,71,87,0.15)';
+            ctx.lineWidth = 1;
+            for (let ny = 0; ny < gH; ny += 10 * sc) {
+                ctx.beginPath();
+                ctx.moveTo(oX - gW, oY + gTop + ny);
+                ctx.lineTo(oX, oY + gTop + ny);
+                ctx.stroke();
+            }
+
+            // Right goal
+            ctx.fillStyle = 'rgba(55,66,250,0.12)';
+            ctx.fillRect(oX + map.w * sc, oY + gTop, gW, gH);
+            ctx.strokeStyle = '#3742fa';
+            ctx.lineWidth = 3 * sc;
+            ctx.strokeRect(oX + map.w * sc, oY + gTop, gW, gH);
+
+            // Goal net lines right
+            ctx.strokeStyle = 'rgba(55,66,250,0.15)';
+            ctx.lineWidth = 1;
+            for (let ny = 0; ny < gH; ny += 10 * sc) {
+                ctx.beginPath();
+                ctx.moveTo(oX + map.w * sc, oY + gTop + ny);
+                ctx.lineTo(oX + map.w * sc + gW, oY + gTop + ny);
+                ctx.stroke();
+            }
+
+            // ---- GOAL POSTS ----
+            const postR = POST_R * sc;
+            const postPositions = [
+                [0, map.h / 2 - map.gs / 2],
+                [0, map.h / 2 + map.gs / 2],
+                [map.w, map.h / 2 - map.gs / 2],
+                [map.w, map.h / 2 + map.gs / 2]
+            ];
+            postPositions.forEach(([ppx, ppy]) => {
+                ctx.beginPath();
+                ctx.arc(oX + ppx * sc, oY + ppy * sc, postR, 0, Math.PI * 2);
+                ctx.fillStyle = '#ddd';
+                ctx.fill();
+                ctx.strokeStyle = '#999';
+                ctx.lineWidth = 1.5 * sc;
+                ctx.stroke();
+            });
+
+            // ---- BALL ----
+            if (rm.ball) {
+                const bx = oX + rm.ball.x * sc;
+                const by = oY + rm.ball.y * sc;
+                const br = BALL_R * sc;
+
+                // Shadow
+                ctx.beginPath();
+                ctx.arc(bx + 2 * sc, by + 3 * sc, br, 0, Math.PI * 2);
+                ctx.fillStyle = 'rgba(0,0,0,0.25)';
+                ctx.fill();
+
+                // Ball
+                ctx.beginPath();
+                ctx.arc(bx, by, br, 0, Math.PI * 2);
+                ctx.fillStyle = '#fff';
+                ctx.fill();
+                ctx.strokeStyle = '#bbb';
+                ctx.lineWidth = 1.5 * sc;
+                ctx.stroke();
+
+                // Ball highlight
+                ctx.beginPath();
+                ctx.arc(bx - 2 * sc, by - 2 * sc, br * 0.35, 0, Math.PI * 2);
+                ctx.fillStyle = 'rgba(255,255,255,0.4)';
+                ctx.fill();
+            }
+
+            // ---- PLAYERS ----
+            const players = rm.players || {};
+            Object.values(players).forEach(p => {
+                if (!p.online || p.team === 'spectator') return;
+
+                const ppx = oX + (p.x || 0) * sc;
+                const ppy = oY + (p.y || 0) * sc;
+                const ppr = PLR_R * sc;
+
+                const mainCol = p.team === 'red' ? '#ff4757' : '#3742fa';
+                const darkCol = p.team === 'red' ? '#c0392b' : '#2f3099';
+                const lightCol = p.team === 'red' ? '#ff6b81' : '#5f6cfa';
+
+                // Shadow
+                ctx.beginPath();
+                ctx.arc(ppx + 2 * sc, ppy + 3 * sc, ppr, 0, Math.PI * 2);
+                ctx.fillStyle = 'rgba(0,0,0,0.3)';
+                ctx.fill();
+
+                // Body
+                ctx.beginPath();
+                ctx.arc(ppx, ppy, ppr, 0, Math.PI * 2);
+                const grad = ctx.createRadialGradient(ppx - 3 * sc, ppy - 3 * sc, 0, ppx, ppy, ppr);
+                grad.addColorStop(0, lightCol);
+                grad.addColorStop(1, mainCol);
+                ctx.fillStyle = grad;
+                ctx.fill();
+                ctx.strokeStyle = darkCol;
+                ctx.lineWidth = 3 * sc;
+                ctx.stroke();
+
+                // Kick ring
+                if (p.id === myId && isKicking) {
+                    ctx.beginPath();
+                    ctx.arc(ppx, ppy, ppr + 6 * sc, 0, Math.PI * 2);
+                    ctx.strokeStyle = 'rgba(255,255,255,0.6)';
+                    ctx.lineWidth = 2 * sc;
+                    ctx.stroke();
+                }
+
+                // Direction indicator for my player
+                if (p.id === myId && (Math.abs(joyDX) > 0.1 || Math.abs(joyDY) > 0.1)) {
+                    const ang = Math.atan2(joyDY, joyDX);
+                    ctx.beginPath();
+                    ctx.moveTo(ppx + Math.cos(ang) * ppr, ppy + Math.sin(ang) * ppr);
+                    ctx.lineTo(ppx + Math.cos(ang) * (ppr + 8 * sc), ppy + Math.sin(ang) * (ppr + 8 * sc));
+                    ctx.strokeStyle = 'rgba(255,255,255,0.5)';
+                    ctx.lineWidth = 2.5 * sc;
+                    ctx.lineCap = 'round';
+                    ctx.stroke();
+                }
+
+                // Name
+                ctx.fillStyle = '#fff';
+                ctx.font = `bold ${Math.max(9, Math.floor(11 * sc))}px sans-serif`;
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'bottom';
+                ctx.fillText(p.name, ppx, ppy - ppr - 3 * sc);
+
+                // My indicator
+                if (p.id === myId) {
+                    ctx.fillStyle = '#2ed573';
+                    ctx.beginPath();
+                    ctx.arc(ppx, ppy - ppr - 10 * sc, 3 * sc, 0, Math.PI * 2);
+                    ctx.fill();
+                }
+            });
+
+            // ---- MAP NAME ----
+            ctx.fillStyle = 'rgba(255,255,255,0.12)';
+            ctx.font = `${Math.floor(10 * sc)}px sans-serif`;
+            ctx.textAlign = 'right';
+            ctx.textBaseline = 'bottom';
+            ctx.fillText(map.name, oX + (map.w - 5) * sc, oY + (map.h - 5) * sc);
+        }
+
+        draw();
+    }
+
+    // ===========================================================
+    //  KEYBOARD (PC fallback)
+    // ===========================================================
+    window.addEventListener('keydown', e => {
+        if (document.activeElement === document.getElementById('chatInputField')) return;
+        keysDown[e.key] = true;
+        if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', ' '].includes(e.key)) {
+            e.preventDefault();
+        }
+    });
+
+    window.addEventListener('keyup', e => {
+        keysDown[e.key] = false;
+    });
+
+    // ===========================================================
+    //  CLEANUP ON CLOSE
+    // ===========================================================
+    window.addEventListener('beforeunload', () => {
+        if (roomCode) {
+            db.ref('rooms/' + roomCode + '/players/' + myId + '/online').set(false);
+        }
+    });
+
+    // Prevent zoom gestures
+    document.addEventListener('gesturestart', e => e.preventDefault());
+    document.addEventListener('gesturechange', e => e.preventDefault());
+    document.addEventListener('gestureend', e => e.preventDefault());
+    document.addEventListener('dblclick', e => e.preventDefault());
+
+    // Prevent context menu
+    document.addEventListener('contextmenu', e => e.preventDefault());
+
+    console.log('HaxBall Mobile initialized. Player ID:', myId);
+    </script>
+</body>
+</html>
