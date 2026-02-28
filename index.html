@@ -671,7 +671,11 @@ function cleanup(){
     stopKA();teardownConn();teardownChat();
     if(roomRef){
         if(rLH){roomRef.off('value',rLH);rLH=null}
-        roomRef.child('players/'+myId).remove();
+        if(isHost){
+            roomRef.remove(); // Host çıkınca odayı tamamen sil
+        } else {
+            roomRef.child('players/'+myId).remove();
+        }
         roomRef=null;
     }
     stopL();roomData=null;roomCode='';isHost=false;P={};
@@ -1297,6 +1301,28 @@ window.addEventListener('beforeunload',function(){
 // ============================================================
 // BAŞLAT
 // ============================================================
+// Eski odaları temizle
+function cleanOldRooms(){
+    var cutoff=Date.now()-(2*60*60*1000);
+    db.ref('rooms').once('value').then(function(s){
+        var updates={};
+        s.forEach(function(child){
+            var d=child.val();
+            if(d.players){
+                var hostOnline=false;
+                for(var pid in d.players){
+                    if(d.players[pid].lastSeen>cutoff&&d.players[pid].online!==false){
+                        hostOnline=true;break;
+                    }
+                }
+                if(!hostOnline)updates['rooms/'+child.key]=null;
+            }
+        });
+        if(Object.keys(updates).length>0)db.ref().update(updates);
+    });
+}
+cleanOldRooms();
+
 $('inpName').value='Oyuncu'+Math.floor(Math.random()*900+100);
 showScr('menu');
 
