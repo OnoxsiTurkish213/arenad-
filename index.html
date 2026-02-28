@@ -7,51 +7,38 @@
 <style>
 *{margin:0;padding:0;box-sizing:border-box;-webkit-touch-callout:none;-webkit-user-select:none;user-select:none;-webkit-tap-highlight-color:transparent}
 html,body{width:100%;height:100%;overflow:hidden;background:#0a0a1a;font-family:'Segoe UI',Tahoma,sans-serif;touch-action:none;position:fixed;top:0;left:0}
-
-/* ====== ROTATE MESSAGE ====== */
 #rotateMsg{position:fixed;top:0;left:0;width:100%;height:100%;background:#0a0a1a;z-index:99999;display:none;align-items:center;justify-content:center;flex-direction:column;color:#fff;gap:12px;font-size:15px}
 @media(max-width:640px) and (orientation:portrait){#rotateMsg{display:flex!important}}
-
-/* ====== SCREENS ====== */
 .screen{position:absolute;top:0;left:0;width:100%;height:100%;display:none;overflow-y:auto}
-
-/* ====== MENU ====== */
 #menuScreen{display:flex;flex-direction:column;align-items:center;justify-content:center;background:linear-gradient(145deg,#0b0920,#1a1545,#0d1b3e);z-index:100;padding:12px}
 #menuScreen h1{color:#fff;font-size:28px;margin-bottom:3px;text-shadow:0 0 25px rgba(255,200,0,.2)}
 #menuScreen .sub{color:#666;font-size:11px;margin-bottom:20px;letter-spacing:.5px}
 .mbox{background:rgba(255,255,255,.05);border-radius:16px;padding:20px;width:320px;max-width:92vw;border:1px solid rgba(255,255,255,.07);backdrop-filter:blur(8px)}
-.mbox input,.mbox select{width:100%;padding:11px 14px;margin-bottom:9px;border:1px solid rgba(255,255,255,.1);border-radius:9px;background:rgba(255,255,255,.04);color:#fff;font-size:14px;outline:none;transition:border .2s;-webkit-appearance:none}
+.mbox input,.mbox select{width:100%;padding:11px 14px;margin-bottom:9px;border:1px solid rgba(255,255,255,.1);border-radius:9px;background:rgba(255,255,255,.04);color:#fff;font-size:14px;outline:none;-webkit-appearance:none}
 .mbox input:focus{border-color:rgba(255,255,255,.3)}
 .mbox input::placeholder{color:rgba(255,255,255,.25)}
 .mbox select option{background:#151530;color:#fff}
 .mbox label{color:#888;font-size:11px;display:block;margin-bottom:4px;margin-top:2px}
 .divider{display:flex;align-items:center;margin:12px 0;color:rgba(255,255,255,.18);font-size:11px;gap:8px}
 .divider::before,.divider::after{content:'';flex:1;height:1px;background:rgba(255,255,255,.08)}
-
-/* ====== BUTTONS ====== */
 .btn{padding:11px 18px;border:none;border-radius:9px;font-size:14px;font-weight:600;cursor:pointer;transition:transform .08s;text-align:center;color:#fff;display:inline-block;letter-spacing:.3px}
 .btn:active{transform:scale(.96)}
 .btn-full{width:100%;margin-bottom:7px}
 .btn-red{background:linear-gradient(135deg,#e74c3c,#b92d2d)}
 .btn-blue{background:linear-gradient(135deg,#3498db,#2475a8)}
 .btn-green{background:linear-gradient(135deg,#27ae60,#1c8a4a)}
-.btn-orange{background:linear-gradient(135deg,#f39c12,#d4850a)}
 .btn-gray{background:rgba(255,255,255,.08);color:#aaa;border:1px solid rgba(255,255,255,.08)}
 .btn-small{padding:7px 14px;font-size:12px;border-radius:7px}
-
-/* ====== LOBBY ====== */
 #lobbyScreen{flex-direction:column;align-items:center;background:linear-gradient(145deg,#0b0920,#1a1545,#0d1b3e);z-index:95;padding:14px}
 #lobbyScreen h2{color:#fff;font-size:21px;margin-bottom:4px}
 .room-code-box{background:rgba(243,156,18,.1);border:1px solid rgba(243,156,18,.2);color:#f39c12;font-size:15px;font-weight:700;padding:5px 16px;border-radius:8px;margin-bottom:4px}
 .lobby-map-info{color:#777;font-size:11px;margin-bottom:12px}
-
 .lobby-teams{display:flex;gap:10px;width:96%;max-width:920px;flex-wrap:wrap;justify-content:center}
 .team-panel{background:rgba(255,255,255,.03);border-radius:12px;padding:12px;min-width:170px;flex:1;border:1px solid rgba(255,255,255,.05);min-height:110px}
 .team-panel h3{text-align:center;margin-bottom:8px;font-size:13px;padding-bottom:6px;border-bottom:1px solid rgba(255,255,255,.06)}
 .team-panel.t-red h3{color:#e74c3c}
 .team-panel.t-blue h3{color:#3498db}
 .team-panel.t-spec h3{color:#777}
-
 .player-row{display:flex;align-items:center;justify-content:space-between;padding:5px 8px;margin-bottom:4px;border-radius:6px;background:rgba(255,255,255,.03);color:#fff;font-size:12px;gap:4px}
 .player-row .p-info{display:flex;align-items:center;gap:5px;flex:1;min-width:0;overflow:hidden}
 .player-row .p-info .p-name{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
@@ -63,20 +50,14 @@ html,body{width:100%;height:100%;overflow:hidden;background:#0a0a1a;font-family:
 .pos-FWD{background:rgba(231,76,60,.2);color:#e74c3c}
 .admin-row-btns{display:flex;gap:2px;flex-shrink:0}
 .admin-row-btns button{padding:2px 5px;font-size:9px;border:none;border-radius:3px;cursor:pointer;font-weight:600;color:#fff}
-
 .lobby-position-select{margin-top:10px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.05);border-radius:10px;padding:12px;width:96%;max-width:400px}
 .lobby-position-select h4{color:#ccc;font-size:12px;margin-bottom:6px}
 .lobby-position-select select{width:100%;padding:9px 12px;border:1px solid rgba(255,255,255,.1);border-radius:7px;background:rgba(255,255,255,.04);color:#fff;font-size:13px;outline:none;-webkit-appearance:none}
 .lobby-position-select select option{background:#151530;color:#fff}
-
 .lobby-actions{margin-top:14px;display:flex;gap:7px;flex-wrap:wrap;justify-content:center}
 .lobby-actions .btn{padding:9px 20px;font-size:12px}
-
-/* ====== GAME SCREEN ====== */
 #gameScreen{z-index:80;background:#1a472a}
 #gameCanvas{display:block;width:100%;height:100%;outline:none}
-
-/* ====== HUD ====== */
 #hud{position:absolute;top:0;left:50%;transform:translateX(-50%);display:flex;z-index:85;pointer-events:none;border-radius:0 0 10px 10px;overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,.5)}
 .hud-score{padding:5px 18px;font-size:26px;font-weight:900;color:#fff;min-width:48px;text-align:center;display:flex;align-items:center;justify-content:center}
 .hud-score-red{background:rgba(192,57,43,.9)}
@@ -84,15 +65,11 @@ html,body{width:100%;height:100%;overflow:hidden;background:#0a0a1a;font-family:
 .hud-center{background:rgba(0,0,0,.78);padding:4px 14px;display:flex;flex-direction:column;align-items:center;justify-content:center}
 .hud-timer{color:#fff;font-size:15px;font-weight:700;font-variant-numeric:tabular-nums}
 .hud-status{color:#f39c12;font-size:8px;font-weight:700;text-transform:uppercase;margin-top:1px;letter-spacing:.5px}
-
-/* ====== MOBILE CONTROLS ====== */
 #joyZone{position:absolute;bottom:0;left:0;width:44%;height:58%;z-index:86;touch-action:none;pointer-events:auto}
 #joyBase{position:absolute;width:108px;height:108px;border-radius:50%;background:rgba(255,255,255,.05);border:2px solid rgba(255,255,255,.08);pointer-events:none;display:none;z-index:87}
 #joyThumb{position:absolute;width:44px;height:44px;border-radius:50%;background:rgba(255,255,255,.18);border:2px solid rgba(255,255,255,.35);pointer-events:none;display:none;z-index:88}
 #kickButton{position:absolute;bottom:22px;right:22px;width:74px;height:74px;border-radius:50%;background:rgba(255,255,255,.08);border:3px solid rgba(255,255,255,.22);z-index:86;display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,.65);font-size:11px;font-weight:700;touch-action:none;pointer-events:auto;transition:transform .07s,background .07s,border-color .07s}
 #kickButton.active{background:rgba(255,255,255,.3);border-color:rgba(255,255,255,.8);transform:scale(1.08);color:#fff}
-
-/* ====== ADMIN PANEL IN GAME ====== */
 #adminPanelGame{position:absolute;top:42px;right:6px;z-index:90;display:none;pointer-events:auto}
 #adminToggleBtn{background:rgba(243,156,18,.82);color:#000;border:none;padding:6px 10px;border-radius:7px;font-weight:700;font-size:10px;cursor:pointer}
 #adminMenuContent{display:none;background:rgba(5,5,20,.94);border-radius:10px;padding:8px;margin-top:4px;min-width:200px;max-width:260px;border:1px solid rgba(255,255,255,.06);max-height:75vh;overflow-y:auto;backdrop-filter:blur(8px)}
@@ -104,108 +81,84 @@ html,body{width:100%;height:100%;overflow:hidden;background:#0a0a1a;font-family:
 .adm-player-row .apr-name{color:#ccc;font-size:10px;flex:1;min-width:50px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .adm-player-row button{padding:3px 6px;font-size:9px;border:none;border-radius:3px;cursor:pointer;font-weight:600;color:#fff;flex-shrink:0}
 .adm-player-row select{padding:2px 4px;font-size:9px;border:1px solid rgba(255,255,255,.1);border-radius:3px;background:rgba(255,255,255,.05);color:#fff;-webkit-appearance:none;width:48px;flex-shrink:0}
-
-/* ====== GOAL OVERLAY ====== */
 #goalOverlay{position:absolute;top:0;left:0;width:100%;height:100%;display:none;align-items:center;justify-content:center;z-index:89;pointer-events:none;background:rgba(0,0,0,.22)}
 #goalOverlay .goal-text{font-size:52px;font-weight:900;color:#fff;text-shadow:0 0 40px rgba(255,255,255,.35),0 4px 20px rgba(0,0,0,.5);animation:goalAnim .4s cubic-bezier(.175,.885,.32,1.275)}
 @keyframes goalAnim{0%{transform:scale(.15);opacity:0}70%{transform:scale(1.1)}100%{transform:scale(1);opacity:1}}
-
-/* ====== TOAST ====== */
 #toast{position:fixed;bottom:65px;left:50%;transform:translateX(-50%);background:rgba(0,0,0,.88);color:#fff;padding:7px 18px;border-radius:18px;font-size:11px;z-index:99990;display:none;white-space:nowrap;pointer-events:none;backdrop-filter:blur(6px)}
-
 .hidden{display:none!important}
 </style>
 </head>
 <body>
+<div id="rotateMsg"><div style="font-size:36px;margin-bottom:8px">📱</div><p>Lütfen ekranı yatay çevirin</p></div>
 
-<!-- ROTATE MSG -->
-<div id="rotateMsg">
-<div style="font-size:36px;margin-bottom:8px">📱</div>
-<p>Lütfen ekranı yatay çevirin</p>
-</div>
-
-<!-- MENU SCREEN -->
 <div id="menuScreen" class="screen" style="display:flex">
 <h1>⚽ HaxBall Mobile</h1>
 <p class="sub">GERÇEK ZAMANLI ÇOK OYUNCULU FUTBOL</p>
 <div class="mbox">
-  <input type="text" id="inpName" placeholder="Oyuncu Adın" maxlength="12">
-  <div class="divider">YENİ ODA OLUŞTUR</div>
-  <label>Harita</label>
-  <select id="inpMap">
-    <option value="classic">⚽ Klasik Saha</option>
-    <option value="big">🏟️ Büyük Saha</option>
-    <option value="small">🎯 Mini Saha</option>
-    <option value="hockey">🏒 Buz Hokeyi</option>
-    <option value="futsal">👟 Futsal</option>
-  </select>
-  <input type="text" id="inpPwd" placeholder="Oda Şifresi (opsiyonel)" maxlength="20">
-  <button class="btn btn-full btn-red" id="btnCreate">🏟️ Oda Kur (Host)</button>
-  <div class="divider">MEVCUT ODAYA KATIL</div>
-  <input type="text" id="inpCode" placeholder="Oda Kodu (5 karakter)" maxlength="6" style="text-transform:uppercase">
-  <input type="text" id="inpJoinPwd" placeholder="Şifre (varsa)" maxlength="20">
-  <button class="btn btn-full btn-blue" id="btnJoin">🚀 Odaya Katıl</button>
+<input type="text" id="inpName" placeholder="Oyuncu Adın" maxlength="12">
+<div class="divider">YENİ ODA OLUŞTUR</div>
+<label>Harita</label>
+<select id="inpMap">
+<option value="classic">⚽ Klasik Saha</option>
+<option value="big">🏟️ Büyük Saha</option>
+<option value="small">🎯 Mini Saha</option>
+<option value="hockey">🏒 Buz Hokeyi</option>
+<option value="futsal">👟 Futsal</option>
+</select>
+<input type="text" id="inpPwd" placeholder="Oda Şifresi (opsiyonel)" maxlength="20">
+<button class="btn btn-full btn-red" id="btnCreate">🏟️ Oda Kur (Host)</button>
+<div class="divider">MEVCUT ODAYA KATIL</div>
+<input type="text" id="inpCode" placeholder="Oda Kodu (5 karakter)" maxlength="6" style="text-transform:uppercase">
+<input type="text" id="inpJoinPwd" placeholder="Şifre (varsa)" maxlength="20">
+<button class="btn btn-full btn-blue" id="btnJoin">🚀 Odaya Katıl</button>
 </div>
 </div>
 
-<!-- LOBBY SCREEN -->
 <div id="lobbyScreen" class="screen">
 <h2>🏟️ Oyun Lobisi</h2>
 <div class="room-code-box" id="lobbyCode">ODA: -----</div>
 <div class="lobby-map-info" id="lobbyMapName">Harita: -</div>
-
 <div class="lobby-teams">
-  <div class="team-panel t-red"><h3>🔴 Kırmızı Takım</h3><div id="lobbyRedList"></div></div>
-  <div class="team-panel t-spec"><h3>👁️ İzleyiciler</h3><div id="lobbySpecList"></div></div>
-  <div class="team-panel t-blue"><h3>🔵 Mavi Takım</h3><div id="lobbyBlueList"></div></div>
+<div class="team-panel t-red"><h3>🔴 Kırmızı Takım</h3><div id="lobbyRedList"></div></div>
+<div class="team-panel t-spec"><h3>👁️ İzleyiciler</h3><div id="lobbySpecList"></div></div>
+<div class="team-panel t-blue"><h3>🔵 Mavi Takım</h3><div id="lobbyBlueList"></div></div>
 </div>
-
 <div class="lobby-position-select" id="lobbyPosBox">
-  <h4>🎽 Mevki Seçimi</h4>
-  <select id="lobbyPosSelect">
-    <option value="">-- Mevki Seç --</option>
-    <option value="GK">🧤 Kaleci (GK)</option>
-    <option value="DEF">🛡️ Defans (DEF)</option>
-    <option value="MID">🎯 Orta Saha (MID)</option>
-    <option value="FWD">⚡ Forvet (FWD)</option>
-  </select>
+<h4>🎽 Mevki Seçimi</h4>
+<select id="lobbyPosSelect">
+<option value="">-- Mevki Seç --</option>
+<option value="GK">🧤 Kaleci (GK)</option>
+<option value="DEF">🛡️ Defans (DEF)</option>
+<option value="MID">🎯 Orta Saha (MID)</option>
+<option value="FWD">⚡ Forvet (FWD)</option>
+</select>
 </div>
-
 <div class="lobby-actions">
-  <button class="btn btn-red btn-small" id="btnTeamRed">🔴 Kırmızıya Geç</button>
-  <button class="btn btn-gray btn-small" id="btnTeamSpec">👁️ İzleyici</button>
-  <button class="btn btn-blue btn-small" id="btnTeamBlue">🔵 Maviye Geç</button>
-  <button class="btn btn-green btn-small hidden" id="btnStart">🚀 Maçı Başlat</button>
-  <button class="btn btn-red btn-small" id="btnLeave" style="background:linear-gradient(135deg,#95433e,#7a2e2e)">🚪 Ayrıl</button>
+<button class="btn btn-red btn-small" id="btnTeamRed">🔴 Kırmızıya Geç</button>
+<button class="btn btn-gray btn-small" id="btnTeamSpec">👁️ İzleyici</button>
+<button class="btn btn-blue btn-small" id="btnTeamBlue">🔵 Maviye Geç</button>
+<button class="btn btn-green btn-small hidden" id="btnStart">🚀 Maçı Başlat</button>
+<button class="btn btn-small" id="btnLeave" style="background:linear-gradient(135deg,#95433e,#7a2e2e);color:#fff">🚪 Ayrıl</button>
 </div>
 </div>
 
-<!-- GAME SCREEN -->
 <div id="gameScreen" class="screen">
 <canvas id="gameCanvas" tabindex="0"></canvas>
-
 <div id="hud">
-  <div class="hud-score hud-score-red" id="hudRed">0</div>
-  <div class="hud-center">
-    <div class="hud-timer" id="hudTimer">0:00</div>
-    <div class="hud-status" id="hudStatus"></div>
-  </div>
-  <div class="hud-score hud-score-blue" id="hudBlue">0</div>
+<div class="hud-score hud-score-red" id="hudRed">0</div>
+<div class="hud-center"><div class="hud-timer" id="hudTimer">0:00</div><div class="hud-status" id="hudStatus"></div></div>
+<div class="hud-score hud-score-blue" id="hudBlue">0</div>
 </div>
-
 <div id="joyZone"></div>
 <div id="joyBase"></div>
 <div id="joyThumb"></div>
 <div id="kickButton">VURUŞ</div>
-
 <div id="adminPanelGame">
-  <button id="adminToggleBtn">⚙️ Admin</button>
-  <div id="adminMenuContent"></div>
+<button id="adminToggleBtn">⚙️ Admin</button>
+<div id="adminMenuContent"></div>
 </div>
-
 <div id="goalOverlay"><div class="goal-text" id="goalText">GOL!</div></div>
 </div>
-
 <div id="toast"></div>
 
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
@@ -214,9 +167,6 @@ html,body{width:100%;height:100%;overflow:hidden;background:#0a0a1a;font-family:
 (function(){
 "use strict";
 
-// ============================================================
-//                    FIREBASE INIT
-// ============================================================
 firebase.initializeApp({
     apiKey:"AIzaSyDXgndR3i2p0ovRXVxqGb24d7lMXdTTX9I",
     authDomain:"mobilgame1-f03ac.firebaseapp.com",
@@ -226,1980 +176,934 @@ firebase.initializeApp({
     messagingSenderId:"188464433527",
     appId:"1:188464433527:web:baed82070bfed9652df972"
 });
-var db = firebase.database();
+var db=firebase.database();
 
-// ============================================================
-//                    UTILITY FUNCTIONS
-// ============================================================
-var $ = function(id){ return document.getElementById(id); };
-function uid(){ return Math.random().toString(36).substr(2,10) + Date.now().toString(36).substr(-4); }
-function roomCodeGen(){
-    var ch = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789', s = '';
-    for(var i=0;i<5;i++) s += ch[Math.floor(Math.random()*ch.length)];
-    return s;
-}
-function toast(msg, dur){
-    dur = dur || 2200;
-    var t = $('toast');
-    t.textContent = msg;
-    t.style.display = 'block';
-    clearTimeout(t._tm);
-    t._tm = setTimeout(function(){ t.style.display = 'none'; }, dur);
-}
-function lerp(a,b,t){ return a + (b - a) * t; }
-function dist(x1,y1,x2,y2){ return Math.sqrt((x2-x1)*(x2-x1)+(y2-y1)*(y2-y1)); }
-function clamp(v,lo,hi){ return v < lo ? lo : (v > hi ? hi : v); }
-function normVec(x,y){
-    var l = Math.sqrt(x*x+y*y);
-    if(l < 0.0001) return {x:0,y:0};
-    return {x:x/l, y:y/l};
-}
+var $=function(id){return document.getElementById(id)};
+function uid(){return Math.random().toString(36).substr(2,10)+Date.now().toString(36).substr(-4)}
+function roomCodeGen(){var c='ABCDEFGHJKLMNPQRSTUVWXYZ23456789',s='';for(var i=0;i<5;i++)s+=c[Math.floor(Math.random()*c.length)];return s}
+function toast(msg,dur){dur=dur||2200;var t=$('toast');t.textContent=msg;t.style.display='block';clearTimeout(t._tm);t._tm=setTimeout(function(){t.style.display='none'},dur)}
+function lerp(a,b,t){return a+(b-a)*t}
+function dist(x1,y1,x2,y2){return Math.sqrt((x2-x1)*(x2-x1)+(y2-y1)*(y2-y1))}
+function clamp(v,lo,hi){return v<lo?lo:(v>hi?hi:v)}
+function normVec(x,y){var l=Math.sqrt(x*x+y*y);if(l<0.0001)return{x:0,y:0};return{x:x/l,y:y/l}}
 
-// ============================================================
-//                    MAP DEFINITIONS
-// ============================================================
-var MAPS = {
-    classic: {
-        name:'Klasik Saha', fieldW:1200, fieldH:600,
-        goalH:150, goalD:55,
-        bgColor:'#2b7530', floorColor:'#3a8c3a', floorColor2:'#358535',
-        lineColor:'rgba(255,255,255,0.50)',
-        centerR:85, penW:130, penH:270,
-        ballFric:0.988, playerFric:0.91
-    },
-    big: {
-        name:'Büyük Saha', fieldW:1500, fieldH:750,
-        goalH:180, goalD:60,
-        bgColor:'#1a5c1a', floorColor:'#2a7a2a', floorColor2:'#257225',
-        lineColor:'rgba(255,255,255,0.45)',
-        centerR:100, penW:150, penH:300,
-        ballFric:0.989, playerFric:0.92
-    },
-    small: {
-        name:'Mini Saha', fieldW:900, fieldH:450,
-        goalH:120, goalD:45,
-        bgColor:'#2d6b2d', floorColor:'#3a8530', floorColor2:'#358028',
-        lineColor:'rgba(255,255,255,0.50)',
-        centerR:65, penW:100, penH:200,
-        ballFric:0.986, playerFric:0.90
-    },
-    hockey: {
-        name:'Buz Hokeyi', fieldW:1100, fieldH:500,
-        goalH:130, goalD:50,
-        bgColor:'#152a44', floorColor:'#1f4470', floorColor2:'#1b3d65',
-        lineColor:'rgba(255,255,255,0.55)',
-        centerR:75, penW:120, penH:240,
-        ballFric:0.994, playerFric:0.955
-    },
-    futsal: {
-        name:'Futsal', fieldW:1000, fieldH:520,
-        goalH:135, goalD:48,
-        bgColor:'#7a5a10', floorColor:'#9a7020', floorColor2:'#8d6518',
-        lineColor:'rgba(255,255,255,0.55)',
-        centerR:70, penW:110, penH:230,
-        ballFric:0.984, playerFric:0.90
-    }
+/* ===== MAPS ===== */
+var MAPS={
+    classic:{name:'Klasik Saha',fieldW:1200,fieldH:600,goalH:150,goalD:55,bgColor:'#2b7530',floorColor:'#3a8c3a',floorColor2:'#358535',lineColor:'rgba(255,255,255,0.50)',centerR:85,penW:130,penH:270,ballFric:0.988,playerFric:0.91},
+    big:{name:'Büyük Saha',fieldW:1500,fieldH:750,goalH:180,goalD:60,bgColor:'#1a5c1a',floorColor:'#2a7a2a',floorColor2:'#257225',lineColor:'rgba(255,255,255,0.45)',centerR:100,penW:150,penH:300,ballFric:0.989,playerFric:0.92},
+    small:{name:'Mini Saha',fieldW:900,fieldH:450,goalH:120,goalD:45,bgColor:'#2d6b2d',floorColor:'#3a8530',floorColor2:'#358028',lineColor:'rgba(255,255,255,0.50)',centerR:65,penW:100,penH:200,ballFric:0.986,playerFric:0.90},
+    hockey:{name:'Buz Hokeyi',fieldW:1100,fieldH:500,goalH:130,goalD:50,bgColor:'#152a44',floorColor:'#1f4470',floorColor2:'#1b3d65',lineColor:'rgba(255,255,255,0.55)',centerR:75,penW:120,penH:240,ballFric:0.994,playerFric:0.955},
+    futsal:{name:'Futsal',fieldW:1000,fieldH:520,goalH:135,goalD:48,bgColor:'#7a5a10',floorColor:'#A07828',floorColor2:'#957020',lineColor:'rgba(255,255,255,0.55)',centerR:70,penW:110,penH:230,ballFric:0.984,playerFric:0.90}
 };
 
-// ============================================================
-//                    POSITION SLOT SYSTEM
-// ============================================================
-// Returns max count per position for given team size
+/* ===== POSITION SLOT SYSTEM ===== */
 function getSlotConfig(teamSize){
-    if(teamSize <= 0) return {GK:0,DEF:0,MID:0,FWD:0};
-    if(teamSize === 1) return {GK:1,DEF:0,MID:0,FWD:0};
-    if(teamSize === 2) return {GK:1,DEF:0,MID:0,FWD:1};
-    if(teamSize === 3) return {GK:1,DEF:1,MID:0,FWD:1};
-    if(teamSize === 4) return {GK:1,DEF:1,MID:1,FWD:1};
-    if(teamSize === 5) return {GK:1,DEF:2,MID:1,FWD:1};
-    if(teamSize === 6) return {GK:1,DEF:2,MID:2,FWD:1};
-    if(teamSize === 7) return {GK:1,DEF:2,MID:2,FWD:2};
-    if(teamSize === 8) return {GK:1,DEF:3,MID:2,FWD:2};
-    if(teamSize === 9) return {GK:1,DEF:3,MID:3,FWD:2};
-    if(teamSize === 10) return {GK:1,DEF:3,MID:3,FWD:3};
-    if(teamSize >= 11) return {GK:1,DEF:4,MID:3,FWD:3};
-    return {GK:1,DEF:1,MID:1,FWD:1};
+    // Her takım büyüklüğü için her mevkiden max kaç kişi olabilir
+    // 1 kişi bile olsa tüm mevkilere girebilir (max 1)
+    if(teamSize<=0)return{GK:0,DEF:0,MID:0,FWD:0};
+    if(teamSize===1)return{GK:1,DEF:1,MID:1,FWD:1}; // 1 kişi istediğini seçebilir
+    if(teamSize===2)return{GK:1,DEF:1,MID:1,FWD:1}; // 2 kişi de serbestçe seçer
+    if(teamSize===3)return{GK:1,DEF:1,MID:1,FWD:1}; // 3 kişi de
+    if(teamSize===4)return{GK:1,DEF:1,MID:1,FWD:1}; // 4 kişi: her pozisyondan 1
+    if(teamSize===5)return{GK:1,DEF:2,MID:1,FWD:1};
+    if(teamSize===6)return{GK:1,DEF:2,MID:2,FWD:1};
+    if(teamSize===7)return{GK:1,DEF:2,MID:2,FWD:2};
+    if(teamSize===8)return{GK:1,DEF:3,MID:2,FWD:2};
+    if(teamSize===9)return{GK:1,DEF:3,MID:3,FWD:2};
+    if(teamSize===10)return{GK:1,DEF:3,MID:3,FWD:3};
+    return{GK:1,DEF:4,MID:3,FWD:3};
 }
 
-function countPosInTeam(players, team, pos, excludePid){
-    var c = 0;
+function countPosInTeam(players,team,pos,excludePid){
+    var c=0;
     for(var pid in players){
-        if(pid === excludePid) continue;
-        var p = players[pid];
-        if(p.online === false) continue;
-        if(p.team === team && p.pos === pos) c++;
+        if(pid===excludePid)continue;
+        var p=players[pid];
+        if(p.online===false)continue;
+        if(p.team===team&&p.pos===pos)c++;
     }
     return c;
 }
 
-function getTeamSize(players, team, excludePid){
-    var c = 0;
+function getTeamSize(players,team){
+    var c=0;
     for(var pid in players){
-        if(pid === excludePid) continue;
-        var p = players[pid];
-        if(p.online === false) continue;
-        if(p.team === team) c++;
+        var p=players[pid];
+        if(p.online===false)continue;
+        if(p.team===team)c++;
     }
     return c;
 }
 
-function isPosAvailable(players, team, pos, excludePid){
-    var ts = getTeamSize(players, team, null);
-    var cfg = getSlotConfig(ts);
-    var taken = countPosInTeam(players, team, pos, excludePid);
-    return taken < (cfg[pos] || 0);
+function isPosAvailable(players,team,pos,excludePid){
+    var ts=getTeamSize(players,team);
+    var cfg=getSlotConfig(ts);
+    var taken=countPosInTeam(players,team,pos,excludePid);
+    return taken<(cfg[pos]||0);
 }
 
-function autoAssignPos(players, team, pid){
-    var ts = getTeamSize(players, team, null);
-    // include this player in count if not already counted
-    var alreadyInTeam = false;
-    if(players[pid] && players[pid].team === team && players[pid].online !== false) alreadyInTeam = true;
-    if(!alreadyInTeam) ts++;
-    var cfg = getSlotConfig(ts);
-    var order = ['GK','DEF','MID','FWD'];
-    for(var oi = 0; oi < order.length; oi++){
-        var pos = order[oi];
-        var taken = countPosInTeam(players, team, pos, pid);
-        if(taken < (cfg[pos] || 0)) return pos;
+function autoAssignPos(players,team,pid){
+    var ts=getTeamSize(players,team);
+    // Eğer henüz takımda değilse +1
+    var inTeam=false;
+    if(players[pid]&&players[pid].team===team&&players[pid].online!==false)inTeam=true;
+    if(!inTeam)ts++;
+    var cfg=getSlotConfig(ts);
+    var order=['GK','DEF','MID','FWD'];
+    for(var i=0;i<order.length;i++){
+        var pos=order[i];
+        var taken=countPosInTeam(players,team,pos,pid);
+        if(taken<(cfg[pos]||0))return pos;
     }
     return 'MID';
 }
 
-// ============================================================
-//                    SPAWN POSITIONS
-// ============================================================
-function getSpawnPos(team, pos, indexInPos, totalInPos, map){
-    var FW = map.fieldW, FH = map.fieldH;
-    var baseX = FW / 2;
-    if(team === 'red'){
-        if(pos === 'GK') baseX = 50;
-        else if(pos === 'DEF') baseX = FW * 0.18;
-        else if(pos === 'MID') baseX = FW * 0.34;
-        else if(pos === 'FWD') baseX = FW * 0.45;
-    } else {
-        if(pos === 'GK') baseX = FW - 50;
-        else if(pos === 'DEF') baseX = FW * 0.82;
-        else if(pos === 'MID') baseX = FW * 0.66;
-        else if(pos === 'FWD') baseX = FW * 0.55;
+/* ===== SPAWN POSITIONS ===== */
+function getSpawnPos(team,pos,indexInPos,totalInPos,map){
+    var FW=map.fieldW,FH=map.fieldH;
+    var baseX=FW/2;
+    if(team==='red'){
+        if(pos==='GK')baseX=50;
+        else if(pos==='DEF')baseX=FW*0.18;
+        else if(pos==='MID')baseX=FW*0.34;
+        else if(pos==='FWD')baseX=FW*0.45;
+    }else{
+        if(pos==='GK')baseX=FW-50;
+        else if(pos==='DEF')baseX=FW*0.82;
+        else if(pos==='MID')baseX=FW*0.66;
+        else if(pos==='FWD')baseX=FW*0.55;
     }
-    var spacing = Math.min(68, (FH - 80) / Math.max(totalInPos, 1));
-    var startY = FH / 2 - (totalInPos - 1) * spacing / 2;
-    return { x: baseX, y: startY + indexInPos * spacing };
+    var spacing=Math.min(68,(FH-80)/Math.max(totalInPos,1));
+    var startY=FH/2-(totalInPos-1)*spacing/2;
+    return{x:baseX,y:startY+indexInPos*spacing};
 }
 
-function spawnAllTeam(pids, team, players, map, updates){
-    // Group by position
-    var groups = {GK:[], DEF:[], MID:[], FWD:[]};
-    for(var i = 0; i < pids.length; i++){
-        var pid = pids[i];
-        var pos = (players[pid] && players[pid].pos) || 'MID';
-        if(!groups[pos]) groups[pos] = [];
+function spawnAllTeam(pids,team,players,map,updates){
+    var groups={GK:[],DEF:[],MID:[],FWD:[]};
+    for(var i=0;i<pids.length;i++){
+        var pid=pids[i];
+        var pos=(players[pid]&&players[pid].pos)||'MID';
+        if(!groups[pos])groups[pos]=[];
         groups[pos].push(pid);
     }
     for(var p in groups){
-        var arr = groups[p];
-        for(var j = 0; j < arr.length; j++){
-            var sp = getSpawnPos(team, p, j, arr.length, map);
+        var arr=groups[p];
+        for(var j=0;j<arr.length;j++){
+            var sp=getSpawnPos(team,p,j,arr.length,map);
             if(updates){
-                updates['players/' + arr[j] + '/x'] = sp.x;
-                updates['players/' + arr[j] + '/y'] = sp.y;
-                updates['players/' + arr[j] + '/vx'] = 0;
-                updates['players/' + arr[j] + '/vy'] = 0;
+                updates['players/'+arr[j]+'/x']=sp.x;
+                updates['players/'+arr[j]+'/y']=sp.y;
+                updates['players/'+arr[j]+'/vx']=0;
+                updates['players/'+arr[j]+'/vy']=0;
             }
         }
     }
-    return groups;
 }
 
-// ============================================================
-//                    PHYSICS CONSTANTS
-// ============================================================
-var FIELD_MARGIN = 70;
-var PLAYER_RADIUS = 19;
-var BALL_RADIUS = 11;
-var KICK_HALO_RADIUS = 35;
-var KICK_FORCE = 4.8;
-var PLAYER_ACCEL = 0.26;
-var PLAYER_MAX_SPEED = 2.75;
-var BALL_MAX_SPEED = 9.5;
-var BOUNCE_DAMP = 0.6;
-var PLAYER_BOUNCE_DAMP = 0.22;
-var BALL_PUSH_FORCE = 0.3;
-var POST_RADIUS = 6;
-var MATCH_DURATION = 180;
-var NET_SEND_INTERVAL = 42;
-var GOAL_RESET_MS = 1800;
-var KICK_COOLDOWN_FRAMES = 10;
+/* ===== PHYSICS CONSTANTS ===== */
+var FM=70,PR=19,BR=11,KHR=35,KF=4.8;
+var PA=0.26,PMS=2.75,BMS=9.5;
+var BD=0.6,PBD=0.22,BPF=0.3,PST=6;
+var MATCH_DUR=180,NSI=42,GRD=1800;
+var KICK_DURATION=6; // frames the kick halo stays active
+var FDT=1000/60;
 
-// ============================================================
-//                    GAME STATE
-// ============================================================
-var myId = uid();
-var myName = '';
-var roomCode = '';
-var roomRef = null;
-var isHost = false;
-var gameState = 'menu'; // menu, lobby, game
-var roomData = null;
-var curMapKey = 'classic';
-var curMap = MAPS.classic;
+/* ===== STATE ===== */
+var myId=uid(),myName='',roomCode='',roomRef=null,isHost=false,gameState='menu';
+var roomData=null,curMapKey='classic',curMap=MAPS.classic;
+var localPlayers={},localBall={x:600,y:300,vx:0,vy:0};
+var matchTime=0,matchRunning=false,matchPaused=false,goalScoredFlag=false,goalResetCountdown=0;
+var redScore=0,blueScore=0,lastNetSendTime=0;
+var myInput={dx:0,dy:0,kick:false};
+var kickBtnDown=false;
+var kickFired=false; // has this press already fired a kick?
+var joyTouchId=null,joyActive=false,joySX=0,joySY=0,kickTouchId=null;
+var keysDown={};
+var canvas,ctx,canvasW=0,canvasH=0,viewScale=1,viewOffX=0,viewOffY=0;
+var animFrameId=null,lastFT=0,acc=0;
+var roomListenerHandle=null,adminMenuOpen=false,userGestureReceived=false;
 
-// Local simulation objects
-var localPlayers = {};
-var localBall = {x:600, y:300, vx:0, vy:0};
-var matchTime = 0;
-var matchRunning = false;
-var matchPaused = false;
-var goalScoredFlag = false;
-var goalResetCountdown = 0;
-var redScore = 0;
-var blueScore = 0;
-var lastNetSendTime = 0;
+canvas=$('gameCanvas');ctx=canvas.getContext('2d');
 
-// Input
-var myInput = {dx:0, dy:0, kick:false};
-var kickBtnDown = false;
-var kickFiredThisPress = false; // prevents continuous kick while holding
-
-// Joystick touch
-var joyTouchId = null;
-var joyActive = false;
-var joySX = 0, joySY = 0;
-var kickTouchId = null;
-
-// Keyboard
-var keysDown = {};
-
-// Canvas
-var canvas, ctx;
-var canvasW = 0, canvasH = 0;
-var viewScale = 1, viewOffX = 0, viewOffY = 0;
-
-// Loop
-var animFrameId = null;
-var lastFrameTimestamp = 0;
-var physicAccum = 0;
-var FIXED_STEP = 1000 / 60;
-
-// Firebase listener
-var roomListenerHandle = null;
-var adminMenuOpen = false;
-var userGestureReceived = false;
-
-// ============================================================
-//                    DOM REFERENCES
-// ============================================================
-canvas = $('gameCanvas');
-ctx = canvas.getContext('2d');
-
-// ============================================================
-//                    SCREEN MANAGEMENT
-// ============================================================
+/* ===== SCREEN ===== */
 function showScreen(name){
-    $('menuScreen').style.display = 'none';
-    $('lobbyScreen').style.display = 'none';
-    $('gameScreen').style.display = 'none';
-    gameState = name;
-    if(name === 'menu'){
-        $('menuScreen').style.display = 'flex';
-        stopGameLoop();
-    } else if(name === 'lobby'){
-        $('lobbyScreen').style.display = 'flex';
-        stopGameLoop();
-    } else if(name === 'game'){
-        $('gameScreen').style.display = 'block';
-        resizeCanvas();
-        startGameLoop();
-        setTimeout(function(){ canvas.focus(); }, 80);
-    }
+    $('menuScreen').style.display='none';
+    $('lobbyScreen').style.display='none';
+    $('gameScreen').style.display='none';
+    gameState=name;
+    if(name==='menu'){$('menuScreen').style.display='flex';stopLoop();}
+    else if(name==='lobby'){$('lobbyScreen').style.display='flex';stopLoop();}
+    else if(name==='game'){$('gameScreen').style.display='block';resizeCanvas();startLoop();setTimeout(function(){canvas.focus()},80);}
 }
 
-// ============================================================
-//                    CANVAS RESIZE
-// ============================================================
+/* ===== CANVAS ===== */
 function resizeCanvas(){
-    canvasW = window.innerWidth;
-    canvasH = window.innerHeight;
-    canvas.width = canvasW;
-    canvas.height = canvasH;
-    var totalW = curMap.fieldW + FIELD_MARGIN * 2;
-    var totalH = curMap.fieldH + FIELD_MARGIN * 2;
-    var sx = canvasW / totalW;
-    var sy = canvasH / totalH;
-    viewScale = Math.min(sx, sy);
-    viewOffX = (canvasW - totalW * viewScale) / 2;
-    viewOffY = (canvasH - totalH * viewScale) / 2;
+    canvasW=window.innerWidth;canvasH=window.innerHeight;
+    canvas.width=canvasW;canvas.height=canvasH;
+    var tw=curMap.fieldW+FM*2,th=curMap.fieldH+FM*2;
+    viewScale=Math.min(canvasW/tw,canvasH/th);
+    viewOffX=(canvasW-tw*viewScale)/2;viewOffY=(canvasH-th*viewScale)/2;
 }
-window.addEventListener('resize', function(){
-    if(gameState === 'game') resizeCanvas();
+window.addEventListener('resize',function(){if(gameState==='game')resizeCanvas()});
+canvas.setAttribute('tabindex','0');canvas.style.outline='none';
+
+/* ===== FULLSCREEN ===== */
+function tryFS(){
+    if(!userGestureReceived)return;
+    try{
+        if(!document.fullscreenElement&&!document.webkitFullscreenElement){
+            var e=document.documentElement;
+            if(e.requestFullscreen)e.requestFullscreen().catch(function(){});
+            else if(e.webkitRequestFullscreen)e.webkitRequestFullscreen();
+        }
+        if(screen.orientation&&screen.orientation.lock)screen.orientation.lock('landscape').catch(function(){});
+    }catch(e){}
+}
+function onGest(){userGestureReceived=true;if(gameState==='game')tryFS()}
+document.addEventListener('click',onGest,{passive:true});
+document.addEventListener('touchend',onGest,{passive:true});
+document.addEventListener('contextmenu',function(e){e.preventDefault()});
+document.addEventListener('gesturestart',function(e){e.preventDefault()});
+
+/* ===== CREATE ROOM ===== */
+$('btnCreate').addEventListener('click',function(){
+    myName=$('inpName').value.trim()||('P'+myId.substr(0,4));
+    if(myName.length>12)myName=myName.substr(0,12);
+    curMapKey=$('inpMap').value||'classic';curMap=MAPS[curMapKey]||MAPS.classic;
+    var pwd=$('inpPwd').value.trim();roomCode=roomCodeGen();
+    var init={code:roomCode,password:pwd,hostId:myId,state:'lobby',mapKey:curMapKey,
+        createdAt:firebase.database.ServerValue.TIMESTAMP,players:{},
+        match:{redScore:0,blueScore:0,time:0,running:false,paused:false,ball:{x:curMap.fieldW/2,y:curMap.fieldH/2,vx:0,vy:0}}};
+    init.players[myId]={name:myName,team:'spectator',pos:'',x:curMap.fieldW/2,y:curMap.fieldH/2,vx:0,vy:0,kick:false,idx:0,idy:0,ik:false,online:true};
+    roomRef=db.ref('rooms/'+roomCode);
+    roomRef.set(init).then(function(){
+        isHost=true;setupListen();setupDC();showScreen('lobby');
+        $('lobbyCode').textContent='ODA: '+roomCode;$('lobbyMapName').textContent='Harita: '+curMap.name;
+        toast('Oda kuruldu! Kod: '+roomCode);
+    }).catch(function(e){toast('Hata: '+e.message)});
 });
 
-// ============================================================
-//                    FULLSCREEN (user gesture only)
-// ============================================================
-function tryFullscreen(){
-    if(!userGestureReceived) return;
-    try {
-        var el = document.documentElement;
-        if(!document.fullscreenElement && !document.webkitFullscreenElement){
-            if(el.requestFullscreen) el.requestFullscreen().catch(function(){});
-            else if(el.webkitRequestFullscreen) el.webkitRequestFullscreen();
-        }
-        if(screen.orientation && screen.orientation.lock){
-            screen.orientation.lock('landscape').catch(function(){});
-        }
-    } catch(e){}
-}
-function onUserGesture(){
-    userGestureReceived = true;
-    if(gameState === 'game') tryFullscreen();
-}
-document.addEventListener('click', onUserGesture, {passive:true});
-document.addEventListener('touchend', onUserGesture, {passive:true});
-document.addEventListener('contextmenu', function(e){ e.preventDefault(); });
-document.addEventListener('gesturestart', function(e){ e.preventDefault(); });
-document.addEventListener('gesturechange', function(e){ e.preventDefault(); });
-
-// ============================================================
-//                    FIREBASE: CREATE ROOM
-// ============================================================
-$('btnCreate').addEventListener('click', function(){
-    myName = $('inpName').value.trim() || ('Player' + myId.substr(0,4));
-    if(myName.length > 12) myName = myName.substr(0,12);
-    curMapKey = $('inpMap').value || 'classic';
-    curMap = MAPS[curMapKey] || MAPS.classic;
-    var pwd = $('inpPwd').value.trim();
-    roomCode = roomCodeGen();
-
-    var initData = {
-        code: roomCode,
-        password: pwd,
-        hostId: myId,
-        state: 'lobby',
-        mapKey: curMapKey,
-        createdAt: firebase.database.ServerValue.TIMESTAMP,
-        players: {},
-        match: {
-            redScore: 0, blueScore: 0, time: 0,
-            running: false, paused: false,
-            ball: {x: curMap.fieldW/2, y: curMap.fieldH/2, vx:0, vy:0}
-        }
-    };
-    initData.players[myId] = {
-        name: myName, team: 'spectator', pos: '',
-        x: curMap.fieldW/2, y: curMap.fieldH/2, vx:0, vy:0,
-        kick: false, idx:0, idy:0, ik:false, online: true
-    };
-
-    roomRef = db.ref('rooms/' + roomCode);
-    roomRef.set(initData).then(function(){
-        isHost = true;
-        setupRoomListener();
-        setupOnDisconnect();
-        showScreen('lobby');
-        $('lobbyCode').textContent = 'ODA: ' + roomCode;
-        $('lobbyMapName').textContent = 'Harita: ' + curMap.name;
-        toast('Oda kuruldu! Kod: ' + roomCode);
-    }).catch(function(e){
-        toast('Hata: ' + e.message);
-    });
-});
-
-// ============================================================
-//                    FIREBASE: JOIN ROOM
-// ============================================================
-$('btnJoin').addEventListener('click', function(){
-    myName = $('inpName').value.trim() || ('Player' + myId.substr(0,4));
-    if(myName.length > 12) myName = myName.substr(0,12);
-    var code = $('inpCode').value.trim().toUpperCase();
-    var pwd = $('inpJoinPwd').value.trim();
-    if(!code || code.length < 3){ toast('Oda kodu girin!'); return; }
-
-    var ref = db.ref('rooms/' + code);
+/* ===== JOIN ROOM ===== */
+$('btnJoin').addEventListener('click',function(){
+    myName=$('inpName').value.trim()||('P'+myId.substr(0,4));
+    if(myName.length>12)myName=myName.substr(0,12);
+    var code=$('inpCode').value.trim().toUpperCase();
+    var pwd=$('inpJoinPwd').value.trim();
+    if(!code||code.length<3){toast('Oda kodu girin!');return}
+    var ref=db.ref('rooms/'+code);
     ref.once('value').then(function(snap){
-        if(!snap.exists()){ toast('Oda bulunamadı!'); return; }
-        var d = snap.val();
-        if(d.password && d.password !== pwd){ toast('Yanlış şifre!'); return; }
-
-        roomCode = code;
-        roomRef = ref;
-        isHost = false;
-        curMapKey = d.mapKey || 'classic';
-        curMap = MAPS[curMapKey] || MAPS.classic;
-
-        var playerData = {
-            name: myName, team: 'spectator', pos: '',
-            x: curMap.fieldW/2, y: curMap.fieldH/2, vx:0, vy:0,
-            kick: false, idx:0, idy:0, ik:false, online: true
-        };
-        return roomRef.child('players/' + myId).set(playerData);
+        if(!snap.exists()){toast('Oda bulunamadı!');return}
+        var d=snap.val();
+        if(d.password&&d.password!==pwd){toast('Yanlış şifre!');return}
+        roomCode=code;roomRef=ref;isHost=false;
+        curMapKey=d.mapKey||'classic';curMap=MAPS[curMapKey]||MAPS.classic;
+        return roomRef.child('players/'+myId).set({name:myName,team:'spectator',pos:'',x:curMap.fieldW/2,y:curMap.fieldH/2,vx:0,vy:0,kick:false,idx:0,idy:0,ik:false,online:true});
     }).then(function(){
-        if(!roomRef) return;
-        setupRoomListener();
-        setupOnDisconnect();
-        showScreen('lobby');
-        $('lobbyCode').textContent = 'ODA: ' + roomCode;
-        $('lobbyMapName').textContent = 'Harita: ' + curMap.name;
-        toast('Odaya katıldın!');
-    }).catch(function(e){
-        toast('Hata: ' + e.message);
-    });
+        if(!roomRef)return;
+        setupListen();setupDC();showScreen('lobby');
+        $('lobbyCode').textContent='ODA: '+roomCode;$('lobbyMapName').textContent='Harita: '+curMap.name;
+        toast('Katıldın!');
+    }).catch(function(e){toast('Hata: '+e.message)});
 });
 
-// ============================================================
-//                    FIREBASE: ON DISCONNECT
-// ============================================================
-function setupOnDisconnect(){
-    if(!roomRef) return;
-    roomRef.child('players/' + myId).onDisconnect().update({online: false});
-}
+function setupDC(){if(roomRef)roomRef.child('players/'+myId).onDisconnect().update({online:false})}
 
-// ============================================================
-//                    FIREBASE: ROOM LISTENER
-// ============================================================
-function setupRoomListener(){
-    if(roomListenerHandle && roomRef){
-        roomRef.off('value', roomListenerHandle);
-    }
-    roomListenerHandle = roomRef.on('value', function(snap){
-        if(!snap.exists()){
-            toast('Oda silindi!');
-            cleanupRoom();
-            showScreen('menu');
-            return;
-        }
-        roomData = snap.val();
-
-        // Host migration
-        if(roomData.hostId && roomData.players){
-            var hp = roomData.players[roomData.hostId];
-            if(!hp || hp.online === false){
-                var onlineIds = [];
-                for(var pid in roomData.players){
-                    if(roomData.players[pid].online !== false) onlineIds.push(pid);
-                }
-                if(onlineIds.length > 0 && onlineIds[0] === myId){
-                    isHost = true;
-                    roomRef.update({hostId: myId});
-                    toast('Sen yeni hostsun!');
-                }
+/* ===== LISTEN ===== */
+function setupListen(){
+    if(roomListenerHandle&&roomRef)roomRef.off('value',roomListenerHandle);
+    roomListenerHandle=roomRef.on('value',function(snap){
+        if(!snap.exists()){toast('Oda kapandı!');cleanupRoom();showScreen('menu');return}
+        roomData=snap.val();
+        if(roomData.hostId&&roomData.players){
+            var hp=roomData.players[roomData.hostId];
+            if(!hp||hp.online===false){
+                var on=[];for(var pid in roomData.players){if(roomData.players[pid].online!==false)on.push(pid)}
+                if(on.length>0&&on[0]===myId){isHost=true;roomRef.update({hostId:myId});toast('Sen yeni hostsun!')}
             }
         }
-        isHost = (roomData.hostId === myId);
-
-        // Map sync
-        if(roomData.mapKey && MAPS[roomData.mapKey]){
-            var oldKey = curMapKey;
-            curMapKey = roomData.mapKey;
-            curMap = MAPS[curMapKey];
-            if(gameState === 'game' && oldKey !== curMapKey){
-                resizeCanvas();
-            }
-        }
-
-        // Screen transitions
-        if(gameState === 'lobby'){
-            refreshLobbyUI();
-            if(roomData.state === 'playing'){
-                initGameState();
-                showScreen('game');
-            }
-        } else if(gameState === 'game'){
-            if(roomData.state === 'lobby'){
-                stopGameLoop();
-                showScreen('lobby');
-                return;
-            }
-            // Client sync
-            if(!isHost){
-                clientSyncFromServer();
-            }
-            // Score sync
-            if(roomData.match){
-                redScore = roomData.match.redScore || 0;
-                blueScore = roomData.match.blueScore || 0;
-            }
-            $('adminPanelGame').style.display = isHost ? 'block' : 'none';
+        isHost=(roomData.hostId===myId);
+        if(roomData.mapKey&&MAPS[roomData.mapKey]){var ok=curMapKey;curMapKey=roomData.mapKey;curMap=MAPS[curMapKey];if(gameState==='game'&&ok!==curMapKey)resizeCanvas()}
+        if(gameState==='lobby'){refreshLobbyUI();if(roomData.state==='playing'){initGameState();showScreen('game')}}
+        else if(gameState==='game'){
+            if(roomData.state==='lobby'){stopLoop();showScreen('lobby');return}
+            if(!isHost)clientSync();
+            if(roomData.match){redScore=roomData.match.redScore||0;blueScore=roomData.match.blueScore||0}
+            $('adminPanelGame').style.display=isHost?'block':'none';
         }
     });
 }
 
-// ============================================================
-//                    LOBBY UI REFRESH
-// ============================================================
+/* ===== LOBBY UI ===== */
 function refreshLobbyUI(){
-    if(!roomData || !roomData.players) return;
-    var redDiv = $('lobbyRedList');
-    var blueDiv = $('lobbyBlueList');
-    var specDiv = $('lobbySpecList');
-    redDiv.innerHTML = '';
-    blueDiv.innerHTML = '';
-    specDiv.innerHTML = '';
-
-    var players = roomData.players;
-    var posLabels = {GK:'KAL', DEF:'DEF', MID:'ORS', FWD:'FRV'};
-
-    for(var pid in players){
-        var p = players[pid];
-        if(p.online === false) continue;
-
-        var row = document.createElement('div');
-        row.className = 'player-row';
-
-        var isHostPlayer = (pid === roomData.hostId);
-        var hostHTML = isHostPlayer ? '<span class="host-tag">HOST</span>' : '';
-
-        var posHTML = '';
-        if(p.pos && p.team !== 'spectator'){
-            posHTML = '<span class="pos-tag pos-' + p.pos + '">' + (posLabels[p.pos] || p.pos) + '</span>';
+    if(!roomData||!roomData.players)return;
+    var rD=$('lobbyRedList'),bD=$('lobbyBlueList'),sD=$('lobbySpecList');
+    rD.innerHTML='';bD.innerHTML='';sD.innerHTML='';
+    var ps=roomData.players;
+    var posLabels={GK:'KAL',DEF:'DEF',MID:'ORS',FWD:'FRV'};
+    for(var pid in ps){
+        var p=ps[pid];if(p.online===false)continue;
+        var row=document.createElement('div');row.className='player-row';
+        var hostH=pid===roomData.hostId?'<span class="host-tag">HOST</span>':'';
+        var posH='';
+        if(p.pos&&p.team!=='spectator')posH='<span class="pos-tag pos-'+p.pos+'">'+(posLabels[p.pos]||p.pos)+'</span>';
+        var admH='';
+        if(isHost&&pid!==myId){
+            admH='<div class="admin-row-btns">'+
+                '<button style="background:#e74c3c" data-apid="'+pid+'" data-atm="red">K</button>'+
+                '<button style="background:#3498db" data-apid="'+pid+'" data-atm="blue">M</button>'+
+                '<button style="background:#555" data-apid="'+pid+'" data-atm="spectator">İ</button></div>';
         }
-
-        var adminHTML = '';
-        if(isHost && pid !== myId){
-            adminHTML = '<div class="admin-row-btns">' +
-                '<button style="background:#e74c3c" data-apid="' + pid + '" data-atm="red">K</button>' +
-                '<button style="background:#3498db" data-apid="' + pid + '" data-atm="blue">M</button>' +
-                '<button style="background:#555" data-apid="' + pid + '" data-atm="spectator">İ</button>' +
-                '</div>';
-        }
-
-        row.innerHTML = '<span class="p-info">' + hostHTML +
-            '<span class="p-name">' + (p.name || '?') + '</span>' + posHTML +
-            '</span>' + adminHTML;
-
-        if(p.team === 'red') redDiv.appendChild(row);
-        else if(p.team === 'blue') blueDiv.appendChild(row);
-        else specDiv.appendChild(row);
+        row.innerHTML='<span class="p-info">'+hostH+'<span class="p-name">'+(p.name||'?')+'</span>'+posH+'</span>'+admH;
+        if(p.team==='red')rD.appendChild(row);
+        else if(p.team==='blue')bD.appendChild(row);
+        else sD.appendChild(row);
     }
-
-    // Bind admin move buttons
     document.querySelectorAll('[data-apid]').forEach(function(btn){
-        btn.addEventListener('click', function(){
-            var tPid = btn.getAttribute('data-apid');
-            var tTeam = btn.getAttribute('data-atm');
-            if(!isHost || !roomRef) return;
-            if(tTeam === 'spectator'){
-                roomRef.child('players/' + tPid).update({team:'spectator', pos:''});
-            } else {
-                // Check team limit
-                var ts = getTeamSize(roomData.players, tTeam, null);
-                if(ts >= 11){ toast('Takım dolu! (max 11)'); return; }
-                var newPos = autoAssignPos(roomData.players, tTeam, tPid);
-                roomRef.child('players/' + tPid).update({team: tTeam, pos: newPos});
+        btn.addEventListener('click',function(){
+            var tPid=btn.getAttribute('data-apid'),tTeam=btn.getAttribute('data-atm');
+            if(!isHost||!roomRef)return;
+            if(tTeam==='spectator'){roomRef.child('players/'+tPid).update({team:'spectator',pos:''});}
+            else{
+                var ts=getTeamSize(roomData.players,tTeam);
+                if(ts>=11){toast('Takım dolu!');return}
+                var np=autoAssignPos(roomData.players,tTeam,tPid);
+                roomRef.child('players/'+tPid).update({team:tTeam,pos:np});
             }
         });
     });
-
-    // Show/hide start button
-    $('btnStart').classList.toggle('hidden', !isHost);
-
-    // Map info
-    $('lobbyMapName').textContent = 'Harita: ' + curMap.name;
-
-    // Position select
+    $('btnStart').classList.toggle('hidden',!isHost);
+    $('lobbyMapName').textContent='Harita: '+curMap.name;
     refreshPosSelect();
 }
 
 function refreshPosSelect(){
-    if(!roomData || !roomData.players) return;
-    var me = roomData.players[myId];
-    if(!me || me.team === 'spectator'){
-        $('lobbyPosBox').style.display = 'none';
-        return;
+    if(!roomData||!roomData.players)return;
+    var me=roomData.players[myId];
+    if(!me||me.team==='spectator'){$('lobbyPosBox').style.display='none';return}
+    $('lobbyPosBox').style.display='block';
+    var sel=$('lobbyPosSelect');
+    var team=me.team;
+    var ts=getTeamSize(roomData.players,team);
+    var cfg=getSlotConfig(ts);
+    var positions=['GK','DEF','MID','FWD'];
+    var labels={GK:'🧤 Kaleci',DEF:'🛡️ Defans',MID:'🎯 Orta Saha',FWD:'⚡ Forvet'};
+    var html='<option value="">-- Mevki Seç --</option>';
+    for(var i=0;i<positions.length;i++){
+        var pos=positions[i];var max=cfg[pos]||0;
+        var taken=countPosInTeam(roomData.players,team,pos,myId);
+        var avail=taken<max;var isMine=(me.pos===pos);
+        html+='<option value="'+pos+'"';
+        if(isMine)html+=' selected';
+        if(!avail&&!isMine)html+=' disabled';
+        html+='>'+labels[pos]+' ('+taken+'/'+max+')';
+        if(!avail&&!isMine)html+=' - DOLU';
+        html+='</option>';
     }
-    $('lobbyPosBox').style.display = 'block';
-
-    var sel = $('lobbyPosSelect');
-    var team = me.team;
-    var ts = getTeamSize(roomData.players, team, null);
-    var cfg = getSlotConfig(ts);
-    var positions = ['GK','DEF','MID','FWD'];
-    var labels = {GK:'🧤 Kaleci', DEF:'🛡️ Defans', MID:'🎯 Orta Saha', FWD:'⚡ Forvet'};
-
-    var html = '<option value="">-- Mevki Seç --</option>';
-    for(var i = 0; i < positions.length; i++){
-        var pos = positions[i];
-        var max = cfg[pos] || 0;
-        var taken = countPosInTeam(roomData.players, team, pos, myId);
-        var avail = taken < max;
-        var isMine = (me.pos === pos);
-        html += '<option value="' + pos + '"';
-        if(isMine) html += ' selected';
-        if(!avail && !isMine) html += ' disabled';
-        html += '>' + labels[pos] + ' (' + taken + '/' + max + ')';
-        if(!avail && !isMine) html += ' - DOLU';
-        html += '</option>';
-    }
-    sel.innerHTML = html;
+    sel.innerHTML=html;
 }
 
-// ============================================================
-//                    LOBBY POSITION SELECT
-// ============================================================
-$('lobbyPosSelect').addEventListener('change', function(){
-    var val = $('lobbyPosSelect').value;
-    if(!val || !roomRef || !roomData) return;
-    var me = roomData.players[myId];
-    if(!me || me.team === 'spectator') return;
-    if(!isPosAvailable(roomData.players, me.team, val, myId)){
-        toast('Bu mevki dolu!');
-        return;
+$('lobbyPosSelect').addEventListener('change',function(){
+    var val=$('lobbyPosSelect').value;
+    if(!val||!roomRef||!roomData)return;
+    var me=roomData.players[myId];
+    if(!me||me.team==='spectator')return;
+    if(!isPosAvailable(roomData.players,me.team,val,myId)){toast('Bu mevki dolu!');return}
+    roomRef.child('players/'+myId).update({pos:val});toast('Mevki: '+val);
+});
+
+$('btnTeamRed').addEventListener('click',function(){
+    if(!roomRef||!roomData)return;
+    var ts=getTeamSize(roomData.players,'red');
+    if(ts>=11){toast('Kırmızı dolu! (max 11)');return}
+    var np=autoAssignPos(roomData.players,'red',myId);
+    roomRef.child('players/'+myId).update({team:'red',pos:np});
+});
+$('btnTeamBlue').addEventListener('click',function(){
+    if(!roomRef||!roomData)return;
+    var ts=getTeamSize(roomData.players,'blue');
+    if(ts>=11){toast('Mavi dolu! (max 11)');return}
+    var np=autoAssignPos(roomData.players,'blue',myId);
+    roomRef.child('players/'+myId).update({team:'blue',pos:np});
+});
+$('btnTeamSpec').addEventListener('click',function(){if(roomRef)roomRef.child('players/'+myId).update({team:'spectator',pos:''})});
+$('btnLeave').addEventListener('click',function(){cleanupRoom();showScreen('menu')});
+
+$('btnStart').addEventListener('click',function(){
+    if(!isHost||!roomRef||!roomData)return;
+    var ps=roomData.players;var rc=0,bc=0;
+    for(var pid in ps){if(ps[pid].online===false)continue;if(ps[pid].team==='red')rc++;if(ps[pid].team==='blue')bc++}
+    if(rc<1||bc<1){toast('Her takımda en az 1 oyuncu!');return}
+    var updates={};var redP=[],blueP=[];
+    for(var pid2 in ps){
+        if(ps[pid2].online===false)continue;
+        if(ps[pid2].team==='red')redP.push(pid2);
+        else if(ps[pid2].team==='blue')blueP.push(pid2);
     }
-    roomRef.child('players/' + myId).update({pos: val});
-    toast('Mevki: ' + val);
-});
-
-// ============================================================
-//                    LOBBY ACTION BUTTONS
-// ============================================================
-$('btnTeamRed').addEventListener('click', function(){
-    if(!roomRef || !roomData) return;
-    var ts = getTeamSize(roomData.players, 'red', null);
-    if(ts >= 11){ toast('Kırmızı takım dolu! (max 11)'); return; }
-    var newPos = autoAssignPos(roomData.players, 'red', myId);
-    roomRef.child('players/' + myId).update({team:'red', pos: newPos});
-});
-
-$('btnTeamBlue').addEventListener('click', function(){
-    if(!roomRef || !roomData) return;
-    var ts = getTeamSize(roomData.players, 'blue', null);
-    if(ts >= 11){ toast('Mavi takım dolu! (max 11)'); return; }
-    var newPos = autoAssignPos(roomData.players, 'blue', myId);
-    roomRef.child('players/' + myId).update({team:'blue', pos: newPos});
-});
-
-$('btnTeamSpec').addEventListener('click', function(){
-    if(!roomRef) return;
-    roomRef.child('players/' + myId).update({team:'spectator', pos:''});
-});
-
-$('btnLeave').addEventListener('click', function(){
-    cleanupRoom();
-    showScreen('menu');
-});
-
-// ============================================================
-//                    START MATCH
-// ============================================================
-$('btnStart').addEventListener('click', function(){
-    if(!isHost || !roomRef || !roomData) return;
-    var players = roomData.players;
-    var rc = 0, bc = 0;
-    for(var pid in players){
-        if(players[pid].online === false) continue;
-        if(players[pid].team === 'red') rc++;
-        if(players[pid].team === 'blue') bc++;
-    }
-    if(rc < 1 || bc < 1){
-        toast('Her takımda en az 1 oyuncu olmalı!');
-        return;
-    }
-
-    var updates = {};
-    var redPids = [], bluePids = [];
-    for(var pid2 in players){
-        if(players[pid2].online === false) continue;
-        if(players[pid2].team === 'red') redPids.push(pid2);
-        else if(players[pid2].team === 'blue') bluePids.push(pid2);
-    }
-
-    // Auto-assign positions for anyone without one
-    for(var r = 0; r < redPids.length; r++){
-        var rp = redPids[r];
-        if(!players[rp].pos || players[rp].pos === ''){
-            var ap = autoAssignPos(players, 'red', rp);
-            updates['players/' + rp + '/pos'] = ap;
-            players[rp].pos = ap; // update local copy for spawn calc
+    for(var r=0;r<redP.length;r++){
+        if(!ps[redP[r]].pos||ps[redP[r]].pos===''){
+            var ap=autoAssignPos(ps,'red',redP[r]);updates['players/'+redP[r]+'/pos']=ap;ps[redP[r]].pos=ap;
         }
     }
-    for(var b = 0; b < bluePids.length; b++){
-        var bp = bluePids[b];
-        if(!players[bp].pos || players[bp].pos === ''){
-            var abp = autoAssignPos(players, 'blue', bp);
-            updates['players/' + bp + '/pos'] = abp;
-            players[bp].pos = abp;
+    for(var b=0;b<blueP.length;b++){
+        if(!ps[blueP[b]].pos||ps[blueP[b]].pos===''){
+            var abp=autoAssignPos(ps,'blue',blueP[b]);updates['players/'+blueP[b]+'/pos']=abp;ps[blueP[b]].pos=abp;
         }
     }
-
-    spawnAllTeam(redPids, 'red', players, curMap, updates);
-    spawnAllTeam(bluePids, 'blue', players, curMap, updates);
-
-    updates['state'] = 'playing';
-    updates['match/redScore'] = 0;
-    updates['match/blueScore'] = 0;
-    updates['match/time'] = 0;
-    updates['match/running'] = true;
-    updates['match/paused'] = false;
-    updates['match/ball'] = {x: curMap.fieldW/2, y: curMap.fieldH/2, vx:0, vy:0};
-
+    spawnAllTeam(redP,'red',ps,curMap,updates);
+    spawnAllTeam(blueP,'blue',ps,curMap,updates);
+    updates['state']='playing';updates['match/redScore']=0;updates['match/blueScore']=0;
+    updates['match/time']=0;updates['match/running']=true;updates['match/paused']=false;
+    updates['match/ball']={x:curMap.fieldW/2,y:curMap.fieldH/2,vx:0,vy:0};
     roomRef.update(updates);
 });
 
-// ============================================================
-//                    INIT GAME STATE
-// ============================================================
+/* ===== INIT GAME ===== */
 function initGameState(){
-    if(!roomData) return;
-    localPlayers = {};
+    if(!roomData)return;localPlayers={};
     if(roomData.players){
         for(var pid in roomData.players){
-            var p = roomData.players[pid];
-            if(p.online === false) continue;
-            localPlayers[pid] = {
-                name: p.name || '?',
-                team: p.team || 'spectator',
-                pos: p.pos || '',
-                x: p.x || curMap.fieldW/2,
-                y: p.y || curMap.fieldH/2,
-                vx: p.vx || 0,
-                vy: p.vy || 0,
-                kick: false,
-                kickCooldown: 0,
-                inputDx: 0, inputDy: 0, inputKick: false
-            };
+            var p=roomData.players[pid];if(p.online===false)continue;
+            localPlayers[pid]={name:p.name||'?',team:p.team||'spectator',pos:p.pos||'',
+                x:p.x||curMap.fieldW/2,y:p.y||curMap.fieldH/2,vx:p.vx||0,vy:p.vy||0,
+                kick:false,kickTimer:0,inputDx:0,inputDy:0,inputKick:false};
         }
     }
-    var b = (roomData.match && roomData.match.ball) || {};
-    localBall = {
-        x: b.x || curMap.fieldW/2,
-        y: b.y || curMap.fieldH/2,
-        vx: b.vx || 0,
-        vy: b.vy || 0
-    };
-    matchTime = (roomData.match && roomData.match.time) || 0;
-    matchRunning = (roomData.match && roomData.match.running) || false;
-    matchPaused = (roomData.match && roomData.match.paused) || false;
-    redScore = (roomData.match && roomData.match.redScore) || 0;
-    blueScore = (roomData.match && roomData.match.blueScore) || 0;
-    goalScoredFlag = false;
-    goalResetCountdown = 0;
-    lastNetSendTime = 0;
-    kickBtnDown = false;
-    kickFiredThisPress = false;
-    $('adminPanelGame').style.display = isHost ? 'block' : 'none';
-    adminMenuOpen = false;
-    $('adminMenuContent').style.display = 'none';
-    $('goalOverlay').style.display = 'none';
-    buildAdminMenu();
+    var b=(roomData.match&&roomData.match.ball)||{};
+    localBall={x:b.x||curMap.fieldW/2,y:b.y||curMap.fieldH/2,vx:b.vx||0,vy:b.vy||0};
+    matchTime=(roomData.match&&roomData.match.time)||0;
+    matchRunning=(roomData.match&&roomData.match.running)||false;
+    matchPaused=(roomData.match&&roomData.match.paused)||false;
+    redScore=(roomData.match&&roomData.match.redScore)||0;
+    blueScore=(roomData.match&&roomData.match.blueScore)||0;
+    goalScoredFlag=false;goalResetCountdown=0;lastNetSendTime=0;
+    kickBtnDown=false;kickFired=false;
+    $('adminPanelGame').style.display=isHost?'block':'none';
+    adminMenuOpen=false;$('adminMenuContent').style.display='none';
+    $('goalOverlay').style.display='none';buildAdminMenu();
 }
 
-// ============================================================
-//                    CLIENT SYNC FROM SERVER
-// ============================================================
-function clientSyncFromServer(){
-    if(!roomData || !roomData.match) return;
-
-    matchRunning = roomData.match.running || false;
-    matchPaused = roomData.match.paused || false;
-    matchTime = roomData.match.time || 0;
-
-    // Ball interpolation
+/* ===== CLIENT SYNC ===== */
+function clientSync(){
+    if(!roomData||!roomData.match)return;
+    matchRunning=roomData.match.running||false;
+    matchPaused=roomData.match.paused||false;
+    matchTime=roomData.match.time||0;
     if(roomData.match.ball){
-        var tb = roomData.match.ball;
-        localBall.x = lerp(localBall.x, tb.x, 0.32);
-        localBall.y = lerp(localBall.y, tb.y, 0.32);
-        localBall.vx = lerp(localBall.vx, tb.vx || 0, 0.38);
-        localBall.vy = lerp(localBall.vy, tb.vy || 0, 0.38);
+        var tb=roomData.match.ball;
+        localBall.x=lerp(localBall.x,tb.x,0.32);localBall.y=lerp(localBall.y,tb.y,0.32);
+        localBall.vx=lerp(localBall.vx,tb.vx||0,0.38);localBall.vy=lerp(localBall.vy,tb.vy||0,0.38);
     }
-
-    // Players
     if(roomData.players){
         for(var pid in roomData.players){
-            var rd = roomData.players[pid];
-            if(rd.online === false){ delete localPlayers[pid]; continue; }
+            var rd=roomData.players[pid];
+            if(rd.online===false){delete localPlayers[pid];continue}
             if(!localPlayers[pid]){
-                localPlayers[pid] = {
-                    name: rd.name || '?', team: rd.team, pos: rd.pos || '',
-                    x: rd.x || curMap.fieldW/2, y: rd.y || curMap.fieldH/2,
-                    vx:0, vy:0, kick:false, kickCooldown:0,
-                    inputDx:0, inputDy:0, inputKick:false
-                };
+                localPlayers[pid]={name:rd.name||'?',team:rd.team,pos:rd.pos||'',
+                    x:rd.x||curMap.fieldW/2,y:rd.y||curMap.fieldH/2,vx:0,vy:0,
+                    kick:false,kickTimer:0,inputDx:0,inputDy:0,inputKick:false};
             }
-            var lp2 = localPlayers[pid];
-            lp2.team = rd.team;
-            lp2.name = rd.name;
-            lp2.pos = rd.pos || '';
-            lp2.kick = rd.kick || false;
-
-            if(pid === myId && lp2.team !== 'spectator'){
-                // Client-side prediction for own player
-                var il = Math.sqrt(myInput.dx*myInput.dx + myInput.dy*myInput.dy);
-                if(il > 0.05){
-                    var n = normVec(myInput.dx, myInput.dy);
-                    var str = Math.min(il, 1);
-                    lp2.vx += n.x * PLAYER_ACCEL * str;
-                    lp2.vy += n.y * PLAYER_ACCEL * str;
-                }
-                var sp = Math.sqrt(lp2.vx*lp2.vx + lp2.vy*lp2.vy);
-                if(sp > PLAYER_MAX_SPEED){
-                    lp2.vx = (lp2.vx/sp)*PLAYER_MAX_SPEED;
-                    lp2.vy = (lp2.vy/sp)*PLAYER_MAX_SPEED;
-                }
-                lp2.vx *= curMap.playerFric;
-                lp2.vy *= curMap.playerFric;
-                if(Math.abs(lp2.vx) < 0.003) lp2.vx = 0;
-                if(Math.abs(lp2.vy) < 0.003) lp2.vy = 0;
-                lp2.x += lp2.vx;
-                lp2.y += lp2.vy;
-                // Blend with server
-                if(rd.x !== undefined){
-                    lp2.x = lerp(lp2.x, rd.x, 0.10);
-                    lp2.y = lerp(lp2.y, rd.y, 0.10);
-                }
-                lp2.x = clamp(lp2.x, PLAYER_RADIUS, curMap.fieldW - PLAYER_RADIUS);
-                lp2.y = clamp(lp2.y, PLAYER_RADIUS, curMap.fieldH - PLAYER_RADIUS);
-                lp2.kick = (kickBtnDown && !kickFiredThisPress);
-            } else {
-                // Other players: interpolate
-                if(rd.x !== undefined){
-                    lp2.x = lerp(lp2.x, rd.x, 0.22);
-                    lp2.y = lerp(lp2.y, rd.y, 0.22);
-                }
+            var lp=localPlayers[pid];
+            lp.team=rd.team;lp.name=rd.name;lp.pos=rd.pos||'';lp.kick=rd.kick||false;
+            if(pid===myId&&lp.team!=='spectator'){
+                var il=Math.sqrt(myInput.dx*myInput.dx+myInput.dy*myInput.dy);
+                if(il>0.05){var n=normVec(myInput.dx,myInput.dy);lp.vx+=n.x*PA*Math.min(il,1);lp.vy+=n.y*PA*Math.min(il,1)}
+                var sp=Math.sqrt(lp.vx*lp.vx+lp.vy*lp.vy);
+                if(sp>PMS){lp.vx=(lp.vx/sp)*PMS;lp.vy=(lp.vy/sp)*PMS}
+                lp.vx*=curMap.playerFric;lp.vy*=curMap.playerFric;
+                if(Math.abs(lp.vx)<0.003)lp.vx=0;if(Math.abs(lp.vy)<0.003)lp.vy=0;
+                lp.x+=lp.vx;lp.y+=lp.vy;
+                if(rd.x!==undefined){lp.x=lerp(lp.x,rd.x,0.1);lp.y=lerp(lp.y,rd.y,0.1)}
+                lp.x=clamp(lp.x,PR,curMap.fieldW-PR);lp.y=clamp(lp.y,PR,curMap.fieldH-PR);
+                lp.kick=kickBtnDown&&!kickFired;
+            }else{
+                if(rd.x!==undefined){lp.x=lerp(lp.x,rd.x,0.22);lp.y=lerp(lp.y,rd.y,0.22)}
             }
         }
-        // Remove disconnected
-        for(var pid2 in localPlayers){
-            if(!roomData.players[pid2] || roomData.players[pid2].online === false){
-                delete localPlayers[pid2];
-            }
-        }
+        for(var pid2 in localPlayers){if(!roomData.players[pid2]||roomData.players[pid2].online===false)delete localPlayers[pid2]}
     }
 }
 
-// ============================================================
-//                    CLEANUP ROOM
-// ============================================================
 function cleanupRoom(){
-    if(roomRef){
-        if(roomListenerHandle) roomRef.off('value', roomListenerHandle);
-        roomListenerHandle = null;
-        roomRef.child('players/' + myId).remove();
-        roomRef = null;
-    }
-    stopGameLoop();
-    roomData = null;
-    roomCode = '';
-    isHost = false;
-    localPlayers = {};
+    if(roomRef){if(roomListenerHandle)roomRef.off('value',roomListenerHandle);roomListenerHandle=null;roomRef.child('players/'+myId).remove();roomRef=null}
+    stopLoop();roomData=null;roomCode='';isHost=false;localPlayers={};
 }
 
-// ============================================================
-//                    GAME LOOP
-// ============================================================
-function startGameLoop(){
-    if(animFrameId) cancelAnimationFrame(animFrameId);
-    lastFrameTimestamp = performance.now();
-    physicAccum = 0;
-    gameTick(lastFrameTimestamp);
-}
-function stopGameLoop(){
-    if(animFrameId){ cancelAnimationFrame(animFrameId); animFrameId = null; }
+/* ===== GAME LOOP ===== */
+function startLoop(){if(animFrameId)cancelAnimationFrame(animFrameId);lastFT=performance.now();acc=0;tick(lastFT)}
+function stopLoop(){if(animFrameId){cancelAnimationFrame(animFrameId);animFrameId=null}}
+function tick(now){
+    animFrameId=requestAnimationFrame(tick);
+    var dt=now-lastFT;lastFT=now;if(dt>80)dt=80;
+    acc+=dt;var steps=0;
+    while(acc>=FDT&&steps<3){fixedUpdate(FDT/1000);acc-=FDT;steps++}
+    renderGame();netTick(now);
 }
 
-function gameTick(now){
-    animFrameId = requestAnimationFrame(gameTick);
-    var dt = now - lastFrameTimestamp;
-    lastFrameTimestamp = now;
-    if(dt > 80) dt = 80;
-
-    physicAccum += dt;
-    var steps = 0;
-    while(physicAccum >= FIXED_STEP && steps < 3){
-        fixedUpdate(FIXED_STEP / 1000);
-        physicAccum -= FIXED_STEP;
-        steps++;
-    }
-
-    renderGame();
-    networkTick(now);
-}
-
-// ============================================================
-//                    NETWORK TICK
-// ============================================================
-function networkTick(now){
-    if(!roomRef) return;
-    if(now - lastNetSendTime < NET_SEND_INTERVAL) return;
-    lastNetSendTime = now;
-
+/* ===== NET TICK ===== */
+function netTick(now){
+    if(!roomRef)return;if(now-lastNetSendTime<NSI)return;lastNetSendTime=now;
     if(isHost){
-        // Host sends everything
-        var u = {};
-        u['match/ball'] = {
-            x: Math.round(localBall.x * 10) / 10,
-            y: Math.round(localBall.y * 10) / 10,
-            vx: Math.round(localBall.vx * 100) / 100,
-            vy: Math.round(localBall.vy * 100) / 100
-        };
-        u['match/time'] = Math.round(matchTime * 10) / 10;
-        u['match/running'] = matchRunning;
-        u['match/paused'] = matchPaused;
-        u['match/redScore'] = redScore;
-        u['match/blueScore'] = blueScore;
-
+        var u={};
+        u['match/ball']={x:Math.round(localBall.x*10)/10,y:Math.round(localBall.y*10)/10,vx:Math.round(localBall.vx*100)/100,vy:Math.round(localBall.vy*100)/100};
+        u['match/time']=Math.round(matchTime*10)/10;u['match/running']=matchRunning;u['match/paused']=matchPaused;
+        u['match/redScore']=redScore;u['match/blueScore']=blueScore;
         for(var pid in localPlayers){
-            var p = localPlayers[pid];
-            if(p.team === 'spectator') continue;
-            u['players/' + pid + '/x'] = Math.round(p.x * 10) / 10;
-            u['players/' + pid + '/y'] = Math.round(p.y * 10) / 10;
-            u['players/' + pid + '/vx'] = Math.round(p.vx * 100) / 100;
-            u['players/' + pid + '/vy'] = Math.round(p.vy * 100) / 100;
-            u['players/' + pid + '/kick'] = p.kick || false;
+            var p=localPlayers[pid];if(p.team==='spectator')continue;
+            u['players/'+pid+'/x']=Math.round(p.x*10)/10;u['players/'+pid+'/y']=Math.round(p.y*10)/10;
+            u['players/'+pid+'/vx']=Math.round(p.vx*100)/100;u['players/'+pid+'/vy']=Math.round(p.vy*100)/100;
+            u['players/'+pid+'/kick']=p.kick||false;
         }
         roomRef.update(u);
-    } else {
-        // Client sends only input
-        var iu = {};
-        iu['players/' + myId + '/idx'] = Math.round(myInput.dx * 100) / 100;
-        iu['players/' + myId + '/idy'] = Math.round(myInput.dy * 100) / 100;
-        iu['players/' + myId + '/ik'] = (kickBtnDown && !kickFiredThisPress);
-        roomRef.update(iu);
+    }else{
+        roomRef.child('players/'+myId).update({
+            idx:Math.round(myInput.dx*100)/100,
+            idy:Math.round(myInput.dy*100)/100,
+            ik:kickBtnDown&&!kickFired
+        });
     }
 }
 
-// ============================================================
-//                    FIXED PHYSICS UPDATE (HOST)
-// ============================================================
-function fixedUpdate(dtSec){
-    if(isHost){
-        hostPhysicsUpdate(dtSec);
-    }
-    // Client updates via syncClientState in the Firebase listener
-}
+/* ===== PHYSICS ===== */
+function fixedUpdate(dt){if(isHost)hostPhysics(dt)}
 
-function hostPhysicsUpdate(dtSec){
-    var FW = curMap.fieldW;
-    var FH = curMap.fieldH;
-    var GH = curMap.goalH;
-    var GD = curMap.goalD;
-    var goalTop = FH/2 - GH/2;
-    var goalBot = FH/2 + GH/2;
+function hostPhysics(dt){
+    var FW=curMap.fieldW,FH=curMap.fieldH,GH=curMap.goalH,GD=curMap.goalD;
+    var gT=FH/2-GH/2,gB=FH/2+GH/2;
+    if(matchRunning&&!matchPaused&&!goalScoredFlag){matchTime+=dt;if(matchTime>=MATCH_DUR){matchRunning=false;matchTime=MATCH_DUR;if(roomRef)roomRef.update({'match/running':false})}}
+    if(goalScoredFlag){goalResetCountdown-=dt*1000;if(goalResetCountdown<=0){goalScoredFlag=false;resetAllPos();$('goalOverlay').style.display='none'}return}
+    if(matchPaused||!matchRunning)return;
 
-    // ---- MATCH TIME ----
-    if(matchRunning && !matchPaused && !goalScoredFlag){
-        matchTime += dtSec;
-        if(matchTime >= MATCH_DURATION){
-            matchRunning = false;
-            matchTime = MATCH_DURATION;
-            if(roomRef) roomRef.update({'match/running': false});
-        }
-    }
-
-    // ---- GOAL RESET ----
-    if(goalScoredFlag){
-        goalResetCountdown -= dtSec * 1000;
-        if(goalResetCountdown <= 0){
-            goalScoredFlag = false;
-            resetAllPositions();
-            $('goalOverlay').style.display = 'none';
-        }
-        return; // freeze during goal celebration
-    }
-
-    if(matchPaused || !matchRunning) return;
-
-    // ---- READ INPUTS ----
-    if(roomData && roomData.players){
+    // Read inputs
+    if(roomData&&roomData.players){
         for(var pid in localPlayers){
-            if(pid === myId){
-                localPlayers[pid].inputDx = myInput.dx;
-                localPlayers[pid].inputDy = myInput.dy;
-                localPlayers[pid].inputKick = (kickBtnDown && !kickFiredThisPress);
-            } else {
-                var rd = roomData.players[pid];
-                if(rd){
-                    localPlayers[pid].inputDx = rd.idx || 0;
-                    localPlayers[pid].inputDy = rd.idy || 0;
-                    localPlayers[pid].inputKick = rd.ik || false;
-                }
+            if(pid===myId){
+                localPlayers[pid].inputDx=myInput.dx;
+                localPlayers[pid].inputDy=myInput.dy;
+                localPlayers[pid].inputKick=kickBtnDown&&!kickFired;
+            }else{
+                var rd=roomData.players[pid];
+                if(rd){localPlayers[pid].inputDx=rd.idx||0;localPlayers[pid].inputDy=rd.idy||0;localPlayers[pid].inputKick=rd.ik||false}
             }
         }
     }
 
-    // ---- SYNC PLAYER LIST ----
-    if(roomData && roomData.players){
+    // Sync player list
+    if(roomData&&roomData.players){
         for(var pid2 in roomData.players){
-            var rd2 = roomData.players[pid2];
-            if(rd2.online === false){ delete localPlayers[pid2]; continue; }
+            var rd2=roomData.players[pid2];if(rd2.online===false){delete localPlayers[pid2];continue}
             if(!localPlayers[pid2]){
-                var sp = getSpawnPos(rd2.team, rd2.pos || 'MID', 0, 1, curMap);
-                localPlayers[pid2] = {
-                    name: rd2.name, team: rd2.team, pos: rd2.pos || '',
-                    x: sp.x, y: sp.y, vx:0, vy:0,
-                    kick:false, kickCooldown:0,
-                    inputDx:0, inputDy:0, inputKick:false
-                };
+                var sp2=getSpawnPos(rd2.team,rd2.pos||'MID',0,1,curMap);
+                localPlayers[pid2]={name:rd2.name,team:rd2.team,pos:rd2.pos||'',x:sp2.x,y:sp2.y,vx:0,vy:0,kick:false,kickTimer:0,inputDx:0,inputDy:0,inputKick:false};
             }
-            localPlayers[pid2].team = rd2.team;
-            localPlayers[pid2].name = rd2.name;
-            localPlayers[pid2].pos = rd2.pos || '';
+            localPlayers[pid2].team=rd2.team;localPlayers[pid2].name=rd2.name;localPlayers[pid2].pos=rd2.pos||'';
         }
-        for(var pid3 in localPlayers){
-            if(!roomData.players[pid3] || roomData.players[pid3].online === false){
-                delete localPlayers[pid3];
-            }
-        }
+        for(var pid3 in localPlayers){if(!roomData.players[pid3]||roomData.players[pid3].online===false)delete localPlayers[pid3]}
     }
 
-    // ---- ACTIVE PLAYER LIST ----
-    var activePids = [];
-    for(var apid in localPlayers){
-        if(localPlayers[apid].team !== 'spectator') activePids.push(apid);
-    }
+    var acts=[];for(var ap in localPlayers){if(localPlayers[ap].team!=='spectator')acts.push(ap)}
 
-    // ---- PLAYER MOVEMENT ----
-    for(var ai = 0; ai < activePids.length; ai++){
-        var pp = localPlayers[activePids[ai]];
+    // Player movement
+    for(var ai=0;ai<acts.length;ai++){
+        var pp=localPlayers[acts[ai]];
+        var inLen=Math.sqrt(pp.inputDx*pp.inputDx+pp.inputDy*pp.inputDy);
+        if(inLen>0.05){var n=normVec(pp.inputDx,pp.inputDy);pp.vx+=n.x*PA*Math.min(inLen,1);pp.vy+=n.y*PA*Math.min(inLen,1)}
+        var spd=Math.sqrt(pp.vx*pp.vx+pp.vy*pp.vy);
+        if(spd>PMS){pp.vx=(pp.vx/spd)*PMS;pp.vy=(pp.vy/spd)*PMS}
+        pp.vx*=curMap.playerFric;pp.vy*=curMap.playerFric;
+        if(Math.abs(pp.vx)<0.003)pp.vx=0;if(Math.abs(pp.vy)<0.003)pp.vy=0;
+        pp.x+=pp.vx;pp.y+=pp.vy;
 
-        // Input acceleration
-        var inLen = Math.sqrt(pp.inputDx*pp.inputDx + pp.inputDy*pp.inputDy);
-        if(inLen > 0.05){
-            var n = normVec(pp.inputDx, pp.inputDy);
-            var strength = Math.min(inLen, 1);
-            pp.vx += n.x * PLAYER_ACCEL * strength;
-            pp.vy += n.y * PLAYER_ACCEL * strength;
-        }
-
-        // Speed cap
-        var spd = Math.sqrt(pp.vx*pp.vx + pp.vy*pp.vy);
-        if(spd > PLAYER_MAX_SPEED){
-            pp.vx = (pp.vx / spd) * PLAYER_MAX_SPEED;
-            pp.vy = (pp.vy / spd) * PLAYER_MAX_SPEED;
-        }
-
-        // Friction
-        pp.vx *= curMap.playerFric;
-        pp.vy *= curMap.playerFric;
-        if(Math.abs(pp.vx) < 0.003) pp.vx = 0;
-        if(Math.abs(pp.vy) < 0.003) pp.vy = 0;
-
-        // Move
-        pp.x += pp.vx;
-        pp.y += pp.vy;
-
-        // ---- SINGLE-PRESS KICK ----
-        if(pp.kickCooldown > 0) pp.kickCooldown--;
-
-        if(pp.inputKick && pp.kickCooldown <= 0){
-            pp.kick = true;
-            pp.kickCooldown = KICK_COOLDOWN_FRAMES;
-        } else {
-            pp.kick = false;
-        }
-
-        // Bounds
-        pp.x = clamp(pp.x, PLAYER_RADIUS, FW - PLAYER_RADIUS);
-        pp.y = clamp(pp.y, PLAYER_RADIUS, FH - PLAYER_RADIUS);
-    }
-
-    // ---- PLAYER-PLAYER COLLISIONS (soft, no strong push) ----
-    for(var ci = 0; ci < activePids.length; ci++){
-        for(var cj = ci + 1; cj < activePids.length; cj++){
-            var pa = localPlayers[activePids[ci]];
-            var pb = localPlayers[activePids[cj]];
-            var cd = dist(pa.x, pa.y, pb.x, pb.y);
-            var minD = PLAYER_RADIUS * 2;
-            if(cd < minD && cd > 0.001){
-                var cnx = (pb.x - pa.x) / cd;
-                var cny = (pb.y - pa.y) / cd;
-                var overlap = minD - cd;
-                // Separate
-                pa.x -= cnx * overlap * 0.5;
-                pa.y -= cny * overlap * 0.5;
-                pb.x += cnx * overlap * 0.5;
-                pb.y += cny * overlap * 0.5;
-                // Very soft velocity exchange
-                var rdvx = pa.vx - pb.vx;
-                var rdvy = pa.vy - pb.vy;
-                var rdvn = rdvx * cnx + rdvy * cny;
-                if(rdvn > 0){
-                    pa.vx -= rdvn * cnx * PLAYER_BOUNCE_DAMP;
-                    pa.vy -= rdvn * cny * PLAYER_BOUNCE_DAMP;
-                    pb.vx += rdvn * cnx * PLAYER_BOUNCE_DAMP;
-                    pb.vy += rdvn * cny * PLAYER_BOUNCE_DAMP;
+        // Kick logic: when inputKick is true AND kickTimer is 0, start a kick
+        // kickTimer counts down, kick is active during that time
+        // Once kickTimer expires, kick is done. Next kick requires releasing and pressing again.
+        if(pp.kickTimer>0){
+            pp.kickTimer--;
+            pp.kick=true;
+        }else{
+            pp.kick=false;
+            if(pp.inputKick){
+                // Fire a new kick
+                pp.kick=true;
+                pp.kickTimer=KICK_DURATION;
+                // For the local player, mark this press as fired so holding doesn't re-fire
+                if(acts[ai]===myId){
+                    kickFired=true;
                 }
             }
         }
+
+        pp.x=clamp(pp.x,PR,FW-PR);pp.y=clamp(pp.y,PR,FH-PR);
     }
 
-    // ---- BALL PHYSICS ----
-    localBall.vx *= curMap.ballFric;
-    localBall.vy *= curMap.ballFric;
-    if(Math.abs(localBall.vx) < 0.004) localBall.vx = 0;
-    if(Math.abs(localBall.vy) < 0.004) localBall.vy = 0;
-    localBall.x += localBall.vx;
-    localBall.y += localBall.vy;
-
-    // Ball speed cap
-    var bspd = Math.sqrt(localBall.vx*localBall.vx + localBall.vy*localBall.vy);
-    if(bspd > BALL_MAX_SPEED){
-        localBall.vx = (localBall.vx / bspd) * BALL_MAX_SPEED;
-        localBall.vy = (localBall.vy / bspd) * BALL_MAX_SPEED;
-    }
-
-    // ---- BALL-PLAYER COLLISIONS ----
-    for(var bi = 0; bi < activePids.length; bi++){
-        var bp = localPlayers[activePids[bi]];
-        var bd = dist(bp.x, bp.y, localBall.x, localBall.y);
-        var bMinD = PLAYER_RADIUS + BALL_RADIUS;
-
-        if(bd < bMinD && bd > 0.001){
-            var bnx = (localBall.x - bp.x) / bd;
-            var bny = (localBall.y - bp.y) / bd;
-            var bOverlap = bMinD - bd;
-
-            // Separate ball
-            localBall.x += bnx * bOverlap;
-            localBall.y += bny * bOverlap;
-
-            // Relative velocity
-            var bdvx = localBall.vx - bp.vx;
-            var bdvy = localBall.vy - bp.vy;
-            var bdvn = bdvx * bnx + bdvy * bny;
-
-            if(bdvn < 0){
-                localBall.vx -= bdvn * bnx * 0.7;
-                localBall.vy -= bdvn * bny * 0.7;
+    // Player-Player collision (soft)
+    for(var ci=0;ci<acts.length;ci++){
+        for(var cj=ci+1;cj<acts.length;cj++){
+            var pa=localPlayers[acts[ci]],pb=localPlayers[acts[cj]];
+            var cd=dist(pa.x,pa.y,pb.x,pb.y),mD=PR*2;
+            if(cd<mD&&cd>0.001){
+                var cnx=(pb.x-pa.x)/cd,cny=(pb.y-pa.y)/cd,ov=mD-cd;
+                pa.x-=cnx*ov*0.5;pa.y-=cny*ov*0.5;pb.x+=cnx*ov*0.5;pb.y+=cny*ov*0.5;
+                var dvx=pa.vx-pb.vx,dvy=pa.vy-pb.vy,dvn=dvx*cnx+dvy*cny;
+                if(dvn>0){pa.vx-=dvn*cnx*PBD;pa.vy-=dvn*cny*PBD;pb.vx+=dvn*cnx*PBD;pb.vy+=dvn*cny*PBD}
             }
+        }
+    }
 
+    // Ball
+    localBall.vx*=curMap.ballFric;localBall.vy*=curMap.ballFric;
+    if(Math.abs(localBall.vx)<0.004)localBall.vx=0;if(Math.abs(localBall.vy)<0.004)localBall.vy=0;
+    localBall.x+=localBall.vx;localBall.y+=localBall.vy;
+    var bspd=Math.sqrt(localBall.vx*localBall.vx+localBall.vy*localBall.vy);
+    if(bspd>BMS){localBall.vx=(localBall.vx/bspd)*BMS;localBall.vy=(localBall.vy/bspd)*BMS}
+
+    // Ball-Player
+    for(var bi=0;bi<acts.length;bi++){
+        var bp=localPlayers[acts[bi]];
+        var bd=dist(bp.x,bp.y,localBall.x,localBall.y),bMD=PR+BR;
+        if(bd<bMD&&bd>0.001){
+            var bnx=(localBall.x-bp.x)/bd,bny=(localBall.y-bp.y)/bd,bov=bMD-bd;
+            localBall.x+=bnx*bov;localBall.y+=bny*bov;
+            var bdvx=localBall.vx-bp.vx,bdvy=localBall.vy-bp.vy,bdvn=bdvx*bnx+bdvy*bny;
+            if(bdvn<0){localBall.vx-=bdvn*bnx*0.7;localBall.vy-=bdvn*bny*0.7}
             if(bp.kick){
-                // Single kick impulse
-                localBall.vx += bnx * KICK_FORCE;
-                localBall.vy += bny * KICK_FORCE;
-                bp.kick = false;
-                bp.kickCooldown = KICK_COOLDOWN_FRAMES;
-                // Mark fired for local player
-                if(activePids[bi] === myId){
-                    kickFiredThisPress = true;
-                }
-            } else {
-                // Very gentle push (dribble feel)
-                localBall.vx += bnx * BALL_PUSH_FORCE;
-                localBall.vy += bny * BALL_PUSH_FORCE;
+                // Apply kick force
+                localBall.vx+=bnx*KF;localBall.vy+=bny*KF;
+                // End the kick immediately after hitting ball
+                bp.kick=false;bp.kickTimer=0;
+            }else{
+                localBall.vx+=bnx*BPF;localBall.vy+=bny*BPF;
             }
         }
     }
 
-    // ---- GOAL POST COLLISIONS ----
-    var posts = [
-        {x:0, y:goalTop}, {x:0, y:goalBot},
-        {x:FW, y:goalTop}, {x:FW, y:goalBot}
-    ];
-    for(var pi = 0; pi < posts.length; pi++){
-        var po = posts[pi];
-        var pd = dist(localBall.x, localBall.y, po.x, po.y);
-        if(pd < BALL_RADIUS + POST_RADIUS && pd > 0.001){
-            var pnx = (localBall.x - po.x) / pd;
-            var pny = (localBall.y - po.y) / pd;
-            var pov = BALL_RADIUS + POST_RADIUS - pd;
-            localBall.x += pnx * pov;
-            localBall.y += pny * pov;
-            var pdot = localBall.vx * pnx + localBall.vy * pny;
-            if(pdot < 0){
-                localBall.vx -= 2 * pdot * pnx * BOUNCE_DAMP;
-                localBall.vy -= 2 * pdot * pny * BOUNCE_DAMP;
-            }
+    // Posts
+    var posts=[{x:0,y:gT},{x:0,y:gB},{x:FW,y:gT},{x:FW,y:gB}];
+    for(var pi=0;pi<posts.length;pi++){
+        var po=posts[pi];var pd=dist(localBall.x,localBall.y,po.x,po.y);
+        if(pd<BR+PST&&pd>0.001){
+            var pnx=(localBall.x-po.x)/pd,pny=(localBall.y-po.y)/pd,pov2=BR+PST-pd;
+            localBall.x+=pnx*pov2;localBall.y+=pny*pov2;
+            var pdot=localBall.vx*pnx+localBall.vy*pny;
+            if(pdot<0){localBall.vx-=2*pdot*pnx*BD;localBall.vy-=2*pdot*pny*BD}
         }
     }
 
-    // ---- WALL COLLISIONS ----
-    // Top wall
-    if(localBall.y - BALL_RADIUS < 0){
-        localBall.y = BALL_RADIUS;
-        localBall.vy = Math.abs(localBall.vy) * BOUNCE_DAMP;
+    // Walls
+    if(localBall.y-BR<0){localBall.y=BR;localBall.vy=Math.abs(localBall.vy)*BD}
+    if(localBall.y+BR>FH){localBall.y=FH-BR;localBall.vy=-Math.abs(localBall.vy)*BD}
+    if(localBall.x-BR<0){
+        if(localBall.y>gT&&localBall.y<gB){
+            if(localBall.x-BR<-GD){handleGoal('blue');return}
+            if(localBall.x<0){if(localBall.y-BR<gT){localBall.y=gT+BR;localBall.vy=Math.abs(localBall.vy)*BD}if(localBall.y+BR>gB){localBall.y=gB-BR;localBall.vy=-Math.abs(localBall.vy)*BD}}
+        }else{localBall.x=BR;localBall.vx=Math.abs(localBall.vx)*BD}
     }
-    // Bottom wall
-    if(localBall.y + BALL_RADIUS > FH){
-        localBall.y = FH - BALL_RADIUS;
-        localBall.vy = -Math.abs(localBall.vy) * BOUNCE_DAMP;
+    if(localBall.x+BR>FW){
+        if(localBall.y>gT&&localBall.y<gB){
+            if(localBall.x+BR>FW+GD){handleGoal('red');return}
+            if(localBall.x>FW){if(localBall.y-BR<gT){localBall.y=gT+BR;localBall.vy=Math.abs(localBall.vy)*BD}if(localBall.y+BR>gB){localBall.y=gB-BR;localBall.vy=-Math.abs(localBall.vy)*BD}}
+        }else{localBall.x=FW-BR;localBall.vx=-Math.abs(localBall.vx)*BD}
     }
-
-    // Left wall / left goal
-    if(localBall.x - BALL_RADIUS < 0){
-        if(localBall.y > goalTop && localBall.y < goalBot){
-            // In goal mouth
-            if(localBall.x - BALL_RADIUS < -GD){
-                handleGoal('blue');
-                return;
-            }
-            // Inner goal walls
-            if(localBall.x < 0){
-                if(localBall.y - BALL_RADIUS < goalTop){
-                    localBall.y = goalTop + BALL_RADIUS;
-                    localBall.vy = Math.abs(localBall.vy) * BOUNCE_DAMP;
-                }
-                if(localBall.y + BALL_RADIUS > goalBot){
-                    localBall.y = goalBot - BALL_RADIUS;
-                    localBall.vy = -Math.abs(localBall.vy) * BOUNCE_DAMP;
-                }
-            }
-        } else {
-            localBall.x = BALL_RADIUS;
-            localBall.vx = Math.abs(localBall.vx) * BOUNCE_DAMP;
-        }
-    }
-
-    // Right wall / right goal
-    if(localBall.x + BALL_RADIUS > FW){
-        if(localBall.y > goalTop && localBall.y < goalBot){
-            if(localBall.x + BALL_RADIUS > FW + GD){
-                handleGoal('red');
-                return;
-            }
-            if(localBall.x > FW){
-                if(localBall.y - BALL_RADIUS < goalTop){
-                    localBall.y = goalTop + BALL_RADIUS;
-                    localBall.vy = Math.abs(localBall.vy) * BOUNCE_DAMP;
-                }
-                if(localBall.y + BALL_RADIUS > goalBot){
-                    localBall.y = goalBot - BALL_RADIUS;
-                    localBall.vy = -Math.abs(localBall.vy) * BOUNCE_DAMP;
-                }
-            }
-        } else {
-            localBall.x = FW - BALL_RADIUS;
-            localBall.vx = -Math.abs(localBall.vx) * BOUNCE_DAMP;
-        }
-    }
-
-    // Goal back walls
-    if(localBall.x < 0 && localBall.y > goalTop && localBall.y < goalBot){
-        if(localBall.x - BALL_RADIUS < -GD){
-            localBall.x = -GD + BALL_RADIUS;
-            localBall.vx = Math.abs(localBall.vx) * BOUNCE_DAMP;
-        }
-    }
-    if(localBall.x > FW && localBall.y > goalTop && localBall.y < goalBot){
-        if(localBall.x + BALL_RADIUS > FW + GD){
-            localBall.x = FW + GD - BALL_RADIUS;
-            localBall.vx = -Math.abs(localBall.vx) * BOUNCE_DAMP;
-        }
-    }
+    if(localBall.x<0&&localBall.y>gT&&localBall.y<gB&&localBall.x-BR<-GD){localBall.x=-GD+BR;localBall.vx=Math.abs(localBall.vx)*BD}
+    if(localBall.x>FW&&localBall.y>gT&&localBall.y<gB&&localBall.x+BR>FW+GD){localBall.x=FW+GD-BR;localBall.vx=-Math.abs(localBall.vx)*BD}
 }
 
-// ============================================================
-//                    GOAL HANDLING
-// ============================================================
-function handleGoal(scoringTeam){
-    goalScoredFlag = true;
-    goalResetCountdown = GOAL_RESET_MS;
-
-    if(scoringTeam === 'red'){
-        redScore++;
-        $('goalText').textContent = '🔴 GOL!';
-        $('goalText').style.color = '#e74c3c';
-    } else {
-        blueScore++;
-        $('goalText').textContent = '🔵 GOL!';
-        $('goalText').style.color = '#3498db';
-    }
-    $('goalOverlay').style.display = 'flex';
-
-    // Freeze everything
-    localBall.vx = 0; localBall.vy = 0;
-    for(var pid in localPlayers){
-        localPlayers[pid].vx = 0;
-        localPlayers[pid].vy = 0;
-    }
-
-    if(roomRef){
-        roomRef.update({'match/redScore': redScore, 'match/blueScore': blueScore});
-    }
+function handleGoal(team){
+    goalScoredFlag=true;goalResetCountdown=GRD;
+    if(team==='red'){redScore++;$('goalText').textContent='🔴 GOL!';$('goalText').style.color='#e74c3c'}
+    else{blueScore++;$('goalText').textContent='🔵 GOL!';$('goalText').style.color='#3498db'}
+    $('goalOverlay').style.display='flex';
+    localBall.vx=0;localBall.vy=0;
+    for(var pid in localPlayers){localPlayers[pid].vx=0;localPlayers[pid].vy=0}
+    if(roomRef)roomRef.update({'match/redScore':redScore,'match/blueScore':blueScore});
 }
 
-function resetAllPositions(){
-    localBall.x = curMap.fieldW / 2;
-    localBall.y = curMap.fieldH / 2;
-    localBall.vx = 0;
-    localBall.vy = 0;
-
-    var redPids = [], bluePids = [];
-    for(var pid in localPlayers){
-        if(localPlayers[pid].team === 'red') redPids.push(pid);
-        else if(localPlayers[pid].team === 'blue') bluePids.push(pid);
-    }
-    spawnGroupLocal(redPids, 'red');
-    spawnGroupLocal(bluePids, 'blue');
+function resetAllPos(){
+    localBall.x=curMap.fieldW/2;localBall.y=curMap.fieldH/2;localBall.vx=0;localBall.vy=0;
+    var rP=[],bP=[];
+    for(var pid in localPlayers){if(localPlayers[pid].team==='red')rP.push(pid);else if(localPlayers[pid].team==='blue')bP.push(pid)}
+    spawnGroupLocal(rP,'red');spawnGroupLocal(bP,'blue');
+}
+function spawnGroupLocal(pids,team){
+    var groups={GK:[],DEF:[],MID:[],FWD:[]};
+    for(var i=0;i<pids.length;i++){var p=localPlayers[pids[i]];var pos=p.pos||'MID';if(!groups[pos])groups[pos]=[];groups[pos].push(pids[i])}
+    for(var pk in groups){var arr=groups[pk];for(var j=0;j<arr.length;j++){var sp=getSpawnPos(team,pk,j,arr.length,curMap);localPlayers[arr[j]].x=sp.x;localPlayers[arr[j]].y=sp.y;localPlayers[arr[j]].vx=0;localPlayers[arr[j]].vy=0}}
 }
 
-function spawnGroupLocal(pids, team){
-    var groups = {GK:[], DEF:[], MID:[], FWD:[]};
-    for(var i = 0; i < pids.length; i++){
-        var p = localPlayers[pids[i]];
-        var pos = p.pos || 'MID';
-        if(!groups[pos]) groups[pos] = [];
-        groups[pos].push(pids[i]);
-    }
-    for(var posKey in groups){
-        var arr = groups[posKey];
-        for(var j = 0; j < arr.length; j++){
-            var sp = getSpawnPos(team, posKey, j, arr.length, curMap);
-            localPlayers[arr[j]].x = sp.x;
-            localPlayers[arr[j]].y = sp.y;
-            localPlayers[arr[j]].vx = 0;
-            localPlayers[arr[j]].vy = 0;
-        }
-    }
-}
-
-// ============================================================
-//                    RENDER
-// ============================================================
+/* ===== RENDER ===== */
 function renderGame(){
-    ctx.clearRect(0, 0, canvasW, canvasH);
-
-    // Background
-    ctx.fillStyle = curMap.bgColor;
-    ctx.fillRect(0, 0, canvasW, canvasH);
-
-    ctx.save();
-    ctx.translate(viewOffX, viewOffY);
-    ctx.scale(viewScale, viewScale);
-    ctx.translate(FIELD_MARGIN, FIELD_MARGIN);
-
-    drawField();
-    drawBall();
-    drawPlayers();
-
-    ctx.restore();
-
-    updateHUD();
+    ctx.clearRect(0,0,canvasW,canvasH);
+    ctx.fillStyle=curMap.bgColor;ctx.fillRect(0,0,canvasW,canvasH);
+    ctx.save();ctx.translate(viewOffX,viewOffY);ctx.scale(viewScale,viewScale);ctx.translate(FM,FM);
+    drawField();drawBall();drawPlayers();
+    ctx.restore();updateHUD();
 }
 
-// ============================================================
-//                    DRAW FIELD
-// ============================================================
 function drawField(){
-    var FW = curMap.fieldW, FH = curMap.fieldH;
-    var GH = curMap.goalH, GD = curMap.goalD;
-    var gT = FH/2 - GH/2, gB = FH/2 + GH/2;
-    var lc = curMap.lineColor;
-
-    // Floor
-    ctx.fillStyle = curMap.floorColor;
-    ctx.fillRect(0, 0, FW, FH);
-
-    // Stripe pattern
-    ctx.fillStyle = curMap.floorColor2;
-    var strW = FW / 14;
-    for(var si = 0; si < 14; si += 2){
-        ctx.fillRect(si * strW, 0, strW, FH);
-    }
-
-    // Border
-    ctx.strokeStyle = lc;
-    ctx.lineWidth = 3;
-    ctx.strokeRect(0, 0, FW, FH);
-
-    // Center line
-    ctx.beginPath(); ctx.moveTo(FW/2, 0); ctx.lineTo(FW/2, FH); ctx.stroke();
-
-    // Center circle
-    ctx.beginPath(); ctx.arc(FW/2, FH/2, curMap.centerR, 0, Math.PI*2); ctx.stroke();
-
-    // Center dot
-    ctx.fillStyle = lc;
-    ctx.beginPath(); ctx.arc(FW/2, FH/2, 4, 0, Math.PI*2); ctx.fill();
-
-    // Penalty areas
-    ctx.lineWidth = 2;
-    ctx.strokeRect(0, FH/2 - curMap.penH/2, curMap.penW, curMap.penH);
-    ctx.strokeRect(FW - curMap.penW, FH/2 - curMap.penH/2, curMap.penW, curMap.penH);
-
-    // Penalty dots
-    ctx.fillStyle = lc;
-    ctx.beginPath(); ctx.arc(curMap.penW * 0.75, FH/2, 3, 0, Math.PI*2); ctx.fill();
-    ctx.beginPath(); ctx.arc(FW - curMap.penW * 0.75, FH/2, 3, 0, Math.PI*2); ctx.fill();
-
-    // Penalty arcs
-    ctx.beginPath(); ctx.arc(curMap.penW, FH/2, curMap.penH*0.26, -Math.PI/2, Math.PI/2); ctx.stroke();
-    ctx.beginPath(); ctx.arc(FW - curMap.penW, FH/2, curMap.penH*0.26, Math.PI/2, Math.PI*1.5); ctx.stroke();
-
-    // Corner arcs
-    var cr = 22;
-    ctx.beginPath(); ctx.arc(0, 0, cr, 0, Math.PI/2); ctx.stroke();
-    ctx.beginPath(); ctx.arc(FW, 0, cr, Math.PI/2, Math.PI); ctx.stroke();
-    ctx.beginPath(); ctx.arc(0, FH, cr, -Math.PI/2, 0); ctx.stroke();
-    ctx.beginPath(); ctx.arc(FW, FH, cr, Math.PI, Math.PI*1.5); ctx.stroke();
-
-    // Position guide lines (subtle)
-    ctx.strokeStyle = 'rgba(255,255,255,0.04)';
-    ctx.lineWidth = 1;
-    ctx.setLineDash([4, 8]);
-    ctx.beginPath(); ctx.moveTo(FW*0.25, 0); ctx.lineTo(FW*0.25, FH); ctx.stroke();
-    ctx.beginPath(); ctx.moveTo(FW*0.75, 0); ctx.lineTo(FW*0.75, FH); ctx.stroke();
-    ctx.beginPath(); ctx.moveTo(FW*0.18, 0); ctx.lineTo(FW*0.18, FH); ctx.stroke();
-    ctx.beginPath(); ctx.moveTo(FW*0.82, 0); ctx.lineTo(FW*0.82, FH); ctx.stroke();
+    var FW=curMap.fieldW,FH=curMap.fieldH,GH=curMap.goalH,GD=curMap.goalD;
+    var gT=FH/2-GH/2,gB=FH/2+GH/2,lc=curMap.lineColor;
+    ctx.fillStyle=curMap.floorColor;ctx.fillRect(0,0,FW,FH);
+    ctx.fillStyle=curMap.floorColor2;var sw=FW/14;
+    for(var si=0;si<14;si+=2)ctx.fillRect(si*sw,0,sw,FH);
+    ctx.strokeStyle=lc;ctx.lineWidth=3;ctx.strokeRect(0,0,FW,FH);
+    ctx.beginPath();ctx.moveTo(FW/2,0);ctx.lineTo(FW/2,FH);ctx.stroke();
+    ctx.beginPath();ctx.arc(FW/2,FH/2,curMap.centerR,0,Math.PI*2);ctx.stroke();
+    ctx.fillStyle=lc;ctx.beginPath();ctx.arc(FW/2,FH/2,4,0,Math.PI*2);ctx.fill();
+    ctx.lineWidth=2;
+    ctx.strokeRect(0,FH/2-curMap.penH/2,curMap.penW,curMap.penH);
+    ctx.strokeRect(FW-curMap.penW,FH/2-curMap.penH/2,curMap.penW,curMap.penH);
+    ctx.fillStyle=lc;
+    ctx.beginPath();ctx.arc(curMap.penW*0.75,FH/2,3,0,Math.PI*2);ctx.fill();
+    ctx.beginPath();ctx.arc(FW-curMap.penW*0.75,FH/2,3,0,Math.PI*2);ctx.fill();
+    ctx.beginPath();ctx.arc(curMap.penW,FH/2,curMap.penH*0.26,-Math.PI/2,Math.PI/2);ctx.stroke();
+    ctx.beginPath();ctx.arc(FW-curMap.penW,FH/2,curMap.penH*0.26,Math.PI/2,Math.PI*1.5);ctx.stroke();
+    var cr=22;
+    ctx.beginPath();ctx.arc(0,0,cr,0,Math.PI/2);ctx.stroke();
+    ctx.beginPath();ctx.arc(FW,0,cr,Math.PI/2,Math.PI);ctx.stroke();
+    ctx.beginPath();ctx.arc(0,FH,cr,-Math.PI/2,0);ctx.stroke();
+    ctx.beginPath();ctx.arc(FW,FH,cr,Math.PI,Math.PI*1.5);ctx.stroke();
+    ctx.strokeStyle='rgba(255,255,255,0.04)';ctx.lineWidth=1;ctx.setLineDash([4,8]);
+    ctx.beginPath();ctx.moveTo(FW*0.25,0);ctx.lineTo(FW*0.25,FH);ctx.stroke();
+    ctx.beginPath();ctx.moveTo(FW*0.75,0);ctx.lineTo(FW*0.75,FH);ctx.stroke();
     ctx.setLineDash([]);
-
-    // ---- LEFT GOAL ----
-    ctx.fillStyle = 'rgba(231,76,60,0.07)';
-    ctx.fillRect(-GD, gT, GD, GH);
-    ctx.strokeStyle = 'rgba(231,76,60,0.12)';
-    ctx.lineWidth = 1;
-    for(var gy = gT; gy <= gB; gy += 10){
-        ctx.beginPath(); ctx.moveTo(-GD, gy); ctx.lineTo(0, gy); ctx.stroke();
-    }
-    for(var gx = -GD; gx <= 0; gx += 10){
-        ctx.beginPath(); ctx.moveTo(gx, gT); ctx.lineTo(gx, gB); ctx.stroke();
-    }
-    ctx.strokeStyle = 'rgba(231,76,60,0.7)';
-    ctx.lineWidth = 3.5;
-    ctx.beginPath();
-    ctx.moveTo(0, gT); ctx.lineTo(-GD, gT); ctx.lineTo(-GD, gB); ctx.lineTo(0, gB);
-    ctx.stroke();
-
-    // ---- RIGHT GOAL ----
-    ctx.fillStyle = 'rgba(52,152,219,0.07)';
-    ctx.fillRect(FW, gT, GD, GH);
-    ctx.strokeStyle = 'rgba(52,152,219,0.12)';
-    ctx.lineWidth = 1;
-    for(var gy2 = gT; gy2 <= gB; gy2 += 10){
-        ctx.beginPath(); ctx.moveTo(FW, gy2); ctx.lineTo(FW+GD, gy2); ctx.stroke();
-    }
-    for(var gx2 = FW; gx2 <= FW+GD; gx2 += 10){
-        ctx.beginPath(); ctx.moveTo(gx2, gT); ctx.lineTo(gx2, gB); ctx.stroke();
-    }
-    ctx.strokeStyle = 'rgba(52,152,219,0.7)';
-    ctx.lineWidth = 3.5;
-    ctx.beginPath();
-    ctx.moveTo(FW, gT); ctx.lineTo(FW+GD, gT); ctx.lineTo(FW+GD, gB); ctx.lineTo(FW, gB);
-    ctx.stroke();
-
-    // ---- GOAL POSTS ----
-    ctx.fillStyle = '#ddd';
-    ctx.strokeStyle = '#999';
-    ctx.lineWidth = 1.5;
-    ctx.beginPath(); ctx.arc(0, gT, POST_RADIUS, 0, Math.PI*2); ctx.fill(); ctx.stroke();
-    ctx.beginPath(); ctx.arc(0, gB, POST_RADIUS, 0, Math.PI*2); ctx.fill(); ctx.stroke();
-    ctx.beginPath(); ctx.arc(FW, gT, POST_RADIUS, 0, Math.PI*2); ctx.fill(); ctx.stroke();
-    ctx.beginPath(); ctx.arc(FW, gB, POST_RADIUS, 0, Math.PI*2); ctx.fill(); ctx.stroke();
+    // Goals
+    ctx.fillStyle='rgba(231,76,60,0.07)';ctx.fillRect(-GD,gT,GD,GH);
+    ctx.strokeStyle='rgba(231,76,60,0.12)';ctx.lineWidth=1;
+    for(var gy=gT;gy<=gB;gy+=10){ctx.beginPath();ctx.moveTo(-GD,gy);ctx.lineTo(0,gy);ctx.stroke()}
+    for(var gx=-GD;gx<=0;gx+=10){ctx.beginPath();ctx.moveTo(gx,gT);ctx.lineTo(gx,gB);ctx.stroke()}
+    ctx.strokeStyle='rgba(231,76,60,0.7)';ctx.lineWidth=3.5;
+    ctx.beginPath();ctx.moveTo(0,gT);ctx.lineTo(-GD,gT);ctx.lineTo(-GD,gB);ctx.lineTo(0,gB);ctx.stroke();
+    ctx.fillStyle='rgba(52,152,219,0.07)';ctx.fillRect(FW,gT,GD,GH);
+    ctx.strokeStyle='rgba(52,152,219,0.12)';ctx.lineWidth=1;
+    for(var gy2=gT;gy2<=gB;gy2+=10){ctx.beginPath();ctx.moveTo(FW,gy2);ctx.lineTo(FW+GD,gy2);ctx.stroke()}
+    for(var gx2=FW;gx2<=FW+GD;gx2+=10){ctx.beginPath();ctx.moveTo(gx2,gT);ctx.lineTo(gx2,gB);ctx.stroke()}
+    ctx.strokeStyle='rgba(52,152,219,0.7)';ctx.lineWidth=3.5;
+    ctx.beginPath();ctx.moveTo(FW,gT);ctx.lineTo(FW+GD,gT);ctx.lineTo(FW+GD,gB);ctx.lineTo(FW,gB);ctx.stroke();
+    ctx.fillStyle='#ddd';ctx.strokeStyle='#999';ctx.lineWidth=1.5;
+    ctx.beginPath();ctx.arc(0,gT,PST,0,Math.PI*2);ctx.fill();ctx.stroke();
+    ctx.beginPath();ctx.arc(0,gB,PST,0,Math.PI*2);ctx.fill();ctx.stroke();
+    ctx.beginPath();ctx.arc(FW,gT,PST,0,Math.PI*2);ctx.fill();ctx.stroke();
+    ctx.beginPath();ctx.arc(FW,gB,PST,0,Math.PI*2);ctx.fill();ctx.stroke();
 }
 
-// ============================================================
-//                    DRAW BALL
-// ============================================================
 function drawBall(){
-    // Shadow
-    ctx.fillStyle = 'rgba(0,0,0,0.14)';
-    ctx.beginPath();
-    ctx.arc(localBall.x + 1.5, localBall.y + 2.5, BALL_RADIUS, 0, Math.PI*2);
-    ctx.fill();
-
-    // Ball gradient
-    var bg = ctx.createRadialGradient(localBall.x - 2, localBall.y - 2, 1, localBall.x, localBall.y, BALL_RADIUS);
-    bg.addColorStop(0, '#ffffff');
-    bg.addColorStop(1, '#dddddd');
-    ctx.fillStyle = bg;
-    ctx.beginPath();
-    ctx.arc(localBall.x, localBall.y, BALL_RADIUS, 0, Math.PI*2);
-    ctx.fill();
-
-    // Outline
-    ctx.strokeStyle = '#aaa';
-    ctx.lineWidth = 1;
-    ctx.beginPath();
-    ctx.arc(localBall.x, localBall.y, BALL_RADIUS, 0, Math.PI*2);
-    ctx.stroke();
-
-    // Pentagon pattern
-    ctx.fillStyle = 'rgba(0,0,0,0.06)';
-    for(var pi = 0; pi < 5; pi++){
-        var pa = (pi / 5) * Math.PI * 2 - Math.PI / 2;
-        var ppx = localBall.x + Math.cos(pa) * BALL_RADIUS * 0.5;
-        var ppy = localBall.y + Math.sin(pa) * BALL_RADIUS * 0.5;
-        ctx.beginPath();
-        ctx.arc(ppx, ppy, BALL_RADIUS * 0.2, 0, Math.PI*2);
-        ctx.fill();
-    }
-
-    // Speed trail
-    var bsp = Math.sqrt(localBall.vx*localBall.vx + localBall.vy*localBall.vy);
-    if(bsp > 2.5){
-        var alpha = Math.min((bsp - 2.5) / 8, 0.25);
-        ctx.strokeStyle = 'rgba(255,255,255,' + alpha + ')';
-        ctx.lineWidth = 1.5;
-        ctx.beginPath();
-        ctx.moveTo(localBall.x, localBall.y);
-        ctx.lineTo(localBall.x - localBall.vx * 2.5, localBall.y - localBall.vy * 2.5);
-        ctx.stroke();
-    }
+    ctx.fillStyle='rgba(0,0,0,0.14)';ctx.beginPath();ctx.arc(localBall.x+1.5,localBall.y+2.5,BR,0,Math.PI*2);ctx.fill();
+    var bg=ctx.createRadialGradient(localBall.x-2,localBall.y-2,1,localBall.x,localBall.y,BR);
+    bg.addColorStop(0,'#fff');bg.addColorStop(1,'#ddd');
+    ctx.fillStyle=bg;ctx.beginPath();ctx.arc(localBall.x,localBall.y,BR,0,Math.PI*2);ctx.fill();
+    ctx.strokeStyle='#aaa';ctx.lineWidth=1;ctx.beginPath();ctx.arc(localBall.x,localBall.y,BR,0,Math.PI*2);ctx.stroke();
+    ctx.fillStyle='rgba(0,0,0,0.06)';
+    for(var pi=0;pi<5;pi++){var pa=(pi/5)*Math.PI*2-Math.PI/2;ctx.beginPath();ctx.arc(localBall.x+Math.cos(pa)*BR*0.5,localBall.y+Math.sin(pa)*BR*0.5,BR*0.2,0,Math.PI*2);ctx.fill()}
+    var bsp=Math.sqrt(localBall.vx*localBall.vx+localBall.vy*localBall.vy);
+    if(bsp>2.5){ctx.strokeStyle='rgba(255,255,255,'+Math.min((bsp-2.5)/8,0.25)+')';ctx.lineWidth=1.5;ctx.beginPath();ctx.moveTo(localBall.x,localBall.y);ctx.lineTo(localBall.x-localBall.vx*2.5,localBall.y-localBall.vy*2.5);ctx.stroke()}
 }
 
-// ============================================================
-//                    DRAW PLAYERS
-// ============================================================
 function drawPlayers(){
-    var posShort = {GK:'GK', DEF:'DF', MID:'MF', FWD:'FW'};
-
+    var posShort={GK:'GK',DEF:'DF',MID:'MF',FWD:'FW'};
     for(var pid in localPlayers){
-        var p = localPlayers[pid];
-        if(p.team === 'spectator') continue;
-
-        var isMe = (pid === myId);
-
-        // ---- KICK HALO ----
-        if(p.kick || p.kickCooldown > KICK_COOLDOWN_FRAMES - 3){
-            var haloGrad = ctx.createRadialGradient(p.x, p.y, PLAYER_RADIUS, p.x, p.y, KICK_HALO_RADIUS);
-            haloGrad.addColorStop(0, 'rgba(255,255,255,0.14)');
-            haloGrad.addColorStop(1, 'rgba(255,255,255,0)');
-            ctx.fillStyle = haloGrad;
-            ctx.beginPath();
-            ctx.arc(p.x, p.y, KICK_HALO_RADIUS, 0, Math.PI*2);
-            ctx.fill();
-
-            ctx.strokeStyle = 'rgba(255,255,255,0.4)';
-            ctx.lineWidth = 2;
-            ctx.setLineDash([3, 3]);
-            ctx.beginPath();
-            ctx.arc(p.x, p.y, KICK_HALO_RADIUS, 0, Math.PI*2);
-            ctx.stroke();
-            ctx.setLineDash([]);
+        var p=localPlayers[pid];if(p.team==='spectator')continue;
+        var isMe=(pid===myId);
+        // Kick halo - show when kick is active (kickTimer > 0)
+        if(p.kick||p.kickTimer>0){
+            var hg=ctx.createRadialGradient(p.x,p.y,PR,p.x,p.y,KHR);
+            hg.addColorStop(0,'rgba(255,255,255,0.14)');hg.addColorStop(1,'rgba(255,255,255,0)');
+            ctx.fillStyle=hg;ctx.beginPath();ctx.arc(p.x,p.y,KHR,0,Math.PI*2);ctx.fill();
+            ctx.strokeStyle='rgba(255,255,255,0.4)';ctx.lineWidth=2;ctx.setLineDash([3,3]);
+            ctx.beginPath();ctx.arc(p.x,p.y,KHR,0,Math.PI*2);ctx.stroke();ctx.setLineDash([]);
         }
-
-        // ---- SHADOW ----
-        ctx.fillStyle = 'rgba(0,0,0,0.12)';
-        ctx.beginPath();
-        ctx.arc(p.x + 1.5, p.y + 2.5, PLAYER_RADIUS, 0, Math.PI*2);
-        ctx.fill();
-
-        // ---- BODY GRADIENT ----
-        var grad;
-        if(p.team === 'red'){
-            grad = ctx.createRadialGradient(p.x - 4, p.y - 4, 1, p.x, p.y, PLAYER_RADIUS);
-            grad.addColorStop(0, '#ff7675');
-            grad.addColorStop(1, '#c0392b');
-        } else {
-            grad = ctx.createRadialGradient(p.x - 4, p.y - 4, 1, p.x, p.y, PLAYER_RADIUS);
-            grad.addColorStop(0, '#74b9ff');
-            grad.addColorStop(1, '#2980b9');
+        ctx.fillStyle='rgba(0,0,0,0.12)';ctx.beginPath();ctx.arc(p.x+1.5,p.y+2.5,PR,0,Math.PI*2);ctx.fill();
+        var gr;
+        if(p.team==='red'){gr=ctx.createRadialGradient(p.x-4,p.y-4,1,p.x,p.y,PR);gr.addColorStop(0,'#ff7675');gr.addColorStop(1,'#c0392b')}
+        else{gr=ctx.createRadialGradient(p.x-4,p.y-4,1,p.x,p.y,PR);gr.addColorStop(0,'#74b9ff');gr.addColorStop(1,'#2980b9')}
+        ctx.fillStyle=gr;ctx.beginPath();ctx.arc(p.x,p.y,PR,0,Math.PI*2);ctx.fill();
+        ctx.strokeStyle=isMe?'#fff':'rgba(255,255,255,0.3)';ctx.lineWidth=isMe?2.5:1.2;
+        ctx.beginPath();ctx.arc(p.x,p.y,PR,0,Math.PI*2);ctx.stroke();
+        if(p.pos&&posShort[p.pos]){
+            ctx.fillStyle='rgba(0,0,0,0.25)';ctx.font='bold 8px Arial';ctx.textAlign='center';ctx.textBaseline='middle';
+            ctx.fillText(posShort[p.pos],p.x+0.5,p.y+0.5);
+            ctx.fillStyle='rgba(255,255,255,0.65)';ctx.fillText(posShort[p.pos],p.x,p.y);
         }
-        ctx.fillStyle = grad;
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, PLAYER_RADIUS, 0, Math.PI*2);
-        ctx.fill();
-
-        // ---- BORDER ----
-        ctx.strokeStyle = isMe ? '#ffffff' : 'rgba(255,255,255,0.3)';
-        ctx.lineWidth = isMe ? 2.5 : 1.2;
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, PLAYER_RADIUS, 0, Math.PI*2);
-        ctx.stroke();
-
-        // ---- POSITION TEXT ON PLAYER ----
-        if(p.pos && posShort[p.pos]){
-            ctx.fillStyle = 'rgba(0,0,0,0.25)';
-            ctx.font = 'bold 8px Arial';
-            ctx.textAlign = 'center';
-            ctx.textBaseline = 'middle';
-            ctx.fillText(posShort[p.pos], p.x + 0.5, p.y + 0.5);
-            ctx.fillStyle = 'rgba(255,255,255,0.65)';
-            ctx.fillText(posShort[p.pos], p.x, p.y);
-        }
-
-        // ---- DIRECTION DOT ----
-        var pSpd = Math.sqrt(p.vx*p.vx + p.vy*p.vy);
-        if(pSpd > 0.3){
-            var dn = normVec(p.vx, p.vy);
-            ctx.fillStyle = 'rgba(255,255,255,0.4)';
-            ctx.beginPath();
-            ctx.arc(p.x + dn.x * PLAYER_RADIUS * 0.65, p.y + dn.y * PLAYER_RADIUS * 0.65, 2.5, 0, Math.PI*2);
-            ctx.fill();
-        }
-
-        // ---- NAME ----
-        ctx.fillStyle = '#fff';
-        ctx.font = 'bold 9px Arial';
-        ctx.textAlign = 'center';
-        ctx.textBaseline = 'bottom';
-        ctx.strokeStyle = 'rgba(0,0,0,0.5)';
-        ctx.lineWidth = 2;
-        ctx.strokeText(p.name || '?', p.x, p.y - PLAYER_RADIUS - 4);
-        ctx.fillText(p.name || '?', p.x, p.y - PLAYER_RADIUS - 4);
-
-        // ---- "YOU" INDICATOR ----
-        if(isMe){
-            ctx.fillStyle = 'rgba(255,255,255,0.5)';
-            ctx.font = '8px Arial';
-            ctx.textAlign = 'center';
-            ctx.textBaseline = 'bottom';
-            ctx.fillText('▼', p.x, p.y - PLAYER_RADIUS - 13);
-        }
+        var pSpd=Math.sqrt(p.vx*p.vx+p.vy*p.vy);
+        if(pSpd>0.3){var dn=normVec(p.vx,p.vy);ctx.fillStyle='rgba(255,255,255,0.4)';ctx.beginPath();ctx.arc(p.x+dn.x*PR*0.65,p.y+dn.y*PR*0.65,2.5,0,Math.PI*2);ctx.fill()}
+        ctx.fillStyle='#fff';ctx.font='bold 9px Arial';ctx.textAlign='center';ctx.textBaseline='bottom';
+        ctx.strokeStyle='rgba(0,0,0,0.5)';ctx.lineWidth=2;
+        ctx.strokeText(p.name||'?',p.x,p.y-PR-4);ctx.fillText(p.name||'?',p.x,p.y-PR-4);
+        if(isMe){ctx.fillStyle='rgba(255,255,255,0.5)';ctx.font='8px Arial';ctx.fillText('▼',p.x,p.y-PR-13)}
     }
 }
 
-// ============================================================
-//                    HUD UPDATE
-// ============================================================
 function updateHUD(){
-    $('hudRed').textContent = redScore;
-    $('hudBlue').textContent = blueScore;
-
-    var mins = Math.floor(matchTime / 60);
-    var secs = Math.floor(matchTime % 60);
-    $('hudTimer').textContent = mins + ':' + (secs < 10 ? '0' : '') + secs;
-
-    if(matchPaused){
-        $('hudStatus').textContent = 'DURAKLATILDI';
-    } else if(!matchRunning && matchTime >= MATCH_DURATION){
-        $('hudStatus').textContent = 'MAÇ BİTTİ';
-    } else if(goalScoredFlag){
-        $('hudStatus').textContent = 'GOL!';
-    } else {
-        $('hudStatus').textContent = '';
-    }
+    $('hudRed').textContent=redScore;$('hudBlue').textContent=blueScore;
+    var m=Math.floor(matchTime/60),s=Math.floor(matchTime%60);
+    $('hudTimer').textContent=m+':'+(s<10?'0':'')+s;
+    if(matchPaused)$('hudStatus').textContent='DURAKLATILDI';
+    else if(!matchRunning&&matchTime>=MATCH_DUR)$('hudStatus').textContent='MAÇ BİTTİ';
+    else if(goalScoredFlag)$('hudStatus').textContent='GOL!';
+    else $('hudStatus').textContent='';
 }
 
-// ============================================================
-//                    ADMIN MENU (IN GAME)
-// ============================================================
+/* ===== ADMIN MENU ===== */
 function buildAdminMenu(){
-    if(!isHost) return;
-    var mc = $('adminMenuContent');
-
-    var posLabels = {GK:'KAL', DEF:'DEF', MID:'ORS', FWD:'FRV'};
-    var mapOptions = '';
-    for(var mk in MAPS){
-        mapOptions += '<option value="' + mk + '"' + (mk === curMapKey ? ' selected' : '') + '>' + MAPS[mk].name + '</option>';
-    }
-
-    var playersHTML = '';
-    if(roomData && roomData.players){
+    if(!isHost)return;
+    var mc=$('adminMenuContent');
+    var posLabels={GK:'KAL',DEF:'DEF',MID:'ORS',FWD:'FRV'};
+    var mapOpts='';for(var mk in MAPS)mapOpts+='<option value="'+mk+'"'+(mk===curMapKey?' selected':'')+'>'+MAPS[mk].name+'</option>';
+    var plHTML='';
+    if(roomData&&roomData.players){
         for(var pid in roomData.players){
-            var p = roomData.players[pid];
-            if(p.online === false) continue;
-            var tc = p.team === 'red' ? '#e74c3c' : (p.team === 'blue' ? '#3498db' : '#888');
-            var posOpts = '<option value="">-</option>';
-            var allPos = ['GK','DEF','MID','FWD'];
-            for(var pi2 = 0; pi2 < allPos.length; pi2++){
-                posOpts += '<option value="' + allPos[pi2] + '"' + (p.pos === allPos[pi2] ? ' selected' : '') + '>' + posLabels[allPos[pi2]] + '</option>';
-            }
-            playersHTML += '<div class="adm-player-row">' +
-                '<span class="apr-name" style="color:' + tc + '">' + (p.name || '?') + '</span>' +
-                '<button style="background:#e74c3c" data-mpid="' + pid + '" data-mact="red">K</button>' +
-                '<button style="background:#3498db" data-mpid="' + pid + '" data-mact="blue">M</button>' +
-                '<button style="background:#555" data-mpid="' + pid + '" data-mact="spectator">İ</button>' +
-                '<select data-mpid="' + pid + '" data-mtype="pos">' + posOpts + '</select>' +
-                '</div>';
+            var p=roomData.players[pid];if(p.online===false)continue;
+            var tc=p.team==='red'?'#e74c3c':(p.team==='blue'?'#3498db':'#888');
+            var posO='<option value="">-</option>';
+            var ap2=['GK','DEF','MID','FWD'];
+            for(var pi2=0;pi2<ap2.length;pi2++)posO+='<option value="'+ap2[pi2]+'"'+(p.pos===ap2[pi2]?' selected':'')+'>'+posLabels[ap2[pi2]]+'</option>';
+            plHTML+='<div class="adm-player-row"><span class="apr-name" style="color:'+tc+'">'+(p.name||'?')+'</span>'+
+                '<button style="background:#e74c3c" data-mpid="'+pid+'" data-mact="red">K</button>'+
+                '<button style="background:#3498db" data-mpid="'+pid+'" data-mact="blue">M</button>'+
+                '<button style="background:#555" data-mpid="'+pid+'" data-mact="spectator">İ</button>'+
+                '<select data-mpid="'+pid+'" data-mtype="pos">'+posO+'</select></div>';
         }
     }
+    mc.innerHTML='<div class="sec">⚙️ KONTROL</div>'+
+        '<button style="background:#f39c12" id="admPause">'+(matchPaused?'▶ Devam Et':'⏸ Duraklat')+'</button>'+
+        '<button style="background:#e74c3c" id="admReset">🔄 Skor Sıfırla</button>'+
+        '<button style="background:#3498db" id="admLobby">🔙 Lobiye Dön</button>'+
+        '<div class="sec">🗺️ HARİTA</div>'+
+        '<select id="admMapSel">'+mapOpts+'</select>'+
+        '<button style="background:#27ae60" id="admMapApply">✅ Haritayı Uygula</button>'+
+        '<div class="sec">👥 TAKIM & MEVKİ</div>'+plHTML;
 
-    mc.innerHTML =
-        '<div class="sec">⚙️ KONTROL</div>' +
-        '<button style="background:#f39c12" id="admPause">' + (matchPaused ? '▶ Devam Et' : '⏸ Duraklat') + '</button>' +
-        '<button style="background:#e74c3c" id="admReset">🔄 Skor Sıfırla</button>' +
-        '<button style="background:#3498db" id="admLobby">🔙 Lobiye Dön</button>' +
-        '<div class="sec">🗺️ HARİTA DEĞİŞTİR</div>' +
-        '<select id="admMapSel">' + mapOptions + '</select>' +
-        '<button style="background:#27ae60" id="admMapApply">✅ Haritayı Uygula</button>' +
-        '<div class="sec">👥 TAKIM & MEVKİ</div>' +
-        playersHTML;
-
-    // ---- EVENT LISTENERS ----
-
-    // Pause
-    var pauseBtn = $('admPause');
-    if(pauseBtn){
-        pauseBtn.onclick = function(){
-            matchPaused = !matchPaused;
-            roomRef.update({'match/paused': matchPaused});
-            pauseBtn.textContent = matchPaused ? '▶ Devam Et' : '⏸ Duraklat';
-            toast(matchPaused ? 'Duraklatıldı' : 'Devam ediyor');
-        };
-    }
-
-    // Reset Score
-    var resetBtn = $('admReset');
-    if(resetBtn){
-        resetBtn.onclick = function(){
-            redScore = 0;
-            blueScore = 0;
-            matchTime = 0;
-            roomRef.update({
-                'match/redScore': 0,
-                'match/blueScore': 0,
-                'match/time': 0
-            });
-            resetAllPositions();
-            toast('Skor sıfırlandı');
-        };
-    }
-
-    // Back to lobby
-    var lobbyBtn = $('admLobby');
-    if(lobbyBtn){
-        lobbyBtn.onclick = function(){
-            matchRunning = false;
-            matchPaused = false;
-            goalScoredFlag = false;
-            roomRef.update({
-                state: 'lobby',
-                'match/running': false,
-                'match/paused': false
-            });
-            stopGameLoop();
-            showScreen('lobby');
-            toast('Lobiye dönüldü');
-        };
-    }
-
-    // Map apply
-    var mapApplyBtn = $('admMapApply');
-    if(mapApplyBtn){
-        mapApplyBtn.onclick = function(){
-            var newKey = $('admMapSel').value;
-            if(newKey === curMapKey){ toast('Zaten bu harita aktif'); return; }
-            curMapKey = newKey;
-            curMap = MAPS[curMapKey];
-            // Update in Firebase - keep scores
-            roomRef.update({
-                mapKey: curMapKey,
-                'match/ball': {x: curMap.fieldW/2, y: curMap.fieldH/2, vx:0, vy:0}
-            });
-            localBall.x = curMap.fieldW / 2;
-            localBall.y = curMap.fieldH / 2;
-            localBall.vx = 0;
-            localBall.vy = 0;
-            resetAllPositions();
-            resizeCanvas();
-            toast('Harita değiştirildi: ' + curMap.name);
-        };
-    }
-
-    // Player team/pos change buttons
+    var pb=$('admPause');if(pb)pb.onclick=function(){
+        matchPaused=!matchPaused;roomRef.update({'match/paused':matchPaused});
+        pb.textContent=matchPaused?'▶ Devam Et':'⏸ Duraklat';toast(matchPaused?'Duraklatıldı':'Devam');
+    };
+    var rb=$('admReset');if(rb)rb.onclick=function(){
+        redScore=0;blueScore=0;matchTime=0;
+        roomRef.update({'match/redScore':0,'match/blueScore':0,'match/time':0});
+        resetAllPos();toast('Skor sıfırlandı');
+    };
+    var lb=$('admLobby');if(lb)lb.onclick=function(){
+        matchRunning=false;matchPaused=false;goalScoredFlag=false;
+        roomRef.update({state:'lobby','match/running':false,'match/paused':false});
+        stopLoop();showScreen('lobby');toast('Lobiye dönüldü');
+    };
+    var mab=$('admMapApply');if(mab)mab.onclick=function(){
+        var nk=$('admMapSel').value;if(nk===curMapKey){toast('Zaten bu harita');return}
+        curMapKey=nk;curMap=MAPS[curMapKey];
+        roomRef.update({mapKey:curMapKey,'match/ball':{x:curMap.fieldW/2,y:curMap.fieldH/2,vx:0,vy:0}});
+        localBall.x=curMap.fieldW/2;localBall.y=curMap.fieldH/2;localBall.vx=0;localBall.vy=0;
+        resetAllPos();resizeCanvas();toast('Harita: '+curMap.name);
+    };
     mc.querySelectorAll('[data-mact]').forEach(function(btn){
-        btn.onclick = function(){
-            var tPid = btn.getAttribute('data-mpid');
-            var tAct = btn.getAttribute('data-mact');
-            if(tAct === 'spectator'){
-                roomRef.child('players/' + tPid).update({team: 'spectator', pos: ''});
-            } else {
-                var ts = getTeamSize(roomData.players, tAct, null);
-                if(ts >= 11){ toast('Takım dolu!'); return; }
-                var np = autoAssignPos(roomData.players, tAct, tPid);
-                roomRef.child('players/' + tPid).update({team: tAct, pos: np});
-                // Respawn
-                setTimeout(function(){
-                    if(localPlayers[tPid]){
-                        var sp = getSpawnPos(tAct, np, 0, 1, curMap);
-                        localPlayers[tPid].x = sp.x;
-                        localPlayers[tPid].y = sp.y;
-                        localPlayers[tPid].vx = 0;
-                        localPlayers[tPid].vy = 0;
-                        localPlayers[tPid].team = tAct;
-                        localPlayers[tPid].pos = np;
-                    }
-                }, 150);
+        btn.onclick=function(){
+            var tPid=btn.getAttribute('data-mpid'),tAct=btn.getAttribute('data-mact');
+            if(tAct==='spectator'){roomRef.child('players/'+tPid).update({team:'spectator',pos:''});}
+            else{
+                var ts=getTeamSize(roomData.players,tAct);if(ts>=11){toast('Takım dolu!');return}
+                var np=autoAssignPos(roomData.players,tAct,tPid);
+                roomRef.child('players/'+tPid).update({team:tAct,pos:np});
+                setTimeout(function(){if(localPlayers[tPid]){var sp=getSpawnPos(tAct,np,0,1,curMap);localPlayers[tPid].x=sp.x;localPlayers[tPid].y=sp.y;localPlayers[tPid].vx=0;localPlayers[tPid].vy=0;localPlayers[tPid].team=tAct;localPlayers[tPid].pos=np}},150);
             }
-            setTimeout(buildAdminMenu, 400);
+            setTimeout(buildAdminMenu,400);
         };
     });
-
-    // Position change selects
     mc.querySelectorAll('[data-mtype="pos"]').forEach(function(sel){
-        sel.onchange = function(){
-            var tPid = sel.getAttribute('data-mpid');
-            var newPos = sel.value;
-            roomRef.child('players/' + tPid).update({pos: newPos});
-            if(localPlayers[tPid] && newPos){
-                var sp = getSpawnPos(localPlayers[tPid].team, newPos, 0, 1, curMap);
-                localPlayers[tPid].x = sp.x;
-                localPlayers[tPid].y = sp.y;
-                localPlayers[tPid].vx = 0;
-                localPlayers[tPid].vy = 0;
-                localPlayers[tPid].pos = newPos;
-            }
+        sel.onchange=function(){
+            var tPid=sel.getAttribute('data-mpid'),nPos=sel.value;
+            roomRef.child('players/'+tPid).update({pos:nPos});
+            if(localPlayers[tPid]&&nPos){var sp=getSpawnPos(localPlayers[tPid].team,nPos,0,1,curMap);localPlayers[tPid].x=sp.x;localPlayers[tPid].y=sp.y;localPlayers[tPid].vx=0;localPlayers[tPid].vy=0;localPlayers[tPid].pos=nPos}
         };
     });
 }
 
-// Admin toggle
-$('adminToggleBtn').addEventListener('click', function(e){
-    e.stopPropagation();
-    adminMenuOpen = !adminMenuOpen;
-    $('adminMenuContent').style.display = adminMenuOpen ? 'block' : 'none';
-    if(adminMenuOpen) buildAdminMenu();
+$('adminToggleBtn').addEventListener('click',function(e){
+    e.stopPropagation();adminMenuOpen=!adminMenuOpen;$('adminMenuContent').style.display=adminMenuOpen?'block':'none';
+    if(adminMenuOpen)buildAdminMenu();
 });
+$('adminPanelGame').addEventListener('touchstart',function(e){e.stopPropagation()},{passive:false});
+$('adminPanelGame').addEventListener('touchmove',function(e){e.stopPropagation()},{passive:false});
+$('adminPanelGame').addEventListener('touchend',function(e){e.stopPropagation()},{passive:false});
+$('adminPanelGame').addEventListener('click',function(e){e.stopPropagation()});
 
-// Prevent admin panel touch from propagating
-$('adminPanelGame').addEventListener('touchstart', function(e){ e.stopPropagation(); }, {passive:false});
-$('adminPanelGame').addEventListener('touchmove', function(e){ e.stopPropagation(); }, {passive:false});
-$('adminPanelGame').addEventListener('touchend', function(e){ e.stopPropagation(); }, {passive:false});
-$('adminPanelGame').addEventListener('click', function(e){ e.stopPropagation(); });
-
-// ============================================================
-//                    TOUCH CONTROLS - JOYSTICK
-// ============================================================
-var joyZone = $('joyZone');
-var joyBaseEl = $('joyBase');
-var joyThumbEl = $('joyThumb');
-
-joyZone.addEventListener('touchstart', function(e){
+/* ===== TOUCH JOYSTICK ===== */
+$('joyZone').addEventListener('touchstart',function(e){
+    e.preventDefault();if(joyTouchId!==null)return;
+    var t=e.changedTouches[0];joyTouchId=t.identifier;joyActive=true;joySX=t.clientX;joySY=t.clientY;
+    showJoy(t.clientX,t.clientY,t.clientX,t.clientY);
+},{passive:false});
+$('joyZone').addEventListener('touchmove',function(e){
     e.preventDefault();
-    if(joyTouchId !== null) return;
-    var t = e.changedTouches[0];
-    joyTouchId = t.identifier;
-    joyActive = true;
-    joySX = t.clientX;
-    joySY = t.clientY;
-    showJoystick(t.clientX, t.clientY, t.clientX, t.clientY);
-}, {passive:false});
-
-joyZone.addEventListener('touchmove', function(e){
+    for(var i=0;i<e.changedTouches.length;i++){
+        var t=e.changedTouches[i];if(t.identifier!==joyTouchId)continue;
+        var dx=t.clientX-joySX,dy=t.clientY-joySY,mx=48;
+        var d=Math.sqrt(dx*dx+dy*dy),cd=Math.min(d,mx),a=Math.atan2(dy,dx);
+        var cx=Math.cos(a)*cd,cy=Math.sin(a)*cd;
+        myInput.dx=cx/mx;myInput.dy=cy/mx;
+        showJoy(joySX,joySY,joySX+cx,joySY+cy);
+    }
+},{passive:false});
+$('joyZone').addEventListener('touchend',function(e){
     e.preventDefault();
-    for(var i = 0; i < e.changedTouches.length; i++){
-        var t = e.changedTouches[i];
-        if(t.identifier !== joyTouchId) continue;
-        var dx = t.clientX - joySX;
-        var dy = t.clientY - joySY;
-        var maxR = 48;
-        var d = Math.sqrt(dx*dx + dy*dy);
-        var clamped = Math.min(d, maxR);
-        var angle = Math.atan2(dy, dx);
-        var cx = Math.cos(angle) * clamped;
-        var cy = Math.sin(angle) * clamped;
-        myInput.dx = cx / maxR;
-        myInput.dy = cy / maxR;
-        showJoystick(joySX, joySY, joySX + cx, joySY + cy);
-    }
-}, {passive:false});
-
-joyZone.addEventListener('touchend', function(e){
-    e.preventDefault();
-    for(var i = 0; i < e.changedTouches.length; i++){
-        if(e.changedTouches[i].identifier === joyTouchId){
-            joyTouchId = null;
-            joyActive = false;
-            myInput.dx = 0;
-            myInput.dy = 0;
-            hideJoystick();
-        }
-    }
-}, {passive:false});
-
-joyZone.addEventListener('touchcancel', function(e){
-    for(var i = 0; i < e.changedTouches.length; i++){
-        if(e.changedTouches[i].identifier === joyTouchId){
-            joyTouchId = null;
-            joyActive = false;
-            myInput.dx = 0;
-            myInput.dy = 0;
-            hideJoystick();
-        }
-    }
-}, {passive:false});
-
-function showJoystick(bx, by, tx, ty){
-    joyBaseEl.style.display = 'block';
-    joyBaseEl.style.left = (bx - 54) + 'px';
-    joyBaseEl.style.top = (by - 54) + 'px';
-    joyThumbEl.style.display = 'block';
-    joyThumbEl.style.left = (tx - 22) + 'px';
-    joyThumbEl.style.top = (ty - 22) + 'px';
+    for(var i=0;i<e.changedTouches.length;i++){if(e.changedTouches[i].identifier===joyTouchId){joyTouchId=null;joyActive=false;myInput.dx=0;myInput.dy=0;hideJoy()}}
+},{passive:false});
+$('joyZone').addEventListener('touchcancel',function(e){
+    for(var i=0;i<e.changedTouches.length;i++){if(e.changedTouches[i].identifier===joyTouchId){joyTouchId=null;joyActive=false;myInput.dx=0;myInput.dy=0;hideJoy()}}
+},{passive:false});
+function showJoy(bx,by,tx,ty){
+    $('joyBase').style.display='block';$('joyBase').style.left=(bx-54)+'px';$('joyBase').style.top=(by-54)+'px';
+    $('joyThumb').style.display='block';$('joyThumb').style.left=(tx-22)+'px';$('joyThumb').style.top=(ty-22)+'px';
 }
+function hideJoy(){$('joyBase').style.display='none';$('joyThumb').style.display='none'}
 
-function hideJoystick(){
-    joyBaseEl.style.display = 'none';
-    joyThumbEl.style.display = 'none';
+/* ===== KICK BUTTON ===== */
+// Single press: press fires one kick, must release and press again for next kick
+// Holding does NOT continuously kick
+$('kickButton').addEventListener('touchstart',function(e){
+    e.preventDefault();e.stopPropagation();
+    kickBtnDown=true;
+    kickFired=false; // reset so this new press can fire
+    myInput.kick=true;
+    $('kickButton').classList.add('active');
+},{passive:false});
+$('kickButton').addEventListener('touchend',function(e){
+    e.preventDefault();e.stopPropagation();
+    kickBtnDown=false;
+    kickFired=false;
+    myInput.kick=false;
+    $('kickButton').classList.remove('active');
+},{passive:false});
+$('kickButton').addEventListener('touchcancel',function(){
+    kickBtnDown=false;kickFired=false;myInput.kick=false;$('kickButton').classList.remove('active');
+},{passive:false});
+
+/* ===== KEYBOARD ===== */
+document.addEventListener('keydown',function(e){
+    if(gameState!=='game')return;
+    var key=e.key.toLowerCase();
+    keysDown[key]=true;
+    if((key===' '||key==='x')&&!kickBtnDown){
+        kickBtnDown=true;kickFired=false;myInput.kick=true;
+    }
+    updKeys();
+});
+document.addEventListener('keyup',function(e){
+    var key=e.key.toLowerCase();
+    keysDown[key]=false;
+    if(key===' '||key==='x'){kickBtnDown=false;kickFired=false;myInput.kick=false}
+    updKeys();
+});
+function updKeys(){
+    if(joyActive)return;
+    var dx=0,dy=0;
+    if(keysDown['w']||keysDown['arrowup'])dy=-1;if(keysDown['s']||keysDown['arrowdown'])dy=1;
+    if(keysDown['a']||keysDown['arrowleft'])dx=-1;if(keysDown['d']||keysDown['arrowright'])dx=1;
+    myInput.dx=dx;myInput.dy=dy;
 }
+document.addEventListener('click',function(){if(gameState==='game')canvas.focus()});
+document.addEventListener('touchstart',function(){if(gameState==='game')canvas.focus()},{passive:true});
 
-// ============================================================
-//              TOUCH CONTROLS - KICK BUTTON
-//              (Single press - not hold!)
-// ============================================================
-var kickButtonEl = $('kickButton');
+window.addEventListener('beforeunload',function(){if(roomRef)roomRef.child('players/'+myId).update({online:false})});
 
-kickButtonEl.addEventListener('touchstart', function(e){
-    e.preventDefault();
-    e.stopPropagation();
-    if(!kickBtnDown){
-        kickBtnDown = true;
-        kickFiredThisPress = false;
-        myInput.kick = true;
-        kickButtonEl.classList.add('active');
-    }
-}, {passive:false});
-
-kickButtonEl.addEventListener('touchend', function(e){
-    e.preventDefault();
-    e.stopPropagation();
-    kickBtnDown = false;
-    kickFiredThisPress = false;
-    myInput.kick = false;
-    kickButtonEl.classList.remove('active');
-}, {passive:false});
-
-kickButtonEl.addEventListener('touchcancel', function(e){
-    kickBtnDown = false;
-    kickFiredThisPress = false;
-    myInput.kick = false;
-    kickButtonEl.classList.remove('active');
-}, {passive:false});
-
-// ============================================================
-//                    KEYBOARD CONTROLS
-// ============================================================
-document.addEventListener('keydown', function(e){
-    if(gameState !== 'game') return;
-    var key = e.key.toLowerCase();
-    keysDown[key] = true;
-    if((key === ' ' || key === 'x') && !kickBtnDown){
-        kickBtnDown = true;
-        kickFiredThisPress = false;
-        myInput.kick = true;
-    }
-    updateKeyboardInput();
-});
-
-document.addEventListener('keyup', function(e){
-    var key = e.key.toLowerCase();
-    keysDown[key] = false;
-    if(key === ' ' || key === 'x'){
-        kickBtnDown = false;
-        kickFiredThisPress = false;
-        myInput.kick = false;
-    }
-    updateKeyboardInput();
-});
-
-function updateKeyboardInput(){
-    if(joyActive) return;
-    var dx = 0, dy = 0;
-    if(keysDown['w'] || keysDown['arrowup']) dy = -1;
-    if(keysDown['s'] || keysDown['arrowdown']) dy = 1;
-    if(keysDown['a'] || keysDown['arrowleft']) dx = -1;
-    if(keysDown['d'] || keysDown['arrowright']) dx = 1;
-    myInput.dx = dx;
-    myInput.dy = dy;
-}
-
-// Focus fix for keyboard on non-host windows
-document.addEventListener('click', function(){
-    if(gameState === 'game') canvas.focus();
-});
-document.addEventListener('touchstart', function(){
-    if(gameState === 'game') canvas.focus();
-}, {passive:true});
-
-// ============================================================
-//                    WINDOW EVENTS
-// ============================================================
-window.addEventListener('beforeunload', function(){
-    if(roomRef){
-        roomRef.child('players/' + myId).update({online: false});
-    }
-});
-
-// ============================================================
-//                    INITIALIZATION
-// ============================================================
-$('inpName').value = 'Oyuncu' + Math.floor(Math.random() * 900 + 100);
-showScreen('menu');
-hideJoystick();
-
-// Set canvas focusable
-canvas.setAttribute('tabindex', '0');
+$('inpName').value='Oyuncu'+Math.floor(Math.random()*900+100);
+showScreen('menu');hideJoy();
 
 })();
 </script>
