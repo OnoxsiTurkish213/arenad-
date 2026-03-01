@@ -365,48 +365,42 @@ function connectSocket(){
 function applyState(data){
     if(!data)return;
     if(data.match){
-        mT=data.match.time||0;mR=data.match.running||false;mP=data.match.paused||false;
-        rS=data.match.redScore||0;bS=data.match.blueScore||0;
+        mT=data.match.time||0;
+        mR=data.match.running||false;
+        mP=data.match.paused||false;
+        rS=data.match.redScore||0;
+        bS=data.match.blueScore||0;
     }
     if(data.goalFreeze!==undefined)gF=data.goalFreeze;
-
-    // Top
     if(data.ball){
         var tb=data.ball;
         var bd=dst(B.x,B.y,tb.x,tb.y);
-        if(bd>200){B.x=tb.x;B.y=tb.y;B.vx=tb.vx||0;B.vy=tb.vy||0}
-        else{
-            // Hedef pozisyonu set et, fixUp'ta smooth yaklaş
-            B.tx=tb.x;B.ty=tb.y;
-            B.vx=tb.vx||0;B.vy=tb.vy||0;
-        }
+        if(bd>200){B.x=tb.x;B.y=tb.y;}
+        else{B.tx=tb.x;B.ty=tb.y;}
+        B.vx=tb.vx||0;B.vy=tb.vy||0;
         B.fire=tb.fire||false;
     }
-
-    // Oyuncular
     if(data.players){
         for(var pid in data.players){
             var rd=data.players[pid];
             if(!P[pid]){
-                P[pid]={name:rd.name,team:rd.team,pos:rd.pos||'',x:rd.x,y:rd.y,vx:rd.vx||0,vy:rd.vy||0,kick:rd.kick||false,pCD:rd.pCD||0,tx:rd.x,ty:rd.y};
+                P[pid]={name:rd.name,team:rd.team,pos:rd.pos||'',x:rd.x,y:rd.y,vx:0,vy:0,kick:rd.kick||false,pCD:rd.pCD||0,tx:rd.x,ty:rd.y};
+                continue;
+            }
+            var p=P[pid];
+            p.team=rd.team;p.name=rd.name;p.pos=rd.pos||'';p.kick=rd.kick||false;p.pCD=rd.pCD||0;
+            if(pid===myId){
+                p.serverX=rd.x;p.serverY=rd.y;
+                var myD=dst(p.x,p.y,rd.x,rd.y);
+                if(myD>150){p.x=rd.x;p.y=rd.y;p.vx=0;p.vy=0;}
             } else {
-                P[pid].team=rd.team;P[pid].name=rd.name;P[pid].pos=rd.pos||'';P[pid].kick=rd.kick||false;P[pid].pCD=rd.pCD||0;
-                var pd=dst(P[pid].x,P[pid].y,rd.x,rd.y);
-                if(pid===myId){
-                    // Kendi karakterim: çok saptıysa düzelt
-                    if(pd>80){P[pid].x=rd.x;P[pid].y=rd.y}
-                    else if(pd>25){P[pid].x=lerp(P[pid].x,rd.x,.12);P[pid].y=lerp(P[pid].y,rd.y,.12)}
-                    // Server'dan gelen CD
-                    if(rd.pCD>pwCD)pwCD=rd.pCD;
-                } else {
-                    // Diğerleri: hedef pozisyona set et
-                    P[pid].tx=rd.x;P[pid].ty=rd.y;
-                    P[pid].vx=rd.vx||0;P[pid].vy=rd.vy||0;
-                }
+                var pd=dst(p.x,p.y,rd.x,rd.y);
+                if(pd>150){p.x=rd.x;p.y=rd.y;}
+                else{p.tx=rd.x;p.ty=rd.y;}
+                p.vx=rd.vx||0;p.vy=rd.vy||0;
             }
         }
-        // Silinenleri kaldır
-        for(var pid2 in P){if(!data.players[pid2])delete P[pid2]}
+        for(var pid2 in P){if(!data.players[pid2])delete P[pid2];}
     }
 }
 
@@ -528,49 +522,65 @@ function tick(now){
 
 // CLIENT TARAFLI GÜNCELLEME (görsel smooth)
 function clientUpdate(dt){
-    // Kendi oyuncumu lokal hareket ettir (prediction)
+    var pf=MAPS[cmk]?MAPS[cmk].pf||.91:.91;
+    var bf=MAPS[cmk]?MAPS[cmk].bf||.987:.987;
+
+    // KENDİ OYUNCUM: tam lokal fizik
     var me=P[myId];
     if(me&&me.team!=='spectator'&&mR&&!mP&&!gF){
         var il=Math.sqrt(myIn.dx*myIn.dx+myIn.dy*myIn.dy);
-        if(il>.05){var n={x:myIn.dx/il,y:myIn.dy/il};me.vx+=n.x*.28*Math.min(il,1);me.vy+=n.y*.28*Math.min(il,1)}
+        if(il>.05){
+            var nx=myIn.dx/il,ny=myIn.dy/il;
+            me.vx+=nx*.28*Math.min(il,1);
+            me.vy+=ny*.28*Math.min(il,1);
+        }
         var sp=Math.sqrt(me.vx*me.vx+me.vy*me.vy);
-        var pf=MAPS[cmk]?MAPS[cmk].pf||.91:.91;
         if(sp>2.8){me.vx=(me.vx/sp)*2.8;me.vy=(me.vy/sp)*2.8}
         me.vx*=pf;me.vy*=pf;
-        if(Math.abs(me.vx)<.003)me.vx=0;if(Math.abs(me.vy)<.003)me.vy=0;
+        if(Math.abs(me.vx)<.003)me.vx=0;
+        if(Math.abs(me.vy)<.003)me.vy=0;
         me.x+=me.vx;me.y+=me.vy;
-        me.x=clp(me.x,PR,cm.fw-PR);me.y=clp(me.y,PR,cm.fh-PR);
+        me.x=clp(me.x,PR,cm.fw-PR);
+        me.y=clp(me.y,PR,cm.fh-PR);
+        // Sunucu sapma düzeltmesi
+        if(me.serverX!=null){
+            var diffX=me.serverX-me.x;
+            var diffY=me.serverY-me.y;
+            var diff=Math.sqrt(diffX*diffX+diffY*diffY);
+            if(diff>60&&diff<=150){
+                me.x+=diffX*.06;
+                me.y+=diffY*.06;
+            }
+        }
     }
 
-    // Diğer oyuncular: smooth interpolasyon
+    // DİĞER OYUNCULAR: smooth interpolasyon
     for(var pid in P){
         if(pid===myId)continue;
         var p=P[pid];
         if(p.tx==null)continue;
         var dd=dst(p.x,p.y,p.tx,p.ty);
-        if(dd>120){p.x=p.tx;p.y=p.ty}
+        if(dd>150){p.x=p.tx;p.y=p.ty;}
         else if(dd>0.5){
             var spd=Math.sqrt((p.vx||0)*(p.vx||0)+(p.vy||0)*(p.vy||0));
-            var iStr=Math.min(.2+spd*.015,.32);
-            p.x=lerp(p.x,p.tx,iStr);p.y=lerp(p.y,p.ty,iStr);
+            var iStr=Math.min(.18+spd*.012,.28);
+            p.x=lerp(p.x,p.tx,iStr);
+            p.y=lerp(p.y,p.ty,iStr);
         }
     }
 
-    // Top smooth (dead reckoning)
-    if(B.tx!=null){
-        var bd=dst(B.x,B.y,B.tx,B.ty);
-        if(bd>150){B.x=B.tx;B.y=B.ty}
-        else if(bd>0.5){B.x=lerp(B.x,B.tx,.2);B.y=lerp(B.y,B.ty,.2)}
-    }
-    // Top lokal hareket (server gelene kadar)
-    if(mR&&!mP&&!gF){
-        B.x+=B.vx*.3;B.y+=B.vy*.3;
-        var bf=MAPS[cmk]?MAPS[cmk].bf||.987:.987;
+    // TOP: sadece görsel smooth, çarpışma fiziği YOK
+    if(B.tx!=null&&mR&&!mP&&!gF){
+        var bdd=dst(B.x,B.y,B.tx,B.ty);
+        if(bdd>200){B.x=B.tx;B.y=B.ty;}
+        else if(bdd>0.5){
+            var bspd=Math.sqrt(B.vx*B.vx+B.vy*B.vy);
+            var bStr=Math.min(.15+bspd*.01,.25);
+            B.x=lerp(B.x,B.tx,bStr);
+            B.y=lerp(B.y,B.ty,bStr);
+        }
+        B.x+=B.vx*.2;B.y+=B.vy*.2;
         B.vx*=bf;B.vy*=bf;
-        if(B.y-BR<0&&B.vy<0){B.vy=-B.vy*.62}
-        if(B.y+BR>cm.fh&&B.vy>0){B.vy=-B.vy*.62}
-        if(B.x-BR<0&&B.vx<0&&!(B.y>cm.fh/2-cm.gh/2&&B.y<cm.fh/2+cm.gh/2)){B.vx=-B.vx*.62}
-        if(B.x+BR>cm.fw&&B.vx>0&&!(B.y>cm.fh/2-cm.gh/2&&B.y<cm.fh/2+cm.gh/2)){B.vx=-B.vx*.62}
     }
 
     // Cooldown
@@ -582,14 +592,15 @@ function clientUpdate(dt){
 
     // Fire partiküller
     for(var fi=fireParts.length-1;fi>=0;fi--){
-        var fp=fireParts[fi];fp.x+=fp.vx;fp.y+=fp.vy;fp.life--;fp.sz*=.93;
+        var fp=fireParts[fi];
+        fp.x+=fp.vx;fp.y+=fp.vy;fp.life--;fp.sz*=.93;
         if(fp.life<=0)fireParts.splice(fi,1);
     }
     if(B.fire&&fireParts.length<20){
         fireParts.push({x:B.x,y:B.y,vx:-B.vx*.08+(Math.random()-.5)*1.5,vy:-B.vy*.08+(Math.random()-.5)*1.5,life:15,sz:3+Math.random()*3,c:Math.random()>.5?'#ff6600':'#ffcc00'});
     }
 
-    // Bubble timer
+    // Bubble & chat timer
     for(var bp in pBubs){pBubs[bp].timer--;if(pBubs[bp].timer<=0)delete pBubs[bp]}
     for(var ci=chatEnts.length-1;ci>=0;ci--){chatEnts[ci].timer--;if(chatEnts[ci].timer<=0)chatEnts.splice(ci,1)}
 }
