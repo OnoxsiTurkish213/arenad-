@@ -510,9 +510,8 @@ function tick(now){
     var dt=now-lastFT;lastFT=now;
     if(dt>100)dt=100;
     acm+=dt;
-    while(acm>=FDT){clientUpdate(FDT);acm-=FDT}
+    while(acm>=FDT){update(FDT);acm-=FDT}
     render();
-    // Input gönder
     if(now-lastInputSend>=INPUT_INTERVAL&&socket&&socket.connected){
         lastInputSend=now;
         socket.emit('input',{dx:+(myIn.dx.toFixed(2)),dy:+(myIn.dy.toFixed(2)),ik:kH,ip:pH,ipw:pwP});
