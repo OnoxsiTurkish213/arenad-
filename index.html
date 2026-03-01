@@ -570,16 +570,21 @@ function clientUpdate(dt){
     }
 
     // TOP: sadece görsel smooth, çarpışma fiziği YOK
+        // TOP: direkt sunucu pozisyonuna git, sürükleme yok
     if(B.tx!=null&&mR&&!mP&&!gF){
         var bdd=dst(B.x,B.y,B.tx,B.ty);
-        if(bdd>200){B.x=B.tx;B.y=B.ty;}
-        else if(bdd>0.5){
-            var bspd=Math.sqrt(B.vx*B.vx+B.vy*B.vy);
-            var bStr=Math.min(.15+bspd*.01,.25);
-            B.x=lerp(B.x,B.tx,bStr);
-            B.y=lerp(B.y,B.ty,bStr);
+        if(bdd>100){
+            // Uzaksa direkt snap
+            B.x=B.tx;B.y=B.ty;
+        } else if(bdd>1){
+            // Yakınsa hızlı interpolasyon
+            B.x=lerp(B.x,B.tx,.5);
+            B.y=lerp(B.y,B.ty,.5);
         }
-        B.x+=B.vx*.2;B.y+=B.vy*.2;
+        // Hafif lokal hareket sadece çok yavaş toplar için
+        if(Math.sqrt(B.vx*B.vx+B.vy*B.vy)>2){
+            B.x+=B.vx*.15;B.y+=B.vy*.15;
+        }
         B.vx*=bf;B.vy*=bf;
     }
 
