@@ -2,7 +2,7 @@
 <html lang="tr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="wifunction tick(now){dth=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no,viewport-fit=cover">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no,viewport-fit=cover">
 <title>HaxBall Mobile Pro v5</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;-webkit-touch-callout:none;-webkit-user-select:none;user-select:none;-webkit-tap-highlight-color:transparent}
@@ -41,20 +41,24 @@ html,body{width:100%;height:100%;overflow:hidden;background:#0a0a1a;font-family:
 .player-row .p-name{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .host-tag{background:#f39c12;color:#000;font-size:8px;padding:1px 4px;border-radius:3px;font-weight:700}
 .pos-tag{font-size:8px;padding:1px 5px;border-radius:3px;font-weight:700}
-.pos-GK{background:rgba(241,196,15,.2);color:#f1c40f}.pos-DEF{background:rgba(46,204,113,.2);color:#2ecc71}.pos-MID{background:rgba(52,152,219,.2);color:#3498db}.pos-FWD{background:rgba(231,76,60,.2);color:#e74c3c}
+.pos-GK{background:rgba(241,196,15,.2);color:#f1c40f}
+.pos-DEF{background:rgba(46,204,113,.2);color:#2ecc71}
+.pos-MID{background:rgba(52,152,219,.2);color:#3498db}
+.pos-FWD{background:rgba(231,76,60,.2);color:#e74c3c}
 .admin-row-btns{display:flex;gap:2px}
 .admin-row-btns button{padding:2px 5px;font-size:9px;border:none;border-radius:3px;cursor:pointer;font-weight:600;color:#fff}
-.lobby-position-select{margin-top:10px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.05);border-radius:10px;padding:12px;width:96%;max-width:400px}
-.lobby-position-select h4{color:#ccc;font-size:12px;margin-bottom:6px}
-.lobby-position-select select{width:100%;padding:9px 12px;border:1px solid rgba(255,255,255,.1);border-radius:7px;background:rgba(255,255,255,.04);color:#fff;font-size:13px;outline:none;-webkit-appearance:none}
-.lobby-position-select select option{background:#151530}
+.lobby-box{margin-top:10px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.05);border-radius:10px;padding:12px;width:96%;max-width:400px}
+.lobby-box h4{color:#ccc;font-size:12px;margin-bottom:6px}
+.lobby-box select{width:100%;padding:9px 12px;border:1px solid rgba(255,255,255,.1);border-radius:7px;background:rgba(255,255,255,.04);color:#fff;font-size:13px;outline:none;-webkit-appearance:none}
+.lobby-box select option{background:#151530}
 .lobby-actions{margin-top:14px;display:flex;gap:7px;flex-wrap:wrap;justify-content:center}
 .lobby-actions .btn{padding:9px 20px;font-size:12px}
 #gameScreen{z-index:80;background:#1a472a}
 #gameCanvas{display:block;width:100%;height:100%;outline:none}
 #hud{position:absolute;top:0;left:50%;transform:translateX(-50%);display:flex;z-index:85;pointer-events:none;border-radius:0 0 10px 10px;overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,.5)}
 .hud-score{padding:5px 18px;font-size:26px;font-weight:900;color:#fff;min-width:48px;text-align:center}
-.hud-score-red{background:rgba(192,57,43,.9)}.hud-score-blue{background:rgba(41,128,185,.9)}
+.hud-score-red{background:rgba(192,57,43,.9)}
+.hud-score-blue{background:rgba(41,128,185,.9)}
 .hud-center{background:rgba(0,0,0,.78);padding:4px 14px;display:flex;flex-direction:column;align-items:center;justify-content:center}
 .hud-timer{color:#fff;font-size:15px;font-weight:700}
 .hud-status{color:#f39c12;font-size:8px;font-weight:700;text-transform:uppercase;margin-top:1px}
@@ -88,7 +92,6 @@ html,body{width:100%;height:100%;overflow:hidden;background:#0a0a1a;font-family:
 .apr{display:flex;align-items:center;gap:3px;margin-bottom:4px;padding:4px 6px;background:rgba(255,255,255,.03);border-radius:5px;flex-wrap:wrap}
 .apr .an{color:#ccc;font-size:10px;flex:1;min-width:50px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .apr button{padding:3px 6px;font-size:9px;border:none;border-radius:3px;cursor:pointer;font-weight:600;color:#fff}
-.apr select{padding:2px 4px;font-size:9px;border:1px solid rgba(255,255,255,.1);border-radius:3px;background:rgba(255,255,255,.05);color:#fff;-webkit-appearance:none;width:48px}
 #goalOverlay{position:absolute;top:0;left:0;width:100%;height:100%;display:none;align-items:center;justify-content:center;z-index:89;pointer-events:none;background:rgba(0,0,0,.22)}
 .goal-text{font-size:52px;font-weight:900;color:#fff;text-shadow:0 0 40px rgba(255,255,255,.35);animation:ga .4s cubic-bezier(.175,.885,.32,1.275)}
 @keyframes ga{0%{transform:scale(.15);opacity:0}70%{transform:scale(1.1)}100%{transform:scale(1);opacity:1}}
@@ -97,9 +100,9 @@ html,body{width:100%;height:100%;overflow:hidden;background:#0a0a1a;font-family:
 #winOverlay p{color:#ccc;font-size:16px;margin-bottom:20px}
 #winOverlay button{padding:14px 40px;border:none;border-radius:10px;font-size:16px;font-weight:700;cursor:pointer;color:#fff;background:linear-gradient(135deg,#27ae60,#1c8a4a)}
 #toast{position:fixed;bottom:65px;left:50%;transform:translateX(-50%);background:rgba(0,0,0,.88);color:#fff;padding:7px 18px;border-radius:18px;font-size:11px;z-index:99990;display:none;white-space:nowrap;pointer-events:none}
-.hidden{display:none!important}
-#connecting{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.85);z-index:99998;display:none;align-items:center;justify-content:center;flex-direction:column;color:#fff;gap:12px}
+#connecting{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,10,.92);z-index:99998;display:flex;align-items:center;justify-content:center;flex-direction:column;color:#fff;gap:12px}
 #connecting p{font-size:14px;color:#aaa}
+.hidden{display:none!important}
 </style>
 </head>
 <body>
@@ -112,9 +115,13 @@ html,body{width:100%;height:100%;overflow:hidden;background:#0a0a1a;font-family:
 <input type="text" id="inpName" placeholder="Oyuncu Adın" maxlength="12">
 <div class="divider">YENİ ODA</div>
 <label>Harita</label>
-<select id="inpMap"><option value="classic">Klasik</option><option value="big">Büyük</option><option value="small">Mini</option><option value="hockey">Hokey</option><option value="futsal">Futsal</option></select>
-<label>Gol Sınırı</label>
-<select id="inpGL"><option value="3">3</option><option value="5" selected>5</option><option value="10">10</option><option value="0">Süre Bitene Kadar</option></select>
+<select id="inpMap">
+<option value="classic">Klasik</option>
+<option value="big">Büyük</option>
+<option value="small">Mini</option>
+<option value="hockey">Hokey</option>
+<option value="futsal">Futsal</option>
+</select>
 <input type="text" id="inpPwd" placeholder="Şifre (opsiyonel)" maxlength="20">
 <button class="btn btn-full btn-red" id="btnCreate">🏟️ Oda Kur</button>
 <div class="divider">KATIL</div>
@@ -132,21 +139,44 @@ html,body{width:100%;height:100%;overflow:hidden;background:#0a0a1a;font-family:
 <div class="team-panel t-spec"><h3>👁️ İzleyici</h3><div id="lSL"></div></div>
 <div class="team-panel t-blue"><h3>🔵 Mavi</h3><div id="lBL"></div></div>
 </div>
-<div class="lobby-position-select" id="lobbyPB"><h4>🎽 Mevki</h4>
-<select id="lobbyPS"><option value="">-- Seç --</option><option value="GK">🧤 Kaleci</option><option value="DEF">🛡️ Defans</option><option value="MID">🎯 Orta Saha</option><option value="FWD">⚡ Forvet</option></select></div>
+<div class="lobby-box" id="lobbyPB">
+<h4>🎽 Mevki Seç</h4>
+<select id="lobbyPS">
+<option value="">-- Seç --</option>
+<option value="GK">🧤 Kaleci</option>
+<option value="DEF">🛡️ Defans</option>
+<option value="MID">🎯 Orta Saha</option>
+<option value="FWD">⚡ Forvet</option>
+</select>
+</div>
+<div class="lobby-box" id="lobbyGLBox" style="display:none">
+<h4>⚽ Gol Sınırı</h4>
+<select id="lobbyGLS">
+<option value="1">1 Gol</option>
+<option value="3">3 Gol</option>
+<option value="5" selected>5 Gol</option>
+<option value="10">10 Gol</option>
+<option value="20">20 Gol</option>
+<option value="0">Sınırsız</option>
+</select>
+</div>
 <div class="lobby-actions">
 <button class="btn btn-red btn-small" id="btnTR">🔴 Kırmızı</button>
 <button class="btn btn-gray btn-small" id="btnTS">👁️ İzleyici</button>
 <button class="btn btn-blue btn-small" id="btnTB">🔵 Mavi</button>
 <button class="btn btn-green btn-small hidden" id="btnSt">🚀 Başlat</button>
 <button class="btn btn-small" id="btnLv" style="background:#7a2e2e;color:#fff">🚪 Ayrıl</button>
-</div></div>
+</div>
+</div>
 
 <div id="gameScreen" class="screen">
 <canvas id="gameCanvas" tabindex="0"></canvas>
 <div id="hud">
 <div class="hud-score hud-score-red" id="hudR">0</div>
-<div class="hud-center"><div class="hud-timer" id="hudT">0:00</div><div class="hud-status" id="hudS"></div></div>
+<div class="hud-center">
+<div class="hud-timer" id="hudT">0:00</div>
+<div class="hud-status" id="hudS"></div>
+</div>
 <div class="hud-score hud-score-blue" id="hudB">0</div>
 </div>
 <div id="pingDisp">-- ms</div>
@@ -182,7 +212,6 @@ html,body{width:100%;height:100%;overflow:hidden;background:#0a0a1a;font-family:
 (function(){
 'use strict';
 
-// !! BURAYA RENDER.COM ADRESİNİ YAZ !!
 const SERVER_URL='https://haxball-server-cwtg.onrender.com';
 
 const MAPS={
@@ -193,8 +222,7 @@ const MAPS={
     futsal:{name:'Futsal',fw:1000,fh:520,gh:135,gd:48,bg:'#7a5a10',f1:'#A07828',f2:'#957020',lc:'rgba(255,255,255,.55)',cr:70,pw:110,ph:230}
 };
 
-const PR=19,BR=11,PSR=6,FM=70;
-const FDT=1000/60;
+const PR=19,BR=11,PSR=4,FM=70,FDT=1000/60;
 
 var $=function(id){return document.getElementById(id)};
 function rcode(){var c='ABCDEFGHJKLMNPQRSTUVWXYZ23456789',s='';for(var i=0;i<5;i++)s+=c[Math.floor(Math.random()*c.length)];return s}
@@ -203,22 +231,21 @@ function lerp(a,b,t){return a+(b-a)*t}
 function dst(x1,y1,x2,y2){var dx=x2-x1,dy=y2-y1;return Math.sqrt(dx*dx+dy*dy)}
 function clp(v,a,b){return v<a?a:v>b?b:v}
 
-// DURUM
+// DURUM DEĞİŞKENLERİ
 var socket=null,myId='',myName='',roomCode='',isHost=false,gameState='menu';
 var cmk='classic',cm=MAPS.classic,gLim=5,hostId='';
-var P={},B={x:600,y:300,vx:0,vy:0,fire:false};
+var P={},B={x:600,y:300,vx:0,vy:0,fire:false,tx:600,ty:300};
 var mT=0,mR=false,mP=false,gF=false,rS=0,bS=0;
 var myIn={dx:0,dy:0},kH=false,pH=false,pwP=false,pwCD=0;
 var jTid=null,jA=false,jSX=0,jSY=0,keys={};
 var canvas,ctx,cW=0,cH=0,vS=1,vOX=0,vOY=0;
 var animId=null,lastFT=0,acm=0,admO=false,uG=false;
 var fireParts=[],pBubs={},chatEnts=[];
-var lobbyData=null;
-var pingMs=0,lastPingTime=0;
-// Dead reckoning için
-var lastStateTime=0;
+var lobbyData=null,pingMs=0,lastPingTime=0;
+var lastInputSend=0;
+var INPUT_INTERVAL=50;
 
-// Pre-render
+// Pre-render oyuncular
 var redImg=null,blueImg=null;
 function prerenderPlayers(){
     var sz=PR*2+6;
@@ -233,27 +260,29 @@ function prerenderPlayers(){
 }
 prerenderPlayers();
 
-canvas=$('gameCanvas');ctx=canvas.getContext('2d',{alpha:false});
+canvas=$('gameCanvas');
+ctx=canvas.getContext('2d',{alpha:false});
 
-// EKRAN
+// EKRAN YÖNETİMİ
 function showScr(n){
     $('menuScreen').style.display='none';
     $('lobbyScreen').style.display='none';
     $('gameScreen').style.display='none';
     gameState=n;
-    if(n==='menu'){$('menuScreen').style.display='flex';stopL()}
-    else if(n==='lobby'){$('lobbyScreen').style.display='flex';stopL()}
-    else if(n==='game'){$('gameScreen').style.display='block';resC();startL();setTimeout(function(){canvas.focus()},80)}
+    if(n==='menu'){$('menuScreen').style.display='flex';stopL();}
+    else if(n==='lobby'){$('lobbyScreen').style.display='flex';stopL();}
+    else if(n==='game'){$('gameScreen').style.display='block';resC();startL();setTimeout(function(){canvas.focus()},80);}
 }
 function resC(){
     cW=window.innerWidth;cH=window.innerHeight;
     canvas.width=cW;canvas.height=cH;
     var tw=cm.fw+FM*2,th=cm.fh+FM*2;
-    vS=Math.min(cW/tw,cH/th);vOX=(cW-tw*vS)/2;vOY=(cH-th*vS)/2;
+    vS=Math.min(cW/tw,cH/th);
+    vOX=(cW-tw*vS)/2;vOY=(cH-th*vS)/2;
 }
-window.addEventListener('resize',function(){if(gameState==='game')resC()});
-document.addEventListener('contextmenu',function(e){e.preventDefault()});
-function onGe(){uG=true;if(gameState==='game'){try{if(!document.fullscreenElement)document.documentElement.requestFullscreen().catch(function(){})}catch(e){}}}
+window.addEventListener('resize',function(){if(gameState==='game')resC();});
+document.addEventListener('contextmenu',function(e){e.preventDefault();});
+function onGe(){uG=true;if(gameState==='game'){try{if(!document.fullscreenElement)document.documentElement.requestFullscreen().catch(function(){});}catch(e){}}}
 document.addEventListener('click',onGe,{passive:true});
 document.addEventListener('touchend',onGe,{passive:true});
 
@@ -262,26 +291,24 @@ function connectSocket(){
     $('connecting').style.display='flex';
     $('connectingMsg').textContent='Sunucuya bağlanılıyor...';
     socket=io(SERVER_URL,{
-    transports:['polling','websocket'],
-    reconnection:true,
-    reconnectionDelay:2000,
-    reconnectionAttempts:15,
-    timeout:20000,
-    forceNew:true
-});
+        transports:['polling','websocket'],
+        reconnection:true,
+        reconnectionDelay:2000,
+        reconnectionAttempts:20,
+        timeout:20000
+    });
     socket.on('connect',function(){
         myId=socket.id;
         $('connecting').style.display='none';
-        // Ping ölçümü
         setInterval(function(){
             lastPingTime=Date.now();
             socket.emit('ping_custom');
-        },2000);
+        },3000);
     });
     socket.on('pong_custom',function(){
         pingMs=Date.now()-lastPingTime;
         $('pingDisp').textContent=pingMs+'ms';
-        var col=pingMs<60?'#2ecc71':pingMs<120?'#f39c12':'#e74c3c';
+        var col=pingMs<80?'#2ecc71':pingMs<150?'#f39c12':'#e74c3c';
         $('pingDisp').style.color=col;
     });
     socket.on('disconnect',function(){
@@ -296,12 +323,20 @@ function connectSocket(){
         $('connectingMsg').textContent='Sunucuya ulaşılamıyor...';
     });
 
-    // LOBI EVENTS
+    // LOBİ EVENTS
     socket.on('lobbyUpdate',function(data){
-        lobbyData=data;hostId=data.hostId;isHost=(myId===hostId);
-        cmk=data.mapKey||'classic';cm=MAPS[cmk]||MAPS.classic;
-        gLim=data.goalLimit||0;
+        lobbyData=data;
+        hostId=data.hostId;
+        isHost=(myId===hostId);
+        cmk=data.mapKey||'classic';
+        cm=MAPS[cmk]||MAPS.classic;
+        gLim=data.goalLimit||5;
         if(gameState==='lobby')refLobby();
+    });
+    socket.on('goalLimitChanged',function(data){
+        gLim=data.goalLimit||0;
+        if($('lobbyGLS'))$('lobbyGLS').value=String(gLim);
+        toast(gLim?'Gol sınırı: '+gLim+' Gol':'Sınırsız mod');
     });
     socket.on('newHost',function(data){
         hostId=data.hostId;isHost=(myId===hostId);
@@ -309,32 +344,30 @@ function connectSocket(){
         if(gameState==='game')$('adminPanelGame').style.display=isHost?'block':'none';
         if(isHost)toast('Sen host oldun!');
     });
-    socket.on('kicked',function(){toast('Odadan atıldın!');cleanup();showScr('menu')});
+    socket.on('kicked',function(){toast('Odadan atıldın!');cleanup();showScr('menu');});
     socket.on('backToLobby',function(){
-        stopL();
-        gF=false;P={};B={x:cm.fw/2,y:cm.fh/2,vx:0,vy:0,fire:false};
-        $('winOverlay').style.display='none';$('goalOverlay').style.display='none';
+        stopL();gF=false;P={};
+        B={x:cm.fw/2,y:cm.fh/2,vx:0,vy:0,fire:false,tx:cm.fw/2,ty:cm.fh/2};
+        $('winOverlay').style.display='none';
+        $('goalOverlay').style.display='none';
         showScr('lobby');
     });
 
     // OYUN EVENTS
     socket.on('gameStart',function(data){
-        cmk=data.mapKey||'classic';cm=MAPS[cmk]||MAPS.classic;
-        gLim=data.goalLimit||0;
+        cmk=data.mapKey||'classic';
+        cm=MAPS[cmk]||MAPS.classic;
+        gLim=data.goalLimit||5;
         initGame(data);
         showScr('game');
     });
-
-    // STATE - sunucudan gelen fizik durumu
     socket.on('state',function(data){
-        lastStateTime=performance.now();
         applyState(data);
     });
-
     socket.on('goal',function(data){
         rS=data.redScore;bS=data.blueScore;
-        if(data.team==='red'){$('goalText').textContent='🔴 GOL!';$('goalText').style.color='#e74c3c'}
-        else{$('goalText').textContent='🔵 GOL!';$('goalText').style.color='#3498db'}
+        if(data.team==='red'){$('goalText').textContent='🔴 GOL!';$('goalText').style.color='#e74c3c';}
+        else{$('goalText').textContent='🔵 GOL!';$('goalText').style.color='#3498db';}
         $('goalOverlay').style.display='flex';
         gF=true;
     });
@@ -345,17 +378,29 @@ function connectSocket(){
     socket.on('matchEnd',function(data){
         mR=false;
         $('goalOverlay').style.display='none';
-        if(data.reason==='goal'||data.reason==='time'){
-            var winner=data.winner||(data.redScore>data.blueScore?'red':(data.blueScore>data.redScore?'blue':'draw'));
-            if(winner==='draw'){$('winText').textContent='🤝 BERABERE!';$('winText').style.color='#f39c12'}
-            else{$('winText').textContent='🏆 '+(winner==='red'?'KIRMIZI':'MAVİ')+' KAZANDI!';$('winText').style.color=winner==='red'?'#e74c3c':'#3498db'}
-            $('winSub').textContent=(data.redScore||rS)+' - '+(data.blueScore||bS);
-            $('winOverlay').style.display='flex';
+        var winner=data.winner||(data.redScore>data.blueScore?'red':(data.blueScore>data.redScore?'blue':'draw'));
+        if(winner==='draw'){
+            $('winText').textContent='🤝 BERABERE!';
+            $('winText').style.color='#f39c12';
+        }else{
+            $('winText').textContent='🏆 '+(winner==='red'?'KIRMIZI':'MAVİ')+' KAZANDI!';
+            $('winText').style.color=winner==='red'?'#e74c3c':'#3498db';
         }
+        $('winSub').textContent=(data.redScore||rS)+' - '+(data.blueScore||bS);
+        $('winOverlay').style.display='flex';
     });
-    socket.on('paused',function(p){mP=p;toast(p?'Duraklatıldı':'Devam ediyor')});
-    socket.on('adminReset',function(data){rS=0;bS=0;mT=0;gF=false;$('goalOverlay').style.display='none';if(data)applyState(data)});
-    socket.on('mapChanged',function(data){cmk=data.mapKey;cm=MAPS[cmk]||MAPS.classic;resC();if(data.state)applyState(data.state)});
+    socket.on('paused',function(p){
+        mP=p;toast(p?'Duraklatıldı':'Devam ediyor');
+    });
+    socket.on('adminReset',function(data){
+        rS=0;bS=0;mT=0;gF=false;
+        $('goalOverlay').style.display='none';
+        if(data)applyState(data);
+    });
+    socket.on('mapChanged',function(data){
+        cmk=data.mapKey;cm=MAPS[cmk]||MAPS.classic;resC();
+        if(data.state)applyState(data.state);
+    });
     socket.on('powerShot',function(data){
         if(data.pid===myId)pwCD=2700;
     });
@@ -368,7 +413,7 @@ function connectSocket(){
     });
 }
 
-// STATE UYGULA - dead reckoning ile smooth
+// STATE UYGULA
 function applyState(data){
     if(!data)return;
     if(data.match){
@@ -379,68 +424,86 @@ function applyState(data){
         bS=data.match.blueScore||0;
     }
     if(data.goalFreeze!==undefined)gF=data.goalFreeze;
+    // TOP
     if(data.ball){
         var tb=data.ball;
-        var bd=dst(B.x,B.y,tb.x,tb.y);
-        if(bd>200){B.x=tb.x;B.y=tb.y;}
-        else{B.tx=tb.x;B.ty=tb.y;}
+        B.tx=tb.x;B.ty=tb.y;
         B.vx=tb.vx||0;B.vy=tb.vy||0;
         B.fire=tb.fire||false;
+        if(!B.init||dst(B.x,B.y,tb.x,tb.y)>200){
+            B.x=tb.x;B.y=tb.y;B.init=true;
+        }
     }
+    // OYUNCULAR
     if(data.players){
         for(var pid in data.players){
             var rd=data.players[pid];
             if(!P[pid]){
-                P[pid]={name:rd.name,team:rd.team,pos:rd.pos||'',x:rd.x,y:rd.y,vx:0,vy:0,kick:rd.kick||false,pCD:rd.pCD||0,tx:rd.x,ty:rd.y};
+                P[pid]={name:rd.name,team:rd.team,pos:rd.pos||'',x:rd.x,y:rd.y,vx:rd.vx||0,vy:rd.vy||0,kick:rd.kick||false,pCD:rd.pCD||0,tx:rd.x,ty:rd.y,init:true};
                 continue;
             }
             var p=P[pid];
-            p.team=rd.team;p.name=rd.name;p.pos=rd.pos||'';p.kick=rd.kick||false;p.pCD=rd.pCD||0;
-            if(pid===myId){
-                p.serverX=rd.x;p.serverY=rd.y;
-                var myD=dst(p.x,p.y,rd.x,rd.y);
-                if(myD>150){p.x=rd.x;p.y=rd.y;p.vx=0;p.vy=0;}
-            } else {
-                var pd=dst(p.x,p.y,rd.x,rd.y);
-                if(pd>150){p.x=rd.x;p.y=rd.y;}
-                else{p.tx=rd.x;p.ty=rd.y;}
-                p.vx=rd.vx||0;p.vy=rd.vy||0;
+            p.team=rd.team;p.name=rd.name;p.pos=rd.pos||'';
+            p.kick=rd.kick||false;p.pCD=rd.pCD||0;
+            p.vx=rd.vx||0;p.vy=rd.vy||0;
+            p.tx=rd.x;p.ty=rd.y;
+            if(!p.init||dst(p.x,p.y,rd.x,rd.y)>200){
+                p.x=rd.x;p.y=rd.y;p.init=true;
             }
+            if(pid===myId&&rd.pCD>pwCD)pwCD=rd.pCD;
         }
-        for(var pid2 in P){if(!data.players[pid2])delete P[pid2];}
+        for(var pid2 in P){
+            if(!data.players[pid2])delete P[pid2];
+        }
     }
 }
 
 // ODA KUR
 $('btnCreate').addEventListener('click',function(){
-    if(!socket||!socket.connected){toast('Sunucuya bağlanılamadı!');return}
+    if(!socket||!socket.connected){toast('Sunucuya bağlanılamadı!');return;}
     myName=$('inpName').value.trim()||('P'+Math.random().toString(36).substr(2,4));
     if(myName.length>12)myName=myName.substr(0,12);
     var code=rcode();
-    socket.emit('createRoom',{code:code,playerName:myName,mapKey:$('inpMap').value||'classic',goalLimit:parseInt($('inpGL').value)||0,password:$('inpPwd').value.trim()},function(res){
-        if(res.error){toast(res.error);return}
+    socket.emit('createRoom',{
+        code:code,playerName:myName,
+        mapKey:$('inpMap').value||'classic',
+        goalLimit:5,
+        password:$('inpPwd').value.trim()
+    },function(res){
+        if(res.error){toast(res.error);return;}
         roomCode=res.code;isHost=true;hostId=myId;
         cmk=$('inpMap').value||'classic';cm=MAPS[cmk]||MAPS.classic;
-        showScr('lobby');$('lobbyCode').textContent='ODA: '+roomCode;toast('Kod: '+roomCode);
+        showScr('lobby');
+        $('lobbyCode').textContent='ODA: '+roomCode;
+        toast('Kod: '+roomCode);
     });
 });
 
 // ODAYA KATIL
 $('btnJoin').addEventListener('click',function(){
-    if(!socket||!socket.connected){toast('Sunucuya bağlanılamadı!');return}
+    if(!socket||!socket.connected){toast('Sunucuya bağlanılamadı!');return;}
     myName=$('inpName').value.trim()||('P'+Math.random().toString(36).substr(2,4));
     if(myName.length>12)myName=myName.substr(0,12);
     var code=$('inpCode').value.trim().toUpperCase();
-    if(!code){toast('Kod girin!');return}
-    socket.emit('joinRoom',{code:code,playerName:myName,password:$('inpJP').value.trim()},function(res){
-        if(res.error){toast(res.error);return}
-        roomCode=res.code;isHost=(myId===res.hostId);hostId=res.hostId;
-        cmk=res.mapKey||'classic';cm=MAPS[cmk]||MAPS.classic;gLim=res.goalLimit||0;
-        showScr('lobby');$('lobbyCode').textContent='ODA: '+roomCode;toast('Katıldın!');
+    if(!code){toast('Kod girin!');return;}
+    socket.emit('joinRoom',{
+        code:code,playerName:myName,
+        password:$('inpJP').value.trim()
+    },function(res){
+        if(res.error){toast(res.error);return;}
+        roomCode=res.code;
+        isHost=(myId===res.hostId);
+        hostId=res.hostId;
+        cmk=res.mapKey||'classic';
+        cm=MAPS[cmk]||MAPS.classic;
+        gLim=res.goalLimit||5;
+        showScr('lobby');
+        $('lobbyCode').textContent='ODA: '+roomCode;
+        toast('Katıldın!');
     });
 });
 
-// LOBİ
+// LOBİ RENDER
 function refLobby(){
     if(!lobbyData||!lobbyData.players)return;
     var rD=$('lRL'),bD=$('lBL'),sD=$('lSL');
@@ -450,50 +513,86 @@ function refLobby(){
         var p=lobbyData.players[pid];
         var r=document.createElement('div');r.className='player-row';
         var hH=pid===lobbyData.hostId?'<span class="host-tag">HOST</span>':'';
-        var posH='';if(p.pos&&p.team!=='spectator')posH='<span class="pos-tag pos-'+p.pos+'">'+(pl[p.pos]||p.pos)+'</span>';
+        var posH='';
+        if(p.pos&&p.team!=='spectator')posH='<span class="pos-tag pos-'+p.pos+'">'+(pl[p.pos]||p.pos)+'</span>';
         var aH='';
-        if(isHost&&pid!==myId){aH='<div class="admin-row-btns"><button style="background:#e74c3c" data-ap="'+pid+'" data-at="red">K</button><button style="background:#3498db" data-ap="'+pid+'" data-at="blue">M</button><button style="background:#555" data-ap="'+pid+'" data-at="spectator">İ</button></div>'}
+        if(isHost&&pid!==myId){
+            aH='<div class="admin-row-btns"><button style="background:#e74c3c" data-ap="'+pid+'" data-at="red">K</button><button style="background:#3498db" data-ap="'+pid+'" data-at="blue">M</button><button style="background:#555" data-ap="'+pid+'" data-at="spectator">İ</button></div>';
+        }
         r.innerHTML='<span class="p-info">'+hH+'<span class="p-name">'+(p.name||'?')+'</span>'+posH+'</span>'+aH;
-        if(p.team==='red')rD.appendChild(r);else if(p.team==='blue')bD.appendChild(r);else sD.appendChild(r);
+        if(p.team==='red')rD.appendChild(r);
+        else if(p.team==='blue')bD.appendChild(r);
+        else sD.appendChild(r);
     }
-    rD.querySelectorAll('[data-ap]').forEach(function(b){b.onclick=function(){socket.emit('adminChangeTeam',{pid:b.getAttribute('data-ap'),team:b.getAttribute('data-at')})}});
-    bD.querySelectorAll('[data-ap]').forEach(function(b){b.onclick=function(){socket.emit('adminChangeTeam',{pid:b.getAttribute('data-ap'),team:b.getAttribute('data-at')})}});
-    sD.querySelectorAll('[data-ap]').forEach(function(b){b.onclick=function(){socket.emit('adminChangeTeam',{pid:b.getAttribute('data-ap'),team:b.getAttribute('data-at')})}});
+    // Admin butonları
+    document.querySelectorAll('[data-ap]').forEach(function(b){
+        b.onclick=function(){
+            socket.emit('adminChangeTeam',{pid:b.getAttribute('data-ap'),team:b.getAttribute('data-at')});
+        };
+    });
     $('btnSt').classList.toggle('hidden',!isHost);
-    $('lobbyMapName').textContent=(cm.name||'')+(gLim?' | '+gLim+' Gol':'');
+    $('lobbyMapName').textContent=cm.name||'';
     // Mevki seç
     var me=lobbyData.players[myId];
-    if(!me||me.team==='spectator'){$('lobbyPB').style.display='none'}
-    else{
+    if(!me||me.team==='spectator'){
+        $('lobbyPB').style.display='none';
+    }else{
         $('lobbyPB').style.display='block';
         var sel=$('lobbyPS');
-        var pos=['GK','DEF','MID','FWD'],lab={GK:'🧤 Kaleci',DEF:'🛡️ Defans',MID:'🎯 Orta Saha',FWD:'⚡ Forvet'};
+        var pos=['GK','DEF','MID','FWD'];
+        var lab={GK:'🧤 Kaleci',DEF:'🛡️ Defans',MID:'🎯 Orta Saha',FWD:'⚡ Forvet'};
         var h='<option value="">-- Seç --</option>';
-        for(var i=0;i<pos.length;i++){var pp=pos[i],im=me.pos===pp;h+='<option value="'+pp+'"'+(im?' selected':'')+'>'+lab[pp]+'</option>'}
+        for(var i=0;i<pos.length;i++){
+            var im=me.pos===pos[i];
+            h+='<option value="'+pos[i]+'"'+(im?' selected':'')+'>'+lab[pos[i]]+'</option>';
+        }
         sel.innerHTML=h;
     }
+    // Gol sınırı - sadece host
+    if(isHost){
+        $('lobbyGLBox').style.display='block';
+        $('lobbyGLS').value=String(gLim);
+    }else{
+        $('lobbyGLBox').style.display='none';
+    }
 }
-$('lobbyPS').addEventListener('change',function(){var v=$('lobbyPS').value;if(v&&socket)socket.emit('changePos',{pos:v})});
-$('btnTR').onclick=function(){if(socket)socket.emit('changeTeam',{team:'red'})};
-$('btnTB').onclick=function(){if(socket)socket.emit('changeTeam',{team:'blue'})};
-$('btnTS').onclick=function(){if(socket)socket.emit('changeTeam',{team:'spectator'})};
-$('btnLv').onclick=function(){if(socket)socket.emit('leaveRoom');cleanup();showScr('menu')};
-$('btnSt').onclick=function(){if(socket)socket.emit('startGame',function(res){if(res&&res.error)toast(res.error)})};
+
+$('lobbyPS').addEventListener('change',function(){
+    var v=$('lobbyPS').value;
+    if(v&&socket)socket.emit('changePos',{pos:v});
+});
+$('lobbyGLS').addEventListener('change',function(){
+    var v=parseInt($('lobbyGLS').value)||0;
+    if(socket)socket.emit('changeGoalLimit',{goalLimit:v});
+});
+$('btnTR').onclick=function(){if(socket)socket.emit('changeTeam',{team:'red'});};
+$('btnTB').onclick=function(){if(socket)socket.emit('changeTeam',{team:'blue'});};
+$('btnTS').onclick=function(){if(socket)socket.emit('changeTeam',{team:'spectator'});};
+$('btnLv').onclick=function(){if(socket)socket.emit('leaveRoom');cleanup();showScr('menu');};
+$('btnSt').onclick=function(){
+    if(socket)socket.emit('startGame',function(res){if(res&&res.error)toast(res.error);});
+};
 
 // OYUN BAŞLAT
 function initGame(data){
-    P={};B={x:cm.fw/2,y:cm.fh/2,vx:0,vy:0,fire:false,tx:cm.fw/2,ty:cm.fh/2};
+    P={};
+    B={x:cm.fw/2,y:cm.fh/2,vx:0,vy:0,fire:false,tx:cm.fw/2,ty:cm.fh/2,init:false};
     mT=0;mR=true;mP=false;gF=false;rS=0;bS=0;
-    pwCD=0;kH=false;pH=false;pwP=false;fireParts=[];pBubs={};chatEnts=[];
+    pwCD=0;kH=false;pH=false;pwP=false;
+    fireParts=[];pBubs={};chatEnts=[];
     $('adminPanelGame').style.display=isHost?'block':'none';
     admO=false;$('adminMenuContent').style.display='none';
     $('goalOverlay').style.display='none';$('winOverlay').style.display='none';
     buildAdm();
-    // İlk oyuncu listesi
     if(data.players){
         for(var pid in data.players){
             var p=data.players[pid];
-            P[pid]={name:p.name,team:p.team,pos:p.pos||'',x:p.x||cm.fw/2,y:p.y||cm.fh/2,vx:0,vy:0,kick:false,pCD:0,tx:p.x||cm.fw/2,ty:p.y||cm.fh/2};
+            P[pid]={
+                name:p.name,team:p.team,pos:p.pos||'',
+                x:p.x||cm.fw/2,y:p.y||cm.fh/2,
+                vx:0,vy:0,kick:false,pCD:0,
+                tx:p.x||cm.fw/2,ty:p.y||cm.fh/2,init:true
+            };
         }
     }
 }
@@ -505,30 +604,54 @@ function cleanup(){
 }
 
 // OYUN DÖNGÜSÜ
-function startL(){if(animId)cancelAnimationFrame(animId);lastFT=performance.now();acm=0;tick(lastFT)}
-function stopL(){if(animId){cancelAnimationFrame(animId);animId=null}}
+function startL(){
+    if(animId)cancelAnimationFrame(animId);
+    lastFT=performance.now();acm=0;
+    tick(lastFT);
+}
+function stopL(){
+    if(animId){cancelAnimationFrame(animId);animId=null;}
+}
 
-// Input gönderme
-var lastInputSend=0;
-var INPUT_INTERVAL=33; // ~30fps input
+function tick(now){
+    animId=requestAnimationFrame(tick);
+    var dt=now-lastFT;lastFT=now;
+    if(dt>100)dt=100;
+    acm+=dt;
+    while(acm>=FDT){gameUpdate(FDT);acm-=FDT;}
+    render();
+    // Input gönder
+    if(now-lastInputSend>=INPUT_INTERVAL&&socket&&socket.connected){
+        lastInputSend=now;
+        socket.emit('input',{
+            dx:+(myIn.dx.toFixed(2)),
+            dy:+(myIn.dy.toFixed(2)),
+            ik:kH,ip:pH,ipw:pwP
+        });
+        if(pwP)pwP=false;
+    }
+}
 
+// OYUN GÜNCELLEMESİ
 function gameUpdate(dt){
     var bf=MAPS[cmk]?MAPS[cmk].bf||.987:.987;
-    // TÜM OYUNCULAR smooth interpolasyon
+    // Tüm oyuncular smooth interpolasyon
     for(var pid in P){
         var p=P[pid];
         if(p.tx==null)continue;
         var dd=dst(p.x,p.y,p.tx,p.ty);
-        if(dd>80){p.x=p.tx;p.y=p.ty;}
+        if(dd>100){p.x=p.tx;p.y=p.ty;}
         else if(dd>0.3){p.x=lerp(p.x,p.tx,.5);p.y=lerp(p.y,p.ty,.5);}
     }
-    // TOP smooth interpolasyon
+    // Top smooth interpolasyon
     if(B.tx!=null){
         var bdd=dst(B.x,B.y,B.tx,B.ty);
-        if(bdd>80){B.x=B.tx;B.y=B.ty;}
+        if(bdd>100){B.x=B.tx;B.y=B.ty;}
         else if(bdd>0.3){B.x=lerp(B.x,B.tx,.5);B.y=lerp(B.y,B.ty,.5);}
-        B.x+=B.vx*.12;B.y+=B.vy*.12;
-        B.vx*=bf;B.vy*=bf;
+        if(Math.sqrt(B.vx*B.vx+B.vy*B.vy)>1){
+            B.x+=B.vx*.1;B.y+=B.vy*.1;
+            B.vx*=bf;B.vy*=bf;
+        }
     }
     // Cooldown
     if(pwCD>0)pwCD--;
@@ -545,119 +668,74 @@ function gameUpdate(dt){
     if(B.fire&&fireParts.length<20){
         fireParts.push({x:B.x,y:B.y,vx:-B.vx*.08+(Math.random()-.5)*1.5,vy:-B.vy*.08+(Math.random()-.5)*1.5,life:15,sz:3+Math.random()*3,c:Math.random()>.5?'#ff6600':'#ffcc00'});
     }
-    // Bubble & chat timer
-    for(var bp in pBubs){pBubs[bp].timer--;if(pBubs[bp].timer<=0)delete pBubs[bp]}
-    for(var ci=chatEnts.length-1;ci>=0;ci--){chatEnts[ci].timer--;if(chatEnts[ci].timer<=0)chatEnts.splice(ci,1)}
-}
-
-function tick(now){
-    animId=requestAnimationFrame(tick);
-    var dt=now-lastFT;lastFT=now;
-    if(dt>100)dt=100;
-    acm+=dt;
-    while(acm>=FDT){gameUpdate(FDT);acm-=FDT}
-    render();
-    if(now-lastInputSend>=INPUT_INTERVAL&&socket&&socket.connected){
-        lastInputSend=now;
-        socket.emit('input',{dx:+(myIn.dx.toFixed(2)),dy:+(myIn.dy.toFixed(2)),ik:kH,ip:pH,ipw:pwP});
-        if(pwP)pwP=false;
-    }
-}
-
-// CLIENT TARAFLI GÜNCELLEME (görsel smooth)
-function applyState(data){
-    if(!data)return;
-    if(data.match){
-        mT=data.match.time||0;
-        mR=data.match.running||false;
-        mP=data.match.paused||false;
-        rS=data.match.redScore||0;
-        bS=data.match.blueScore||0;
-    }
-    if(data.goalFreeze!==undefined)gF=data.goalFreeze;
-
-    // TOP
-    if(data.ball){
-        var tb=data.ball;
-        var bd=dst(B.x,B.y,tb.x,tb.y);
-        if(bd>100||!B.tx){
-            B.x=tb.x;B.y=tb.y;
-        }
-        B.tx=tb.x;B.ty=tb.y;
-        B.vx=tb.vx||0;B.vy=tb.vy||0;
-        B.fire=tb.fire||false;
-    }
-
-    // OYUNCULAR
-    if(data.players){
-        for(var pid in data.players){
-            var rd=data.players[pid];
-            if(!P[pid]){
-                P[pid]={
-                    name:rd.name,team:rd.team,pos:rd.pos||'',
-                    x:rd.x,y:rd.y,vx:rd.vx||0,vy:rd.vy||0,
-                    kick:rd.kick||false,pCD:rd.pCD||0,
-                    tx:rd.x,ty:rd.y
-                };
-                continue;
-            }
-            var p=P[pid];
-            p.team=rd.team;p.name=rd.name;
-            p.pos=rd.pos||'';p.kick=rd.kick||false;
-            p.pCD=rd.pCD||0;
-            // HEPSİ aynı şekilde - kendin dahil
-            var pd=dst(p.x,p.y,rd.x,rd.y);
-            if(pd>100){
-                p.x=rd.x;p.y=rd.y;
-            }
-            p.tx=rd.x;p.ty=rd.y;
-            p.vx=rd.vx||0;p.vy=rd.vy||0;
-            // CD güncelle
-            if(pid===myId&&rd.pCD>pwCD)pwCD=rd.pCD;
-        }
-        for(var pid2 in P){
-            if(!data.players[pid2])delete P[pid2];
-        }
-    }
+    // Timer
+    for(var bp in pBubs){pBubs[bp].timer--;if(pBubs[bp].timer<=0)delete pBubs[bp];}
+    for(var ci=chatEnts.length-1;ci>=0;ci--){chatEnts[ci].timer--;if(chatEnts[ci].timer<=0)chatEnts.splice(ci,1);}
 }
 
 // RENDER
 function render(){
     ctx.clearRect(0,0,cW,cH);
     ctx.fillStyle=cm.bg;ctx.fillRect(0,0,cW,cH);
-    ctx.save();ctx.translate(vOX,vOY);ctx.scale(vS,vS);ctx.translate(FM,FM);
+    ctx.save();
+    ctx.translate(vOX,vOY);ctx.scale(vS,vS);ctx.translate(FM,FM);
     drawField();drawFire();drawBall();drawPlayers();
-    ctx.restore();updateHUD();
+    ctx.restore();
+    updateHUD();
 }
+
 function drawField(){
-    var FW=cm.fw,FH=cm.fh,GH=cm.gh,GD=cm.gd,gT=FH/2-GH/2,gB=FH/2+GH/2,lc=cm.lc;
+    var FW=cm.fw,FH=cm.fh,GH=cm.gh,GD=cm.gd;
+    var gT=FH/2-GH/2,gB=FH/2+GH/2,lc=cm.lc;
     ctx.fillStyle=cm.f1;ctx.fillRect(0,0,FW,FH);
-    ctx.fillStyle=cm.f2;var sw=FW/10;for(var i=0;i<10;i+=2)ctx.fillRect(i*sw,0,sw,FH);
-    ctx.strokeStyle=lc;ctx.lineWidth=3;ctx.strokeRect(2,2,FW-4,FH-4);
+    ctx.fillStyle=cm.f2;var sw=FW/10;
+    for(var i=0;i<10;i+=2)ctx.fillRect(i*sw,0,sw,FH);
+    ctx.strokeStyle=lc;ctx.lineWidth=3;
+    ctx.strokeRect(2,2,FW-4,FH-4);
     ctx.beginPath();ctx.moveTo(FW/2,0);ctx.lineTo(FW/2,FH);ctx.stroke();
     ctx.beginPath();ctx.arc(FW/2,FH/2,cm.cr,0,Math.PI*2);ctx.stroke();
     ctx.fillStyle=lc;ctx.beginPath();ctx.arc(FW/2,FH/2,4,0,Math.PI*2);ctx.fill();
-    ctx.lineWidth=2;ctx.strokeRect(0,FH/2-cm.ph/2,cm.pw,cm.ph);ctx.strokeRect(FW-cm.pw,FH/2-cm.ph/2,cm.pw,cm.ph);
+    ctx.lineWidth=2;
+    ctx.strokeRect(0,FH/2-cm.ph/2,cm.pw,cm.ph);
+    ctx.strokeRect(FW-cm.pw,FH/2-cm.ph/2,cm.pw,cm.ph);
+    // Sol kale
     ctx.fillStyle='rgba(231,76,60,.06)';ctx.fillRect(-GD,gT,GD,GH);
     ctx.strokeStyle='rgba(231,76,60,.65)';ctx.lineWidth=3;
     ctx.beginPath();ctx.moveTo(0,gT);ctx.lineTo(-GD,gT);ctx.lineTo(-GD,gB);ctx.lineTo(0,gB);ctx.stroke();
+    // Sağ kale
     ctx.fillStyle='rgba(52,152,219,.06)';ctx.fillRect(FW,gT,GD,GH);
     ctx.strokeStyle='rgba(52,152,219,.65)';
     ctx.beginPath();ctx.moveTo(FW,gT);ctx.lineTo(FW+GD,gT);ctx.lineTo(FW+GD,gB);ctx.lineTo(FW,gB);ctx.stroke();
+    // Direkler
     ctx.fillStyle='#ddd';
-    [[0,gT],[0,gB],[FW,gT],[FW,gB]].forEach(function(pp){ctx.beginPath();ctx.arc(pp[0],pp[1],PSR,0,Math.PI*2);ctx.fill()});
+    [[0,gT],[0,gB],[FW,gT],[FW,gB]].forEach(function(pp){
+        ctx.beginPath();ctx.arc(pp[0],pp[1],PSR,0,Math.PI*2);ctx.fill();
+    });
 }
+
 function drawFire(){
     if(!fireParts.length)return;
-    for(var i=0;i<fireParts.length;i++){var fp=fireParts[i];ctx.globalAlpha=fp.life/15;ctx.fillStyle=fp.c;ctx.fillRect(fp.x-fp.sz/2,fp.y-fp.sz/2,fp.sz,fp.sz)}
+    for(var i=0;i<fireParts.length;i++){
+        var fp=fireParts[i];
+        ctx.globalAlpha=fp.life/15;ctx.fillStyle=fp.c;
+        ctx.fillRect(fp.x-fp.sz/2,fp.y-fp.sz/2,fp.sz,fp.sz);
+    }
     ctx.globalAlpha=1;
 }
+
 function drawBall(){
-    ctx.fillStyle='rgba(0,0,0,.15)';ctx.beginPath();ctx.arc(B.x+2,B.y+3,BR,0,Math.PI*2);ctx.fill();
-    if(B.fire){ctx.fillStyle='rgba(255,100,0,.22)';ctx.beginPath();ctx.arc(B.x,B.y,BR*1.7,0,Math.PI*2);ctx.fill()}
-    ctx.fillStyle=B.fire?'#ffaa00':'#fff';ctx.beginPath();ctx.arc(B.x,B.y,BR,0,Math.PI*2);ctx.fill();
-    ctx.strokeStyle=B.fire?'#ff4400':'#999';ctx.lineWidth=1.5;ctx.beginPath();ctx.arc(B.x,B.y,BR,0,Math.PI*2);ctx.stroke();
+    ctx.fillStyle='rgba(0,0,0,.15)';
+    ctx.beginPath();ctx.arc(B.x+2,B.y+3,BR,0,Math.PI*2);ctx.fill();
+    if(B.fire){
+        ctx.fillStyle='rgba(255,100,0,.22)';
+        ctx.beginPath();ctx.arc(B.x,B.y,BR*1.7,0,Math.PI*2);ctx.fill();
+    }
+    ctx.fillStyle=B.fire?'#ffaa00':'#fff';
+    ctx.beginPath();ctx.arc(B.x,B.y,BR,0,Math.PI*2);ctx.fill();
+    ctx.strokeStyle=B.fire?'#ff4400':'#999';ctx.lineWidth=1.5;
+    ctx.beginPath();ctx.arc(B.x,B.y,BR,0,Math.PI*2);ctx.stroke();
 }
+
 function drawPlayers(){
     var psl={GK:'GK',DEF:'DF',MID:'MF',FWD:'FW'};
     var sz=PR*2+6;
@@ -666,87 +744,198 @@ function drawPlayers(){
         var isMe=(pid===myId);
         if(p.kick){
             ctx.strokeStyle=p.team==='red'?'rgba(255,80,80,.35)':'rgba(80,160,255,.35)';
-            ctx.lineWidth=1.5;ctx.beginPath();ctx.arc(p.x,p.y,PR+BR+2,0,Math.PI*2);ctx.stroke();
+            ctx.lineWidth=1.5;
+            ctx.beginPath();ctx.arc(p.x,p.y,PR+BR+2,0,Math.PI*2);ctx.stroke();
         }
         ctx.drawImage(p.team==='red'?redImg:blueImg,p.x-sz/2,p.y-sz/2);
-        if(isMe){ctx.strokeStyle='rgba(255,255,255,.9)';ctx.lineWidth=2;ctx.beginPath();ctx.arc(p.x,p.y,PR+1,0,Math.PI*2);ctx.stroke()}
-        if(p.pos&&psl[p.pos]){ctx.fillStyle='rgba(255,255,255,.65)';ctx.font='bold 8px Arial';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText(psl[p.pos],p.x,p.y)}
-        ctx.fillStyle='#fff';ctx.font='bold 9px Arial';ctx.textAlign='center';ctx.textBaseline='bottom';ctx.fillText(p.name||'?',p.x,p.y-PR-3);
-        if(isMe){ctx.fillStyle='rgba(255,255,255,.5)';ctx.font='7px Arial';ctx.fillText('▼',p.x,p.y-PR-12)}
-        if(pBubs[pid]){ctx.font='14px Arial';ctx.textAlign='center';ctx.textBaseline='bottom';ctx.fillText(pBubs[pid].text,p.x,p.y-PR-17)}
+        if(isMe){
+            ctx.strokeStyle='rgba(255,255,255,.9)';ctx.lineWidth=2;
+            ctx.beginPath();ctx.arc(p.x,p.y,PR+1,0,Math.PI*2);ctx.stroke();
+        }
+        if(p.pos&&psl[p.pos]){
+            ctx.fillStyle='rgba(255,255,255,.65)';ctx.font='bold 8px Arial';
+            ctx.textAlign='center';ctx.textBaseline='middle';
+            ctx.fillText(psl[p.pos],p.x,p.y);
+        }
+        ctx.fillStyle='#fff';ctx.font='bold 9px Arial';
+        ctx.textAlign='center';ctx.textBaseline='bottom';
+        ctx.fillText(p.name||'?',p.x,p.y-PR-3);
+        if(isMe){
+            ctx.fillStyle='rgba(255,255,255,.5)';ctx.font='7px Arial';
+            ctx.fillText('▼',p.x,p.y-PR-12);
+        }
+        if(pBubs[pid]){
+            ctx.font='14px Arial';ctx.textAlign='center';ctx.textBaseline='bottom';
+            ctx.fillText(pBubs[pid].text,p.x,p.y-PR-17);
+        }
     }
 }
+
 function updateHUD(){
     $('hudR').textContent=rS;$('hudB').textContent=bS;
+    // Süre ileri sayar
     var m=Math.floor(mT/60),s=Math.floor(mT%60);
     $('hudT').textContent=m+':'+(s<10?'0':'')+s;
     if(mP)$('hudS').textContent='DURAKLADI';
-    else if(!mR&&mT>=180)$('hudS').textContent='BİTTİ';
     else if(gF)$('hudS').textContent='GOL!';
-    else $('hudS').textContent=gLim?gLim+' GOL':'';
+    else $('hudS').textContent=gLim?'🏆 '+gLim+' GOL':'∞';
 }
 
 // CHAT
-function addChat(n,m){chatEnts.push({name:n,msg:m,timer:240});if(chatEnts.length>5)chatEnts.shift();renderChatLog()}
-function renderChatLog(){var cl=$('chatLog');cl.innerHTML='';for(var i=0;i<chatEnts.length;i++){var d=document.createElement('div');d.className='ce';d.textContent=chatEnts[i].name+': '+chatEnts[i].msg;cl.appendChild(d)}}
+function addChat(n,m){
+    chatEnts.push({name:n,msg:m,timer:240});
+    if(chatEnts.length>5)chatEnts.shift();
+    renderChatLog();
+}
+function renderChatLog(){
+    var cl=$('chatLog');cl.innerHTML='';
+    for(var i=0;i<chatEnts.length;i++){
+        var d=document.createElement('div');d.className='ce';
+        d.textContent=chatEnts[i].name+': '+chatEnts[i].msg;
+        cl.appendChild(d);
+    }
+}
 
 // ADMIN
 function buildAdm(){
     if(!isHost)return;
     var mc=$('adminMenuContent');mc.innerHTML='';
-    var mo='';for(var mk in MAPS)mo+='<option value="'+mk+'"'+(mk===cmk?' selected':'')+'>'+MAPS[mk].name+'</option>';
+    var mo='';
+    for(var mk in MAPS)mo+='<option value="'+mk+'"'+(mk===cmk?' selected':'')+'>'+MAPS[mk].name+'</option>';
     mc.innerHTML='<div class="sec">KONTROL</div><button style="background:#f39c12" id="admP">'+(mP?'▶':'⏸')+'</button><button style="background:#e74c3c" id="admR">🔄 Sıfırla</button><button style="background:#3498db" id="admL">🔙 Lobi</button><div class="sec">HARİTA</div><select id="admMS">'+mo+'</select><button style="background:#27ae60" id="admMA">✅</button>';
-    $('admP').onclick=function(){if(socket)socket.emit('adminPause')};
-    $('admR').onclick=function(){if(socket)socket.emit('adminReset')};
-    $('admL').onclick=function(){if(socket)socket.emit('adminLobby')};
-    $('admMA').onclick=function(){var nk=$('admMS').value;if(socket)socket.emit('adminChangeMap',{mapKey:nk})};
+    $('admP').onclick=function(){if(socket)socket.emit('adminPause');};
+    $('admR').onclick=function(){if(socket)socket.emit('adminReset');};
+    $('admL').onclick=function(){if(socket)socket.emit('adminLobby');};
+    $('admMA').onclick=function(){var nk=$('admMS').value;if(socket)socket.emit('adminChangeMap',{mapKey:nk});};
 }
-$('adminToggleBtn').onclick=function(e){e.stopPropagation();admO=!admO;$('adminMenuContent').style.display=admO?'block':'none';if(admO)buildAdm()};
-['touchstart','touchmove','touchend'].forEach(function(ev){$('adminPanelGame').addEventListener(ev,function(e){e.stopPropagation()},{passive:false})});
-$('winBtn').onclick=function(){$('winOverlay').style.display='none';if(socket&&isHost)socket.emit('backToLobby')};
+$('adminToggleBtn').onclick=function(e){
+    e.stopPropagation();admO=!admO;
+    $('adminMenuContent').style.display=admO?'block':'none';
+    if(admO)buildAdm();
+};
+['touchstart','touchmove','touchend'].forEach(function(ev){
+    $('adminPanelGame').addEventListener(ev,function(e){e.stopPropagation();},{passive:false});
+});
+$('winBtn').onclick=function(){
+    $('winOverlay').style.display='none';
+    if(socket&&isHost)socket.emit('backToLobby');
+};
 
 // JOYSTİCK
 var jZ=$('joyZone'),jBs=$('joyBase'),jTh=$('joyThumb');
-jZ.addEventListener('touchstart',function(e){e.preventDefault();if(jTid!==null)return;var t=e.changedTouches[0];jTid=t.identifier;jA=true;var r=jBs.getBoundingClientRect();jSX=r.left+r.width/2;jSY=r.top+r.height/2;updJ(t.clientX,t.clientY)},{passive:false});
-jZ.addEventListener('touchmove',function(e){e.preventDefault();for(var i=0;i<e.changedTouches.length;i++){if(e.changedTouches[i].identifier===jTid)updJ(e.changedTouches[i].clientX,e.changedTouches[i].clientY)}},{passive:false});
-jZ.addEventListener('touchend',function(e){e.preventDefault();for(var i=0;i<e.changedTouches.length;i++){if(e.changedTouches[i].identifier===jTid){jTid=null;jA=false;myIn.dx=0;myIn.dy=0;jTh.style.display='none'}}},{passive:false});
-jZ.addEventListener('touchcancel',function(e){for(var i=0;i<e.changedTouches.length;i++){if(e.changedTouches[i].identifier===jTid){jTid=null;jA=false;myIn.dx=0;myIn.dy=0;jTh.style.display='none'}}},{passive:false});
-function updJ(tx,ty){var dx=tx-jSX,dy=ty-jSY,mx=48,d=Math.sqrt(dx*dx+dy*dy),cd=Math.min(d,mx),a=Math.atan2(dy,dx);myIn.dx=Math.cos(a)*cd/mx;myIn.dy=Math.sin(a)*cd/mx;jTh.style.display='block';jTh.style.left=(jSX+Math.cos(a)*cd-25)+'px';jTh.style.top=(jSY+Math.sin(a)*cd-25)+'px'}
+jZ.addEventListener('touchstart',function(e){
+    e.preventDefault();if(jTid!==null)return;
+    var t=e.changedTouches[0];jTid=t.identifier;jA=true;
+    var r=jBs.getBoundingClientRect();
+    jSX=r.left+r.width/2;jSY=r.top+r.height/2;
+    updJ(t.clientX,t.clientY);
+},{passive:false});
+jZ.addEventListener('touchmove',function(e){
+    e.preventDefault();
+    for(var i=0;i<e.changedTouches.length;i++){
+        if(e.changedTouches[i].identifier===jTid)updJ(e.changedTouches[i].clientX,e.changedTouches[i].clientY);
+    }
+},{passive:false});
+jZ.addEventListener('touchend',function(e){
+    e.preventDefault();
+    for(var i=0;i<e.changedTouches.length;i++){
+        if(e.changedTouches[i].identifier===jTid){
+            jTid=null;jA=false;myIn.dx=0;myIn.dy=0;jTh.style.display='none';
+        }
+    }
+},{passive:false});
+jZ.addEventListener('touchcancel',function(e){
+    for(var i=0;i<e.changedTouches.length;i++){
+        if(e.changedTouches[i].identifier===jTid){
+            jTid=null;jA=false;myIn.dx=0;myIn.dy=0;jTh.style.display='none';
+        }
+    }
+},{passive:false});
+function updJ(tx,ty){
+    var dx=tx-jSX,dy=ty-jSY,mx=48;
+    var d=Math.sqrt(dx*dx+dy*dy),cd=Math.min(d,mx),a=Math.atan2(dy,dx);
+    myIn.dx=Math.cos(a)*cd/mx;myIn.dy=Math.sin(a)*cd/mx;
+    jTh.style.display='block';
+    jTh.style.left=(jSX+Math.cos(a)*cd-25)+'px';
+    jTh.style.top=(jSY+Math.sin(a)*cd-25)+'px';
+}
 
-// BUTONLAR
-$('btnKick').addEventListener('touchstart',function(e){e.preventDefault();e.stopPropagation();kH=true;$('btnKick').classList.add('active')},{passive:false});
-$('btnKick').addEventListener('touchend',function(e){e.preventDefault();e.stopPropagation();kH=false;$('btnKick').classList.remove('active')},{passive:false});
-$('btnKick').addEventListener('touchcancel',function(){kH=false;$('btnKick').classList.remove('active')});
-$('btnPass').addEventListener('touchstart',function(e){e.preventDefault();e.stopPropagation();pH=true;kH=true;$('btnPass').classList.add('active')},{passive:false});
-$('btnPass').addEventListener('touchend',function(e){e.preventDefault();e.stopPropagation();pH=false;kH=false;$('btnPass').classList.remove('active')},{passive:false});
-$('btnPass').addEventListener('touchcancel',function(){pH=false;kH=false;$('btnPass').classList.remove('active')});
-$('btnPower').addEventListener('touchstart',function(e){e.preventDefault();e.stopPropagation();if(pwCD<=0){pwP=true;kH=true;$('btnPower').classList.add('active')}else toast(Math.ceil(pwCD/60)+'s bekle')},{passive:false});
-$('btnPower').addEventListener('touchend',function(e){e.preventDefault();e.stopPropagation();kH=false;$('btnPower').classList.remove('active')},{passive:false});
-$('btnPower').addEventListener('touchcancel',function(){kH=false;$('btnPower').classList.remove('active')});
+// AKSİYON BUTONLARI
+$('btnKick').addEventListener('touchstart',function(e){e.preventDefault();e.stopPropagation();kH=true;$('btnKick').classList.add('active');},{passive:false});
+$('btnKick').addEventListener('touchend',function(e){e.preventDefault();e.stopPropagation();kH=false;$('btnKick').classList.remove('active');},{passive:false});
+$('btnKick').addEventListener('touchcancel',function(){kH=false;$('btnKick').classList.remove('active');});
+$('btnPass').addEventListener('touchstart',function(e){e.preventDefault();e.stopPropagation();pH=true;kH=true;$('btnPass').classList.add('active');},{passive:false});
+$('btnPass').addEventListener('touchend',function(e){e.preventDefault();e.stopPropagation();pH=false;kH=false;$('btnPass').classList.remove('active');},{passive:false});
+$('btnPass').addEventListener('touchcancel',function(){pH=false;kH=false;$('btnPass').classList.remove('active');});
+$('btnPower').addEventListener('touchstart',function(e){
+    e.preventDefault();e.stopPropagation();
+    if(pwCD<=0){pwP=true;kH=true;$('btnPower').classList.add('active');}
+    else toast(Math.ceil(pwCD/60)+'s bekle');
+},{passive:false});
+$('btnPower').addEventListener('touchend',function(e){e.preventDefault();e.stopPropagation();kH=false;$('btnPower').classList.remove('active');},{passive:false});
+$('btnPower').addEventListener('touchcancel',function(){kH=false;$('btnPower').classList.remove('active');});
 
 // EMOJİ & CHAT
-document.querySelectorAll('.emoji-btn').forEach(function(btn){btn.addEventListener('touchstart',function(e){e.preventDefault();e.stopPropagation();var em=btn.getAttribute('data-e');if(!em||!socket)return;pBubs[myId]={text:em,timer:150};socket.emit('emoji',{emoji:em});socket.emit('chat',{msg:em})},{passive:false})});
-var chatO=false;
-function toggleChat(){chatO=!chatO;$('chatPanel').style.display=chatO?'flex':'none'}
-$('chatToggle').addEventListener('touchstart',function(e){e.preventDefault();e.stopPropagation();toggleChat()},{passive:false});
-$('chatToggle').addEventListener('click',function(e){e.stopPropagation();toggleChat()});
-document.querySelectorAll('.cm').forEach(function(btn){
-    var h=function(e){e.preventDefault();e.stopPropagation();var msg=btn.getAttribute('data-m');if(!msg||!socket)return;pBubs[myId]={text:msg,timer:180};socket.emit('emoji',{emoji:msg});socket.emit('chat',{msg:msg});chatO=false;$('chatPanel').style.display='none'};
-    btn.addEventListener('touchstart',h,{passive:false});btn.addEventListener('click',h);
+document.querySelectorAll('.emoji-btn').forEach(function(btn){
+    btn.addEventListener('touchstart',function(e){
+        e.preventDefault();e.stopPropagation();
+        var em=btn.getAttribute('data-e');if(!em||!socket)return;
+        pBubs[myId]={text:em,timer:150};
+        socket.emit('emoji',{emoji:em});
+        socket.emit('chat',{msg:em});
+    },{passive:false});
 });
-$('chatPanel').addEventListener('touchstart',function(e){e.stopPropagation()},{passive:false});
+var chatO=false;
+function toggleChat(){chatO=!chatO;$('chatPanel').style.display=chatO?'flex':'none';}
+$('chatToggle').addEventListener('touchstart',function(e){e.preventDefault();e.stopPropagation();toggleChat();},{passive:false});
+$('chatToggle').addEventListener('click',function(e){e.stopPropagation();toggleChat();});
+document.querySelectorAll('.cm').forEach(function(btn){
+    var h=function(e){
+        e.preventDefault();e.stopPropagation();
+        var msg=btn.getAttribute('data-m');if(!msg||!socket)return;
+        pBubs[myId]={text:msg,timer:180};
+        socket.emit('emoji',{emoji:msg});
+        socket.emit('chat',{msg:msg});
+        chatO=false;$('chatPanel').style.display='none';
+    };
+    btn.addEventListener('touchstart',h,{passive:false});
+    btn.addEventListener('click',h);
+});
+$('chatPanel').addEventListener('touchstart',function(e){e.stopPropagation();},{passive:false});
 
 // KLAVYE
-document.addEventListener('keydown',function(e){if(gameState!=='game')return;var k=e.key.toLowerCase();keys[k]=true;if(k===' '||k==='x')kH=true;if(k==='z'){pH=true;kH=true}if(k==='c'&&pwCD<=0){pwP=true;kH=true}updK()});
-document.addEventListener('keyup',function(e){var k=e.key.toLowerCase();keys[k]=false;if(k===' '||k==='x')kH=false;if(k==='z'){pH=false;kH=false}if(k==='c')kH=false;updK()});
-function updK(){if(jA)return;var dx=0,dy=0;if(keys['w']||keys['arrowup'])dy=-1;if(keys['s']||keys['arrowdown'])dy=1;if(keys['a']||keys['arrowleft'])dx=-1;if(keys['d']||keys['arrowright'])dx=1;myIn.dx=dx;myIn.dy=dy}
-document.addEventListener('click',function(){if(gameState==='game')canvas.focus()});
-window.addEventListener('beforeunload',function(){if(socket)socket.emit('leaveRoom')});
+document.addEventListener('keydown',function(e){
+    if(gameState!=='game')return;
+    var k=e.key.toLowerCase();keys[k]=true;
+    if(k===' '||k==='x')kH=true;
+    if(k==='z'){pH=true;kH=true;}
+    if(k==='c'&&pwCD<=0){pwP=true;kH=true;}
+    updK();
+});
+document.addEventListener('keyup',function(e){
+    var k=e.key.toLowerCase();keys[k]=false;
+    if(k===' '||k==='x')kH=false;
+    if(k==='z'){pH=false;kH=false;}
+    if(k==='c')kH=false;
+    updK();
+});
+function updK(){
+    if(jA)return;
+    var dx=0,dy=0;
+    if(keys['w']||keys['arrowup'])dy=-1;
+    if(keys['s']||keys['arrowdown'])dy=1;
+    if(keys['a']||keys['arrowleft'])dx=-1;
+    if(keys['d']||keys['arrowright'])dx=1;
+    myIn.dx=dx;myIn.dy=dy;
+}
+document.addEventListener('click',function(){if(gameState==='game')canvas.focus();});
+window.addEventListener('beforeunload',function(){if(socket)socket.emit('leaveRoom');});
 
 // BAŞLAT
 $('inpName').value='Oyuncu'+Math.floor(Math.random()*900+100);
 connectSocket();
 showScr('menu');
+
 })();
 </script>
 </body>
