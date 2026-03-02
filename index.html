@@ -261,7 +261,14 @@ document.addEventListener('touchend',onGe,{passive:true});
 function connectSocket(){
     $('connecting').style.display='flex';
     $('connectingMsg').textContent='Sunucuya bağlanılıyor...';
-    socket=io(SERVER_URL,{transports:['websocket'],reconnection:true,reconnectionDelay:1000,reconnectionAttempts:10});
+    socket=io(SERVER_URL,{
+    transports:['polling','websocket'],
+    reconnection:true,
+    reconnectionDelay:2000,
+    reconnectionAttempts:15,
+    timeout:20000,
+    forceNew:true
+});
     socket.on('connect',function(){
         myId=socket.id;
         $('connecting').style.display='none';
