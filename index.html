@@ -676,6 +676,7 @@ function refLobby(){
                 +'<button style="background:#e74c3c" data-ap="'+pid+'" data-at="red">K</button>'
                 +'<button style="background:#3498db" data-ap="'+pid+'" data-at="blue">M</button>'
                 +'<button style="background:#555" data-ap="'+pid+'" data-at="spectator">İ</button>'
+                +'<button style="background:#7a2e2e" data-lk="'+pid+'">🚫</button>'
                 +'</div>';
         }
         r.innerHTML='<span class="p-info">'+hH+'<span class="p-name">'+(p.name||'?')+'</span>'+posH+'</span>'+aH;
@@ -685,6 +686,9 @@ function refLobby(){
     }
     document.querySelectorAll('[data-ap]').forEach(function(b){
         b.onclick=function(){ socket.emit('adminChangeTeam',{pid:b.getAttribute('data-ap'),team:b.getAttribute('data-at')}); };
+    });
+    document.querySelectorAll('[data-lk]').forEach(function(b){
+        b.onclick=function(){ if(socket) socket.emit('adminKick',{pid:b.getAttribute('data-lk')}); };
     });
     $('btnSt').classList.toggle('hidden',!isHost);
     $('lobbyMapName').textContent='🗺️ '+( cm.name||cmk );
@@ -986,53 +990,91 @@ function renderChatLog(){
 function buildAdm(){
     if(!isHost) return;
     var mc=$('adminMenuContent'); mc.innerHTML='';
-    var mo='';
-    for(var mk in MAPS) mo+='<option value="'+mk+'"'+(mk===cmk?' selected':'')+'>'+MAPS[mk].name+'</option>';
+
+    // Harita chip'leri
+    var mapChipsHtml='<div style="display:flex;flex-wrap:wrap;gap:4px;margin-bottom:6px">';
+    for(var mk in MAPS){
+        var sel=(mk===cmk)?'border:2px solid #f39c12;background:rgba(243,156,18,.2);color:#f39c12':'border:2px solid rgba(255,255,255,.1);background:rgba(255,255,255,.04);color:#aaa';
+        mapChipsHtml+='<button style="padding:5px 10px;border-radius:16px;font-size:10px;font-weight:600;cursor:pointer;'+sel+'" data-mchip="'+mk+'">'+MAPS[mk].name+'</button>';
+    }
+    mapChipsHtml+='</div>';
+
     mc.innerHTML=
         '<div class="sec">KONTROL</div>'
         +'<button style="background:#f39c12;color:#000" id="admP">'+(mP?'▶ Devam':'⏸ Duraklat')+'</button>'
         +'<button style="background:#e74c3c" id="admR">🔄 Sıfırla</button>'
         +'<button style="background:#3498db" id="admL">🔙 Lobiye Dön</button>'
         +'<div class="sec">HARİTA</div>'
-        +'<select id="admMS">'+mo+'</select>'
-        +'<button style="background:#27ae60" id="admMA">✅ Haritayı Uygula</button>'
+        +mapChipsHtml
         +'<div class="sec">OYUNCULAR</div>'
         +'<div id="admPL"></div>';
+
     $('admP').onclick=function(){ if(socket) socket.emit('adminPause'); buildAdm(); };
     $('admR').onclick=function(){ if(socket) socket.emit('adminReset'); };
     $('admL').onclick=function(){ if(socket) socket.emit('adminLobby'); };
-    $('admMA').onclick=function(){ var nk=$('admMS').value; if(socket) socket.emit('adminChangeMap',{mapKey:nk}); };
-    // Oyuncu listesi - takım değiştirme + kick
-    var pl=$('admPL');
-    for(var pid in P){
-        var p=P[pid]; if(!p) continue;
-        var tIcon=p.team==='red'?'🔴':p.team==='blue'?'🔵':'👁️';
-        var row=document.createElement('div'); row.className='apr';
-        row.innerHTML='<span class="an">'+tIcon+' '+escHtml(p.name)+'</span>'
-            +'<button style="background:#e74c3c;font-size:8px" data-at="red" data-ap2="'+pid+'">K</button>'
-            +'<button style="background:#3498db;font-size:8px" data-at="blue" data-ap2="'+pid+'">M</button>'
-            +'<button style="background:#555;font-size:8px" data-at="spectator" data-ap2="'+pid+'">İ</button>'
-            +'<button style="background:#7a2e2e;font-size:8px" data-kp="'+pid+'">🚫</button>';
-        pl.appendChild(row);
-    }
-    // İzleyiciler de listele (oyun sırasında katılanlar)
+
+    // Harita chip tıklama
+    mc.querySelectorAll('[data-mchip]').forEach(function(b){
+        b.addEventListener('click',function(e){
+            e.stopPropagation();
+            var nk=b.getAttribute('data-mchip');
+            if(socket) socket.emit('adminChangeMap',{mapKey:nk});
+            cmk=nk; cm=MAPS[nk]||MAPS.classic;
+            buildAdm(); // chip renklerini güncelle
+        });
+        b.addEventListener('touchstart',function(e){
+            e.stopPropagation();
+            var nk=b.getAttribute('data-mchip');
+            if(socket) socket.emit('adminChangeMap',{mapKey:nk});
+            cmk=nk; cm=MAPS[nk]||MAPS.classic;
+            setTimeout(buildAdm,50);
+        },{passive:true});
+    });
+
+    // Oyuncu listesi - tüm oyuncular (aktif + izleyici)
+    var allPlayers={};
+    // Önce P'den (oyun içi)
+    for(var pid in P){ allPlayers[pid]=P[pid]; }
+    // Sonra lobbyData'dan (izleyiciler dahil)
     if(lobbyData&&lobbyData.players){
-        for(var spid in lobbyData.players){
-            if(P[spid]) continue; // zaten listede
-            var sp=lobbyData.players[spid]; if(!sp||sp.team!=='spectator') continue;
-            var row2=document.createElement('div'); row2.className='apr';
-            row2.innerHTML='<span class="an">👁️ '+escHtml(sp.name)+'</span>'
-                +'<button style="background:#e74c3c;font-size:8px" data-at="red" data-ap2="'+spid+'">K</button>'
-                +'<button style="background:#3498db;font-size:8px" data-at="blue" data-ap2="'+spid+'">M</button>'
-                +'<button style="background:#7a2e2e;font-size:8px" data-kp="'+spid+'">🚫</button>';
-            pl.appendChild(row2);
+        for(var lpid in lobbyData.players){
+            if(!allPlayers[lpid]) allPlayers[lpid]=lobbyData.players[lpid];
         }
     }
+
+    var pl=$('admPL');
+    for(var apid in allPlayers){
+        if(apid===myId) continue; // kendini listeleme
+        var ap=allPlayers[apid]; if(!ap) continue;
+        var tIcon=ap.team==='red'?'🔴':ap.team==='blue'?'🔵':'👁️';
+        var row=document.createElement('div'); row.className='apr';
+        row.innerHTML='<span class="an">'+tIcon+' '+escHtml(ap.name||'?')+'</span>'
+            +'<button style="background:#e74c3c;font-size:8px;padding:3px 5px;border:none;border-radius:3px;color:#fff;cursor:pointer" data-at="red" data-ap2="'+apid+'">K</button>'
+            +'<button style="background:#3498db;font-size:8px;padding:3px 5px;border:none;border-radius:3px;color:#fff;cursor:pointer" data-at="blue" data-ap2="'+apid+'">M</button>'
+            +'<button style="background:#555;font-size:8px;padding:3px 5px;border:none;border-radius:3px;color:#fff;cursor:pointer" data-at="spectator" data-ap2="'+apid+'">İ</button>'
+            +'<button style="background:#7a2e2e;font-size:8px;padding:3px 5px;border:none;border-radius:3px;color:#fff;cursor:pointer" data-kp="'+apid+'">🚫</button>';
+        pl.appendChild(row);
+    }
+
     pl.querySelectorAll('[data-ap2]').forEach(function(b){
-        b.onclick=function(){ if(socket) socket.emit('adminChangeTeam',{pid:b.getAttribute('data-ap2'),team:b.getAttribute('data-at')}); };
+        b.addEventListener('click',function(e){
+            e.stopPropagation();
+            if(socket) socket.emit('adminChangeTeam',{pid:b.getAttribute('data-ap2'),team:b.getAttribute('data-at')});
+        });
+        b.addEventListener('touchstart',function(e){
+            e.stopPropagation();
+            if(socket) socket.emit('adminChangeTeam',{pid:b.getAttribute('data-ap2'),team:b.getAttribute('data-at')});
+        },{passive:true});
     });
     pl.querySelectorAll('[data-kp]').forEach(function(b){
-        b.onclick=function(){ if(socket) socket.emit('adminKick',{pid:b.getAttribute('data-kp')}); };
+        b.addEventListener('click',function(e){
+            e.stopPropagation();
+            if(socket) socket.emit('adminKick',{pid:b.getAttribute('data-kp')});
+        });
+        b.addEventListener('touchstart',function(e){
+            e.stopPropagation();
+            if(socket) socket.emit('adminKick',{pid:b.getAttribute('data-kp')});
+        },{passive:true});
     });
 }
 
